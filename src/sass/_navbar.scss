@@ -1,7 +1,7 @@
 .navbar-main{
     width: 100%;
     height: 10vh;
-    background: linear-gradient(90deg, #0A2148 6.9%, #1866ED 95.64%);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(227,67,74,1) 60%, rgba(255,255,255,1) 100%);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,7 +44,7 @@
             }
         }
         button{
-            background: linear-gradient(90deg, #1866ED 0%, #65C4FF 100%);
+            background: #e3434a;
             color: #ffffff;
             border: none;
             padding: 11px 21px;

@@ -2,8 +2,7 @@ import React from 'react'
 import Sidebar from '../components/sidebar'
 import Navbar from '../components/navbar'
 import { useEthers } from '@usedapp/core'
-import Ssgt from '../views/ssgt'
-import Yfdai from '../views/yfdai'
+import Farming from '../views/farming'
 
 const Staking = () => {
     const { chainId } = useEthers()
@@ -29,8 +28,7 @@ const Staking = () => {
                      <p className="about-stake">Stake {isYFDAIEnabled() && 'YFDAI'} {isSSGTEnabled() && 'SSGT'} to earn new tokens. You can unstake at any time. Rewards are calculated per block.</p> 
                      }
                     <div className="stake-cards-list">
-                        {isSSGTEnabled() && <Ssgt></Ssgt>}
-                        {isYFDAIEnabled() && <Yfdai></Yfdai>}
+                        <Farming></Farming>
                     </div>
                 </div>
             </div>

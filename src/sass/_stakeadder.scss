@@ -66,7 +66,7 @@
           .input-value{
             border: double 1px transparent;
             border-radius: 5px;
-            background-image: linear-gradient(white, white), radial-gradient(circle at top right, #1866ED 4.02%, #C1D7FC 97.87%);
+            background-image: linear-gradient(white, white), radial-gradient(circle at top right, #e3434a 4.02%, #a5a5a5 97.87%);
             background-origin: border-box;
             background-clip: content-box, border-box;
             width: 240px;
@@ -124,12 +124,12 @@
             }
             
             :nth-child(1){
-                background: linear-gradient(90deg, #1866ED 0%, #65C4FF 100%);
+                background: linear-gradient(90deg, #e3434a 0%, #e3434bbe 100%);
                 color: #FFFFFF;
             }
             :nth-child(2){
                 background: #F2F5FA;
-                color: #1866ED;
+                color: #e3434a;
             }
             button:disabled{
                 opacity: 0.5;

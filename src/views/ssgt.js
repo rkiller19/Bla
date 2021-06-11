@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import StakeCard from '../components/stakecards'
-import StakeLogo2 from '../assets/stakelogo2.png'
+import StakeLogo2 from '../assets/Logo.png'
 import {errorModalAction, modalAction, nftModalAction, unStakeModalAction} from '../actions/modalAction'
 import {useDispatch,useSelector} from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'

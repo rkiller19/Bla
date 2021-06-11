@@ -15,6 +15,9 @@ const Navbar = () => {
 
     let navbarName = window.location.pathname.split('/').join('');
     if (navbarName === '' || navbarName.toLowerCase() === 'dashboard'){
+        navbarName = 'Farming'
+    }
+    if (navbarName === 'farming'){
         navbarName = 'Staking'
     }
     const SideBar = () => {
@@ -43,7 +46,7 @@ const Navbar = () => {
 
     useEffect(() => {
         //console.log(account)
-        if ((!isConnected && navbarName === 'Staking')){
+        if ((!isConnected && navbarName === 'Farming')){
             history.push("/") 
         }
     }, [isConnected])

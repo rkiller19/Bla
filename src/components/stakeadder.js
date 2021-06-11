@@ -16,7 +16,7 @@ const StakeAdder = (props) =>{
         <div className="card-shadow">
             <div className="stake-adder-card">
                 <div className="stake-header">
-                    <p>Stake {props.title}</p>
+                    <p>Stake {props.tokenName}</p>
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">

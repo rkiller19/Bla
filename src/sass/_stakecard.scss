@@ -5,7 +5,7 @@
     box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
     border: double 1px transparent;
     border-radius: 10px;
-    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #1866ED 4.02%, #C1D7FC 97.87%);
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #e3434a 4.02%, #ffffff 97.87%);
     background-origin: border-box;
     background-clip: content-box, border-box;
     margin-bottom: 20px;
@@ -18,6 +18,7 @@
             align-items: center;
             margin-bottom: 30px;
             img{
+                width: 80px;
                 margin-right: 20px;
             }
             .stake-name{
@@ -85,7 +86,7 @@
                  p{
                     font-weight: 600;
                     font-size: 14px;
-                    color: #1866ED;
+                    color: #e3434a;
                  }
              }
              .stake-values{
@@ -97,7 +98,7 @@
                      margin-bottom: 2px;
                  }
                  p:nth-child(2){
-                     color: #1866ED;
+                     color: #e3434a;
                      font-weight: bold;
                      font-size: 18px;
                  }
@@ -123,21 +124,21 @@
                     p{
                         font-weight: 600;
                         font-size: 12px;
-                        color: #1866ED;
+                        color: #e3434a;
                         width: 50%;
                     }
                 }
                 .btn{
                     border:double 1px transparent;
                         border-radius: 10px;
-                        background-image: linear-gradient(#F2F5FA, #F2F5FA), radial-gradient(circle at top right, #1866ED 4.02%, #C1D7FC 97.87%);
+                        background-image: linear-gradient(#F2F5FA, #F2F5FA), radial-gradient(circle at top right, #e3434a 4.02%, #a5a5a5 97.87%);
                         background-origin: border-box;
                         background-clip: content-box, border-box;
                         margin-right: 10px;
 
                     button{
                         border-radius: 10px;
-                        color: #1866ED;
+                        color: #e3434a;
                         padding: 10px 15px;
                         font-weight: 600;
                         font-size: 14px;
@@ -162,7 +163,7 @@
                     margin-bottom: 2px;
                 }
                 p:nth-child(2){
-                    color: #1866ED;
+                    color: #e3434a;
                     font-weight: bold;
                     font-size: 18px;
                 }
@@ -173,7 +174,7 @@
                     width: 110px;
                     height: 44px;
                     margin-right: 10px;
-                    background: linear-gradient(90deg, #1866ED 0%, #65C4FF 100%);
+                    background: linear-gradient(90deg, #e3434a 0%, #252525 100%);
                     color:#FFFFFF;
                     border:none;
                     font-weight: 600;
@@ -181,7 +182,7 @@
                     cursor: pointer;
                 }
                 :disabled{
-                    background: linear-gradient(90deg, #1866ED 0%, #65C4FF 100%);
+                    background: linear-gradient(90deg, #e3434a 0%, #252525 100%);
                     opacity: 0.5;
                 }
             }
@@ -204,8 +205,8 @@
                 }
                 a{
                     font-size: 14px;
-                    color: #1865ed;
-                    border-bottom: 1px solid #1865ed;
+                    color: #e3434a;
+                    border-bottom: 1px solid #e3434a;
                 }
             }
          }
@@ -230,7 +231,7 @@
                 font-size: 15px;
                 font-weight: normal;
                 span{
-                    color: #1865ed;
+                    color: #e3434a;
                 }
             }
         }
@@ -255,7 +256,7 @@
                     text-align: center;
                 }
                 .stake-value{
-                    color: #1865ed;
+                    color: #e3434a;
                     font-size: 24px;
                     font-weight: bold;
                     text-align: center;
@@ -274,14 +275,14 @@
                     .btn {
                         border: double 1px transparent;
                         border-radius: 10px;
-                        background-image: linear-gradient(#F2F5FA, #F2F5FA), radial-gradient(circle at top right, #1866ED 4.02%, #C1D7FC 97.87%);
+                        background-image: linear-gradient(#F2F5FA, #F2F5FA), radial-gradient(circle at top right, #e3434a 4.02%, #a5a5a5 97.87%);
                         background-origin: border-box;
                         background-clip: content-box, border-box;
                         margin-right: 10px;
 
                         button {
                             border-radius: 10px;
-                            color: #1866ED;
+                            color: #e3434a;
                             padding: 10px 15px;
                             font-weight: 600;
                             font-size: 14px;
@@ -310,8 +311,8 @@
                     }
                     a{
                         font-size: 14px;
-                        color: #1865ed;
-                        border-bottom: 1px solid #1865ed;
+                        color: #e3434a;
+                        border-bottom: 1px solid #e3434a;
                     }
                 }
             }
