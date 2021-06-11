@@ -29,8 +29,7 @@ const StakeAdder = (props) =>{
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.walletBalance)}/>
                     <div className="stake-type">
-                        <img src={props.logo} alt="" />
-                        <p>{props.title}</p>
+                        <p>{props.tokenName}</p>
                     </div>
                 </div>
                 <div className="button-stake">

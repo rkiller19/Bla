@@ -18,16 +18,15 @@ const StakeWithdraw = (props) =>{
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">
-                    <p>{props.title} Staked: {props.ssgtStaked}</p>
+                    <p>{props.tokenName} Staked: {props.tokenStaked}</p>
                 </div>
                 <div className="add-on">
                     <div className="input-value">
-                    <input type="text" placeholder={"Enter "+props.title+" amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
+                    <input type="text" placeholder={"Enter "+props.tokenName+" amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.ssgtStaked)}/>
                     <div className="stake-type">
-                        <img src={props.logo} alt="" />
-                        <p>{props.title}</p>
+                        <p>{props.tokenName}</p>
                     </div>
                 </div>
                 <div className="button-stake">

@@ -9,7 +9,7 @@ import { utils } from 'ethers'
 import {harvestingFailed, harvestingInProgress, harvestingSuccess, stakingFailed, stakingInProgress, stakingSucess, unStakingFailed, unStakingInProgress, unStakingSucess} from '../actions/stakingAction'
 import FarmingCard from '../components/farmingcard'
 import {lpTokenNameContractCall} from '../services/farming/LPTokenContractService'
-import {tokenContract, balanceOfTokenContractCall, allowanceContractCall, approveAllowanceFunction} from '../services/farming/TokenContractService'
+import {tokenAbiInterface, tokenContract, balanceOfTokenContractCall, allowanceContractCall, approveAllowanceFunction} from '../services/farming/TokenContractService'
 import StakeAdder from '../components/stakeadder'
 import StakeWithdraw from '../components/stakeWithdraw'
 import Errorbox from '../components/errorbox'
@@ -64,7 +64,7 @@ const Farming = () => {
         dispatch(unStakeModalAction(true,"DAO1"))
     }
 
-    const userBalance = useTokenBalance("0x2A881131C3F8f825E74757eB5792FA12a162d878", account)
+    const userBalance = useTokenBalance(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS, account)
     
     useEffect(() => {
         console.log("userBalance", userBalance)
@@ -117,29 +117,32 @@ const Farming = () => {
 
     useEffect(()=>{
         let lpTokenEarnedArray = []
-        lpTokenEarnedArray.push(lpTokenEarnedContractCall(process.env.REACT_APP_DAO1_FARMING_ADDRESS,account))
+        lpTokenEarnedArray.push(lpTokenEarnedContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,account))
         setLpTokenEarnedContractAbis(lpTokenEarnedArray)
 
         let lpTokenStakedArray = []
-        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_FARMING_ADDRESS,account))
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,account))
         setLpTokenStakedContractAbis(lpTokenStakedArray)
 
     },[])
     
     const lpTokenEarnedCall = useContractCalls(lpTokenEarnedContractAbis)
     const lpTokenStakedCall = useContractCalls(lpTokenStakedContractAbis)
-    const balanceOfLPDAO1TokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_DAO1_MATIC_ADDRESS, process.env.REACT_APP_DAO1_USDT_LP_MATIC_ADDRESS))
-    const balanceOfLPUSDTTokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_USDT_MATIC_ADDRESS, process.env.REACT_APP_DAO1_USDT_LP_MATIC_ADDRESS))
-    
+    const balanceOfLPDAO1TokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_DAO1_ETHEREUM_ADDRESS, process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS))
+    const balanceOfLPUSDTTokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_USDT_ETHEREUM_ADDRESS, process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS))
+    const lpTokenNameCall = useContractCall(lpTokenNameContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS))
+
     console.log("balanceOfLPDAO1TokenCall", balanceOfLPDAO1TokenCall)
     console.log("balanceOfLPUSDTTokenCall", balanceOfLPUSDTTokenCall)
+    console.log("lpTokenNameCall", lpTokenNameCall)
 
     useEffect(() => {
         setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? parseFloat(lpTokenEarnedCall[0][0]._hex) : 0) : 0)
         setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? parseFloat(lpTokenStakedCall[0][0]._hex) : 0) : 0)
         setTokenDao1(balanceOfLPDAO1TokenCall ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18) : 0)
         setTokenUSDT1(balanceOfLPUSDTTokenCall ? utils.formatUnits(balanceOfLPUSDTTokenCall[0]._hex, 18) : 0)
-    }, [lpTokenEarnedCall,lpTokenStakedCall, balanceOfLPDAO1TokenCall, balanceOfLPUSDTTokenCall])
+        //setTokenName(lpTokenNameCall?)
+    }, [lpTokenEarnedCall,lpTokenStakedCall, balanceOfLPDAO1TokenCall, balanceOfLPUSDTTokenCall, lpTokenNameCall])
 
     /*console.log("lpTokenEarnedCall",lpTokenEarnedCall[0])
     console.log("lpTokenStakedCall",lpTokenStakedCall)
@@ -149,11 +152,11 @@ const Farming = () => {
    
     console.log("tokenUSDT1", tokenUSDT1)
     console.log("tokenDao1", tokenDao1)
-    const farmingContract1 = new Contract(process.env.REACT_APP_DAO1_FARMING_ADDRESS, farmingAbiInterface)
+    const farmingContract1 = new Contract(process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS, farmingAbiInterface)
 
-
+    const tokenContract1 = new Contract(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS, tokenAbiInterface)
     const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
-    const { state:approveAllowanceFunctionState, send:sendApproveAllowance } = useContractFunction(tokenContract, approveAllowanceFunction)
+    const { state:approveAllowanceFunctionState, send:sendApproveAllowance } = useContractFunction(tokenContract1, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState, send:withdrawSSGT } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
     const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
     
@@ -167,7 +170,7 @@ const Farming = () => {
         if(walletAmount>0){
             dispatch(unStakeModalAction(false, selector))
             dispatch(unStakingInProgress())
-            withdrawSSGT(1, utils.parseUnits(walletAmount, 18))
+            withdrawSSGT(utils.parseUnits(walletAmount, 18))
         }
     }
 
@@ -185,7 +188,8 @@ const Farming = () => {
 
     const checkAndStakeSSGT = () => {
         // Check allowance, if allowance > 0 && < entered amount then proceed
-        if(walletAmount <= walletBalance){
+        console.log("checkAndStakeSSGT")
+        if(walletAmount > walletBalance){
             if (parseFloat(allowance) > 0 && parseFloat(allowance) > walletAmount){
                 dispatch(stakingInProgress())
                 dispatch(modalAction(false, selector))
@@ -195,17 +199,19 @@ const Farming = () => {
                 // Else call approve allowance
                 dispatch(stakingInProgress())
                 dispatch(modalAction(false, selector))
-                sendApproveAllowance(process.env.REACT_APP_DAO1_FARMING_ADDRESS, BigNumber.from(2).pow(256).sub(1))
+                sendApproveAllowance(process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS, BigNumber.from(2).pow(256).sub(1))
             }
         }
         else{
             // Show error to user
+            setWalletAmount('')
+            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
         }
     }
 
     const stakeSSGT = () => {
         console.log(utils.parseUnits(walletAmount, 18))
-        depositSSGT(1, utils.parseUnits(walletAmount, 18))
+        depositSSGT(utils.parseUnits(walletAmount, 18))
     }
 
     useEffect(() => {
@@ -254,7 +260,7 @@ const Farming = () => {
     const renderPool1 = () => {
         return <FarmingCard
             title="DAO1"
-            tokenName="USDT" 
+            tokenName="DAO1-USDT LP" 
             aprRate={12.00} 
             totalstaked={parseFloat(totalStaked)} 
             totalstakers={totalStakers} 
@@ -270,8 +276,6 @@ const Farming = () => {
             usdUSDTRate = {usdUSDTRate}
             tokenDao1 = {tokenDao1}
             tokenUSDT1 = {tokenUSDT1}
-            stake={stake}
-            unStake={unStake}
             updateWalletAmount = {updateWalletAmount}
             checkAndStakeSSGT = {checkAndStakeSSGT}
             checkAndUnStakeSSGT = {checkAndUnStakeSSGT}
@@ -285,30 +289,6 @@ const Farming = () => {
             {renderPool1()}
             {/*renderPool2()*/}
             {/*renderPool3()*/}
-
-           {/*modalStatus === true ? 
-                <StakeAdder 
-                    title="DAO1"
-                    tokenName={getTokenName(selectedIndex)}
-                    logo={StakeLogo1}
-                    allowance={allowance}
-                    walletBalance={getUserBalance(selectedIndex)}
-                    walletAmount={walletAmount}
-                    updateWalletAmount={updateWalletAmount}
-                    checkAndStakeSSGT={checkAndStakeSSGT}
-                    >
-                </StakeAdder> 
-           : ''*/}
-            {/*unStakeModalStatus === true ? 
-                <StakeWithdraw 
-                    title={props.title} 
-                    logo={props.logo} 
-                    ssgtStaked={props.ssgtStaked}
-                    walletAmount={props.walletAmount}
-                    updateWalletAmount={props.updateWalletAmount} 
-                    checkAndUnStakeSSGT={props.checkAndUnStakeSSGT}
-            /> : ''*/}
-            {errorModalStatus === true? <Errorbox errorMessage={errorModalMessage}></Errorbox>: ''}
         </>
     )
 }

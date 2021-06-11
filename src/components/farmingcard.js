@@ -15,7 +15,12 @@ const FarmingCard = (props) => {
     const harvestTransactionState = useSelector((state) => state.stakingReducer.harvestTransactionState)
     
     const dispatch = useDispatch();
-    
+    const stake = () =>{
+        dispatch(modalAction(true, props.title))
+    }
+    const unStake = () => {
+        dispatch(unStakeModalAction(true,props.title))
+    }
     const selector = useSelector((state) => state.stakedReducer.stake)
     const unStakeSelector = useSelector((state) => state.stakedReducer.unStake)
     const modalStatus = useSelector((state) => state.modalReducer.value);
@@ -72,11 +77,11 @@ const FarmingCard = (props) => {
                 {
                 <div className="stake-button">
                     { unStakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Unstaking in progress...</p></div> : <div className="btn">
-                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Unstake&nbsp;&nbsp;&nbsp;-</button> : <button onClick={props.unStake}>Unstake&nbsp;&nbsp;&nbsp;-</button>}
+                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Unstake&nbsp;&nbsp;&nbsp;-</button> : <button onClick={unStake}>Unstake&nbsp;&nbsp;&nbsp;-</button>}
                     </div>
                     }
                     { stakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Staking in progress...</p></div> : <div className="btn">
-                    { (unStakingTransactionState === 'IN_PROGRESS') ? <button disabled>Stake&nbsp;&nbsp;&nbsp;+</button> : <button onClick={props.stake}>Stake&nbsp;&nbsp;&nbsp;+</button>}
+                    { (unStakingTransactionState === 'IN_PROGRESS') ? <button disabled>Stake&nbsp;&nbsp;&nbsp;+</button> : <button onClick={stake}>Stake&nbsp;&nbsp;&nbsp;+</button>}
                     </div>}
                 </div>
                 }
@@ -94,6 +99,32 @@ const FarmingCard = (props) => {
                 </div>
             </div>
             </div>
+            {modalStatus === true ? 
+                <StakeAdder 
+                    title={props.title}
+                    logo={props.logo}
+                    tokenName={props.tokenName}
+                    allowance={props.allowance}
+                    walletBalance={props.walletBalance}
+                    walletAmount={props.walletAmount}
+                    updateWalletAmount={props.updateWalletAmount}
+                    checkAndStakeSSGT={props.checkAndStakeSSGT}
+                    >
+                </StakeAdder> 
+                
+                : ''}
+            {unStakeModalStatus === true ? 
+                <StakeWithdraw 
+                    title={props.title}
+                    tokenName={props.tokenName} 
+                    logo={props.logo} 
+                    ssgtStaked={props.ssgtStaked}
+                    tokenStaked={props.tokenStaked}
+                    walletAmount={props.walletAmount}
+                    updateWalletAmount={props.updateWalletAmount} 
+                    checkAndUnStakeSSGT={props.checkAndUnStakeSSGT}
+                    /> : ''}
+            {errorModalStatus === true? <Errorbox errorMessage={errorModalMessage}></Errorbox>: ''}
         </div>
     )
 }
