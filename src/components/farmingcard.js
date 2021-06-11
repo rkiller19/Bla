@@ -27,6 +27,7 @@ const FarmingCard = (props) => {
     const modalStatus = useSelector((state) => state.modalReducer.value);
     const modalStatusKey = useSelector((state) => state.modalReducer.title);
     const unStakeModalStatus = useSelector((state) => state.modalReducer.unStakeModal);
+    const unStakeModalStatusKey = useSelector((state) => state.modalReducer.title);
     const errorModalStatus = useSelector((state) => state.modalReducer.errorModal);
     const errorModalMessage = useSelector((state) => state.modalReducer.title);
     
@@ -62,7 +63,9 @@ const FarmingCard = (props) => {
                 </div>
                 <div className="apy staked">
                     <p>TOTAL LIQUIDITY</p>
-                    <p className="percent">${getEquivalentUSDRate(props.tokenDao1, props.usdDAO1Rate)+getEquivalentUSDRate(props.tokenUSDT1, props.usdUSDTRate)}</p>
+                    {props.showLiquidity ? 
+                    <p className="percent">${getEquivalentUSDRate(props.tokenDao1, props.usdDAO1Rate)+getEquivalentUSDRate(props.tokenUSDT1, props.usdUSDTRate)}</p> :
+                    <p className="percent">NA</p> }
                 </div>
                 <div className="apy stakes">
                     <p>EARN</p>
@@ -114,9 +117,10 @@ const FarmingCard = (props) => {
                 </StakeAdder> 
                 
                 : ''}
-            {unStakeModalStatus === true ? 
+            {unStakeModalStatus === true &&  unStakeModalStatusKey===props.uniqueKey ?
                 <StakeWithdraw 
                     title={props.title}
+                    uniqueKey={props.uniqueKey}
                     tokenName={props.tokenName} 
                     logo={props.logo} 
                     ssgtStaked={props.ssgtStaked}
