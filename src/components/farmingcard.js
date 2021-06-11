@@ -43,8 +43,6 @@ const FarmingCard = (props) => {
     }
 
     const getEquivalentUSDRate = (value, multiplier) => {
-        console.log(value)
-        console.log(multiplier)
         return +(multiplier * value).toFixed(2)
     }
 

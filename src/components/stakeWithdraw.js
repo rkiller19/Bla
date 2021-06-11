@@ -22,7 +22,7 @@ const StakeWithdraw = (props) =>{
                 </div>
                 <div className="add-on">
                     <div className="input-value">
-                    <input type="text" placeholder={"Enter "+props.tokenName+" amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
+                    <input type="text" placeholder={"Enter amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.ssgtStaked)}/>
                     <div className="stake-type">
