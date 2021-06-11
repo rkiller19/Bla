@@ -183,7 +183,7 @@ const Farming = () => {
     const userBalance4 = useTokenBalance(process.env.REACT_APP_DA01_DAI_ETHEREUM_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance4)
-        setWalletBalance3(!!userBalance4 ? Math.round(utils.formatEther(userBalance4)) : 0)
+        setWalletBalance4(!!userBalance4 ? Math.round(utils.formatEther(userBalance4)) : 0)
     },[userBalance4])
 
     useEffect(()=>{
