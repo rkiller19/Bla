@@ -9,7 +9,10 @@ import { utils } from 'ethers'
 import {harvestingFailed, harvestingInProgress, harvestingSuccess, stakingFailed, stakingInProgress, stakingSucess, unStakingFailed, unStakingInProgress, unStakingSucess} from '../actions/stakingAction'
 import FarmingCard from '../components/farmingcard'
 import {lpTokenNameContractCall} from '../services/farming/LPTokenContractService'
-import {tokenContract, allowanceContractCall, approveAllowanceFunction} from '../services/farming/TokenContractService'
+import {tokenContract, balanceOfTokenContractCall, allowanceContractCall, approveAllowanceFunction} from '../services/farming/TokenContractService'
+import StakeAdder from '../components/stakeadder'
+import StakeWithdraw from '../components/stakeWithdraw'
+import Errorbox from '../components/errorbox'
 
 
 const Farming = () => {
@@ -32,9 +35,24 @@ const Farming = () => {
     const [tokenNameContractAbis, setTokenNameContractAbis] = useState([])
     const [poolInfo, setPoolInfo] = useState([])
     const [tokenName, setTokenName] = useState('')
+    const [userBalanceAbis, setUserBalanceAbis] = useState([])
+    const modalStatus = useSelector((state) => state.modalReducer.value);
+    const unStakeModalStatus = useSelector((state) => state.modalReducer.unStakeModal);
+    const errorModalStatus = useSelector((state) => state.modalReducer.errorModal);
+    const errorModalMessage = useSelector((state) => state.modalReducer.title);
+    const [selectedIndex, setSelectedIndex] = useState(-1)
 
     const formatToPercentage = (rewardRateValue) => {
         return (rewardRateValue / 100).toFixed(2).replace(/[.,]00$/, "")
+    }
+
+    const stake = (id) =>{
+        setSelectedIndex(id)
+        dispatch(modalAction(true, "DAO1"))
+    }
+    const unStake = () => {
+        setSelectedIndex(-1)
+        dispatch(unStakeModalAction(true,"DAO1"))
     }
 
     const userBalance = useTokenBalance("0x2A881131C3F8f825E74757eB5792FA12a162d878", account)
@@ -66,10 +84,12 @@ const Farming = () => {
     const lpTokenNameCall = useContractCalls(tokenNameContractAbis)
     const lpTokenEarnedCall = useContractCalls(poolInfoTokenEarnedContractAbis)
     const lpTokenStakedCall = useContractCalls(poolInfoTokenStakedContractAbis)
+    const userBalanceCall = useContractCalls(userBalanceAbis)
     
+    console.log("userBalanceCall", userBalanceCall)
     console.log("poolInfoCall",poolInfoCall)
     console.log("lpTokenNameCall",lpTokenNameCall)
-    //console.log("lpTokenEarnedCall",lpTokenEarnedCall)
+    console.log("lpTokenEarnedCall",lpTokenEarnedCall)
     console.log("lpTokenStakedCall",lpTokenStakedCall)
 
     console.log("allowanceCall", allowanceCall)
@@ -84,6 +104,7 @@ const Farming = () => {
         let tokenEarnedArray = []
         let tokenStakedArray = []
         let tokenNameArray = []
+        let userBalanceArray = []
         if(poolCount>0){
             for(var i=0; i<poolCount; i++){
                 abiArray.push(poolInfoContractCall(i))
@@ -91,27 +112,18 @@ const Farming = () => {
                 tokenStakedArray.push(lpTokenStakedContractCall(i, account))
                 if(poolInfoCall.length>0){
                     tokenNameArray.push(lpTokenNameContractCall(poolInfoCall[i].lpToken))
+                    userBalanceArray.push(balanceOfTokenContractCall(poolInfoCall[i].lpToken, account))
                 }
             }
             setPoolInfoContractAbis(abiArray)
             setPoolInfoTokenEarnedContractAbis(tokenEarnedArray)
             setPoolInfoTokenStakedContractAbis(tokenStakedArray)
             setTokenNameContractAbis(tokenNameArray)
+            setUserBalanceAbis(userBalanceArray)
         }
         
     },[poolCount])
 
-    /*useEffect(()=>{
-        let tokenNameArray = []
-        if(poolInfoCall.length>0){
-            for(var i=0; i<poolInfoCall.length; i++){
-                console.log(poolInfoCall[i])
-                //tokenNameArray.push(lpTokenNameContractCall(poolInfoCall[i].lpToken))
-            }
-            setTokenNameContractAbis(tokenNameArray)
-        }        
-    },[poolInfoCall])
-*/
 
     
     const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract, stakeFarmingTokenFunction)
@@ -213,39 +225,76 @@ const Farming = () => {
         }
     },[harvestFunctionState])
 
-const getPoolViews = () =>{
-    let poolViews = []
-    for(var i=0; i<poolCount; i++){
-        poolViews.push(
-        <FarmingCard
-            key={i}
-            title="DAO1"
-            tokenName={lpTokenNameCall[i]} 
-            aprRate={aprRate} 
-            totalstaked={parseFloat(totalStaked)} 
-            totalstakers={totalStakers} 
-            ssgtStaked={parseFloat(lpTokenStakedCall[i])} 
-            ssgtEarned={parseFloat(ssgtEarned)} 
-            logo={StakeLogo1}
-            isNFTEnabled={false} 
-            allowance = {allowance}
-            walletBalance = {walletBalance}
-            walletAmount = {walletAmount}
-            usdRate = {usdRate}
-            updateWalletAmount = {updateWalletAmount}
-            checkAndStakeSSGT = {checkAndStakeSSGT}
-            checkAndUnStakeSSGT = {checkAndUnStakeSSGT}
-            checkAndHarvest = {checkAndHarvest}
-
-        >
-        </FarmingCard>)
+    const getUserBalance = (id) => {
+        return userBalanceCall.length > 0 ? (userBalanceCall[id] ? utils.formatEther(userBalanceCall[id][0]._hex) : 0) : 0
     }
-    return poolViews
-}
+
+    const getTokenName = (id) => {
+        return lpTokenNameCall.length > 0 ? (lpTokenNameCall[id] ? lpTokenNameCall[id][0] : '') : ''
+    }
+
+    const getLPTokenStaked = (id) => {
+        return lpTokenStakedCall.length>0 ? parseFloat(lpTokenStakedCall[id]) : 0
+    }
+
+    const getPoolViews = () =>{
+        let poolViews = []
+        for(var i=0; i<poolCount; i++){
+            poolViews.push(
+                <FarmingCard
+                    key={i.toString()}
+                    title="DAO1"
+                    tokenName={getTokenName(i)} 
+                    aprRate={aprRate} 
+                    totalstaked={parseFloat(totalStaked)} 
+                    totalstakers={totalStakers} 
+                    ssgtStaked={getLPTokenStaked(i)} 
+                    ssgtEarned={parseFloat(ssgtEarned)} 
+                    logo={StakeLogo1}
+                    isNFTEnabled={false} 
+                    allowance = {allowance}
+                    walletBalance = {getUserBalance(i)}
+                    walletAmount = {walletAmount}
+                    usdRate = {usdRate}
+                    stake={() => stake(i)}
+                    unStake={unStake}
+                    updateWalletAmount = {updateWalletAmount}
+                    checkAndStakeSSGT = {checkAndStakeSSGT}
+                    checkAndUnStakeSSGT = {checkAndUnStakeSSGT}
+                    checkAndHarvest = {checkAndHarvest}
+                >
+            </FarmingCard>)
+        }
+        return poolViews
+    }
 
     return( 
         <>
            {getPoolViews()}
+
+           {modalStatus === true ? 
+                <StakeAdder 
+                    title="DAO1"
+                    tokenName={getTokenName(selectedIndex)}
+                    logo={StakeLogo1}
+                    allowance={allowance}
+                    walletBalance={getUserBalance(selectedIndex)}
+                    walletAmount={walletAmount}
+                    updateWalletAmount={updateWalletAmount}
+                    checkAndStakeSSGT={checkAndStakeSSGT}
+                    >
+                </StakeAdder> 
+                : ''}
+            {/*unStakeModalStatus === true ? 
+                <StakeWithdraw 
+                    title={props.title} 
+                    logo={props.logo} 
+                    ssgtStaked={props.ssgtStaked}
+                    walletAmount={props.walletAmount}
+                    updateWalletAmount={props.updateWalletAmount} 
+                    checkAndUnStakeSSGT={props.checkAndUnStakeSSGT}
+            /> : ''*/}
+            {errorModalStatus === true? <Errorbox errorMessage={errorModalMessage}></Errorbox>: ''}
         </>
     )
 }

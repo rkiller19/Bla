@@ -5,7 +5,7 @@ import { utils } from 'ethers'
 
 const StakeAdder = (props) =>{
 
-    console.log(props)
+    console.log("StakeAdder", props)
     const dispatch = useDispatch();
     const selector = useSelector((state) => state.modalReducer.title)
     const close = () =>{
@@ -20,7 +20,8 @@ const StakeAdder = (props) =>{
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">
-                    <p>Balance in wallet: {utils.commify(props.walletBalance)}</p>
+                    {/*<p>Balance in wallet: {utils.commify(utils.parseEther(props.walletBalance))}</p>*/}
+                    <p>Balance in wallet: { props.walletBalance }</p>
                 </div>
                 <div className="add-on">
                     <div className="input-value">
