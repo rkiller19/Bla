@@ -91,14 +91,14 @@ const MaticFarming = () => {
     const userBalance = useTokenBalance(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance)
-        setWalletBalance(!!userBalance ? Math.round(utils.formatEther(userBalance)) : 0)
+        setWalletBalance(!!userBalance ? utils.formatEther(userBalance) : 0)
     },[userBalance])
 
     
     const userBalance2 = useTokenBalance(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance2)
-        setWalletBalance2(!!userBalance2 ? Math.round(utils.formatEther(userBalance2)) : 0)
+        setWalletBalance2(!!userBalance2 ? utils.formatEther(userBalance2) : 0)
     },[userBalance2])
 
     useEffect(()=>{

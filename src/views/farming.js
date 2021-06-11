@@ -164,26 +164,26 @@ const Farming = () => {
     const userBalance = useTokenBalance(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance)
-        setWalletBalance(!!userBalance ? Math.round(utils.formatEther(userBalance)) : 0)
+        setWalletBalance(!!userBalance ? utils.formatEther(userBalance) : 0)
     },[userBalance])
 
     
     const userBalance2 = useTokenBalance(process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance2)
-        setWalletBalance2(!!userBalance2 ? Math.round(utils.formatEther(userBalance2)) : 0)
+        setWalletBalance2(!!userBalance2 ? utils.formatEther(userBalance2) : 0)
     },[userBalance2])
 
     const userBalance3 = useTokenBalance(process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance3)
-        setWalletBalance3(!!userBalance3 ? Math.round(utils.formatEther(userBalance3)) : 0)
+        setWalletBalance3(!!userBalance3 ? utils.formatEther(userBalance3) : 0)
     },[userBalance3])
 
     const userBalance4 = useTokenBalance(process.env.REACT_APP_DA01_DAI_ETHEREUM_ADDRESS, account)
     useEffect(() => {
         console.log("userBalance", userBalance4)
-        setWalletBalance4(!!userBalance4 ? Math.round(utils.formatEther(userBalance4)) : 0)
+        setWalletBalance4(!!userBalance4 ? utils.formatEther(userBalance4) : 0)
     },[userBalance4])
 
     useEffect(()=>{
