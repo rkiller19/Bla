@@ -5,11 +5,11 @@ import { utils } from 'ethers'
 const abiInterface = new utils.Interface(TokenContractAbi)
 export const tokenContract = new Contract("0x2A881131C3F8f825E74757eB5792FA12a162d878", abiInterface)
 
-export const balanceOfTokenContractCall = (tokenContractAddress, walletAddress) => ({
+export const balanceOfTokenContractCall = (tokenContractAddress, lpTokenAddress) => ({
     abi: abiInterface,
     address: tokenContractAddress,
     method: 'balanceOf',
-    args: [walletAddress]
+    args: [lpTokenAddress]
 })
 
 export const allowanceContractCall = (walletAddress) => ({

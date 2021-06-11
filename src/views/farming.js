@@ -3,8 +3,8 @@ import StakeLogo1 from '../assets/Logo.png'
 import {errorModalAction, modalAction, unStakeModalAction} from '../actions/modalAction'
 import {useDispatch,useSelector} from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useContractCalls, useEthers, useTokenBalance, useContractFunction } from '@usedapp/core'
-import {farmingContract, poolLengthContractCall, poolInfoContractCall, lpTokenEarnedContractCall, lpTokenStakedContractCall, stakeFarmingTokenFunction, withdrawFarmingTokenFunction} from '../services/farming/FarmingContractService'
+import { useContractCall, useContractCalls, useEthers, useTokenBalance, useContractFunction } from '@usedapp/core'
+import {farmingAbiInterface, lpTokenEarnedContractCall, lpTokenStakedContractCall, stakeFarmingTokenFunction, withdrawFarmingTokenFunction, harvestFarmingTokenFunction} from '../services/farming/FarmingContractService'
 import { utils } from 'ethers'
 import {harvestingFailed, harvestingInProgress, harvestingSuccess, stakingFailed, stakingInProgress, stakingSucess, unStakingFailed, unStakingInProgress, unStakingSucess} from '../actions/stakingAction'
 import FarmingCard from '../components/farmingcard'
@@ -13,11 +13,18 @@ import {tokenContract, balanceOfTokenContractCall, allowanceContractCall, approv
 import StakeAdder from '../components/stakeadder'
 import StakeWithdraw from '../components/stakeWithdraw'
 import Errorbox from '../components/errorbox'
-
+import { Contract } from '@ethersproject/contracts'
 
 const Farming = () => {
     const dispatch = useDispatch();
     const selector = useSelector((state) => state.modalReducer.title)
+
+    /* Elements for Pool 1 */
+    const [tokenStaked1, setTokenStaked1] = useState(0)
+    const [tokenEarned1, setTokenEarned1] = useState(0)
+    const [tokenDao1, setTokenDao1] = useState(0)
+    const [tokenUSDT1, setTokenUSDT1] = useState(0)
+
     const { account } = useEthers()
     const [poolCount, setPoolCount] = useState(0)
     const [aprRate, setAprRate] = useState(0)
@@ -29,9 +36,11 @@ const Farming = () => {
     const [walletBalance, setWalletBalance] = useState(0)
     const [walletAmount, setWalletAmount] = useState('')
     const [usdRate, setUsdRate] = useState(0)
+    const [usdDAO1Rate, setUsdDAO1Rate] = useState(0)
+    const [usdUSDTRate, setUsdUSDTRate] = useState(0)
     const [poolInfoContractAbis, setPoolInfoContractAbis] = useState([])
-    const [poolInfoTokenEarnedContractAbis, setPoolInfoTokenEarnedContractAbis] = useState([])
-    const [poolInfoTokenStakedContractAbis, setPoolInfoTokenStakedContractAbis] = useState([])
+    const [lpTokenEarnedContractAbis, setLpTokenEarnedContractAbis] = useState([])
+    const [lpTokenStakedContractAbis, setLpTokenStakedContractAbis] = useState([])
     const [tokenNameContractAbis, setTokenNameContractAbis] = useState([])
     const [poolInfo, setPoolInfo] = useState([])
     const [tokenName, setTokenName] = useState('')
@@ -63,12 +72,40 @@ const Farming = () => {
     },[userBalance])
 
     useEffect(async () => {
-        const usdrate = await getUSDRate()
-        setUsdRate(usdrate)
+        
+        const usddao1rate = await getDAO1USDRate()
+        const usdusdtrate = await getUSDTUSDRate()
+        setUsdDAO1Rate(usddao1rate)
+        setUsdUSDTRate(usdusdtrate)
+
+        //const usdrate = await getUSDRate()
+        //setUsdRate(usdrate)
     },[])
 
     const getUSDRateUrl = () =>{
         return "https://api.coingecko.com/api/v3/simple/price?ids=yfdai-finance&vs_currencies=USD"
+    }
+
+    const getDAO1USDRateURL = () => {
+        return "https://api.coingecko.com/api/v3/simple/price?ids=DAO1&vs_currencies=USD"
+    }
+
+    const getUSDTUSDRateURL = () => {
+        return "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=USD"
+    }
+
+    const getDAO1USDRate = async () =>{
+        const url = getDAO1USDRateURL();
+        const response = await fetch(url);
+        const jsonData = await response.json();
+        return jsonData["dao1"].usd
+    }
+
+    const getUSDTUSDRate = async () =>{
+        const url = getUSDTUSDRateURL();
+        const response = await fetch(url);
+        const jsonData = await response.json();
+        return jsonData["tether"].usd
     }
 
     const getUSDRate = async () =>{
@@ -78,58 +115,47 @@ const Farming = () => {
         return jsonData["yfdai-finance"].usd
     }
 
-    const [poolLengthCall, allowanceCall] = useContractCalls([poolLengthContractCall, allowanceContractCall(account)])
+    useEffect(()=>{
+        let lpTokenEarnedArray = []
+        lpTokenEarnedArray.push(lpTokenEarnedContractCall(process.env.REACT_APP_DAO1_FARMING_ADDRESS,account))
+        setLpTokenEarnedContractAbis(lpTokenEarnedArray)
 
-    const poolInfoCall = useContractCalls(poolInfoContractAbis)
-    const lpTokenNameCall = useContractCalls(tokenNameContractAbis)
-    const lpTokenEarnedCall = useContractCalls(poolInfoTokenEarnedContractAbis)
-    const lpTokenStakedCall = useContractCalls(poolInfoTokenStakedContractAbis)
-    const userBalanceCall = useContractCalls(userBalanceAbis)
+        let lpTokenStakedArray = []
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_FARMING_ADDRESS,account))
+        setLpTokenStakedContractAbis(lpTokenStakedArray)
+
+    },[])
     
-    console.log("userBalanceCall", userBalanceCall)
-    console.log("poolInfoCall",poolInfoCall)
-    console.log("lpTokenNameCall",lpTokenNameCall)
-    console.log("lpTokenEarnedCall",lpTokenEarnedCall)
-    console.log("lpTokenStakedCall",lpTokenStakedCall)
-
-    console.log("allowanceCall", allowanceCall)
+    const lpTokenEarnedCall = useContractCalls(lpTokenEarnedContractAbis)
+    const lpTokenStakedCall = useContractCalls(lpTokenStakedContractAbis)
+    const balanceOfLPDAO1TokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_DAO1_MATIC_ADDRESS, process.env.REACT_APP_DAO1_USDT_LP_MATIC_ADDRESS))
+    const balanceOfLPUSDTTokenCall = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_USDT_MATIC_ADDRESS, process.env.REACT_APP_DAO1_USDT_LP_MATIC_ADDRESS))
+    
+    console.log("balanceOfLPDAO1TokenCall", balanceOfLPDAO1TokenCall)
+    console.log("balanceOfLPUSDTTokenCall", balanceOfLPUSDTTokenCall)
 
     useEffect(() => {
-        setPoolCount(poolLengthCall ? parseInt(poolLengthCall[0]._hex) : 0)
-        setAllowance(allowanceCall? utils.formatUnits(allowanceCall[0]._hex, 'ether'): 0)
-    }, [poolLengthCall, poolInfoCall, lpTokenNameCall,lpTokenEarnedCall,lpTokenStakedCall])
+        setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? parseFloat(lpTokenEarnedCall[0][0]._hex) : 0) : 0)
+        setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? parseFloat(lpTokenStakedCall[0][0]._hex) : 0) : 0)
+        setTokenDao1(balanceOfLPDAO1TokenCall ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18) : 0)
+        setTokenUSDT1(balanceOfLPUSDTTokenCall ? utils.formatUnits(balanceOfLPUSDTTokenCall[0]._hex, 18) : 0)
+    }, [lpTokenEarnedCall,lpTokenStakedCall, balanceOfLPDAO1TokenCall, balanceOfLPUSDTTokenCall])
 
-    useEffect(()=>{
-        let abiArray = []
-        let tokenEarnedArray = []
-        let tokenStakedArray = []
-        let tokenNameArray = []
-        let userBalanceArray = []
-        if(poolCount>0){
-            for(var i=0; i<poolCount; i++){
-                abiArray.push(poolInfoContractCall(i))
-                tokenEarnedArray.push(lpTokenEarnedContractCall(i, account))
-                tokenStakedArray.push(lpTokenStakedContractCall(i, account))
-                if(poolInfoCall.length>0){
-                    tokenNameArray.push(lpTokenNameContractCall(poolInfoCall[i].lpToken))
-                    userBalanceArray.push(balanceOfTokenContractCall(poolInfoCall[i].lpToken, account))
-                }
-            }
-            setPoolInfoContractAbis(abiArray)
-            setPoolInfoTokenEarnedContractAbis(tokenEarnedArray)
-            setPoolInfoTokenStakedContractAbis(tokenStakedArray)
-            setTokenNameContractAbis(tokenNameArray)
-            setUserBalanceAbis(userBalanceArray)
-        }
-        
-    },[poolCount])
+    /*console.log("lpTokenEarnedCall",lpTokenEarnedCall[0])
+    console.log("lpTokenStakedCall",lpTokenStakedCall)
+    console.log("tokenEarned1",tokenEarned1)
+    console.log("tokenStaked1",tokenStaked1)
+    */
+   
+    console.log("tokenUSDT1", tokenUSDT1)
+    console.log("tokenDao1", tokenDao1)
+    const farmingContract1 = new Contract(process.env.REACT_APP_DAO1_FARMING_ADDRESS, farmingAbiInterface)
 
 
-    
-    const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract, stakeFarmingTokenFunction)
+    const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState, send:sendApproveAllowance } = useContractFunction(tokenContract, approveAllowanceFunction)
-    const { state:withdrawSSGTFunctionState, send:withdrawSSGT } = useContractFunction(farmingContract, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract, withdrawFarmingTokenFunction)
+    const { state:withdrawSSGTFunctionState, send:withdrawSSGT } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
     
 
     const updateWalletAmount = (inputAmount) => {
@@ -225,54 +251,42 @@ const Farming = () => {
         }
     },[harvestFunctionState])
 
-    const getUserBalance = (id) => {
-        return userBalanceCall.length > 0 ? (userBalanceCall[id] ? utils.formatEther(userBalanceCall[id][0]._hex) : 0) : 0
-    }
-
-    const getTokenName = (id) => {
-        return lpTokenNameCall.length > 0 ? (lpTokenNameCall[id] ? lpTokenNameCall[id][0] : '') : ''
-    }
-
-    const getLPTokenStaked = (id) => {
-        return lpTokenStakedCall.length>0 ? parseFloat(lpTokenStakedCall[id]) : 0
-    }
-
-    const getPoolViews = () =>{
-        let poolViews = []
-        for(var i=0; i<poolCount; i++){
-            poolViews.push(
-                <FarmingCard
-                    key={i.toString()}
-                    title="DAO1"
-                    tokenName={getTokenName(i)} 
-                    aprRate={aprRate} 
-                    totalstaked={parseFloat(totalStaked)} 
-                    totalstakers={totalStakers} 
-                    ssgtStaked={getLPTokenStaked(i)} 
-                    ssgtEarned={parseFloat(ssgtEarned)} 
-                    logo={StakeLogo1}
-                    isNFTEnabled={false} 
-                    allowance = {allowance}
-                    walletBalance = {getUserBalance(i)}
-                    walletAmount = {walletAmount}
-                    usdRate = {usdRate}
-                    stake={() => stake(i)}
-                    unStake={unStake}
-                    updateWalletAmount = {updateWalletAmount}
-                    checkAndStakeSSGT = {checkAndStakeSSGT}
-                    checkAndUnStakeSSGT = {checkAndUnStakeSSGT}
-                    checkAndHarvest = {checkAndHarvest}
-                >
-            </FarmingCard>)
-        }
-        return poolViews
+    const renderPool1 = () => {
+        return <FarmingCard
+            title="DAO1"
+            tokenName="USDT" 
+            aprRate={12.00} 
+            totalstaked={parseFloat(totalStaked)} 
+            totalstakers={totalStakers} 
+            tokenStaked={tokenStaked1} 
+            tokenEarned={tokenEarned1} 
+            logo={StakeLogo1}
+            isNFTEnabled={false} 
+            allowance = {allowance}
+            walletBalance = {totalStakers}
+            walletAmount = {walletAmount}
+            usdRate = {usdRate}
+            usdDAO1Rate = {usdDAO1Rate}
+            usdUSDTRate = {usdUSDTRate}
+            tokenDao1 = {tokenDao1}
+            tokenUSDT1 = {tokenUSDT1}
+            stake={stake}
+            unStake={unStake}
+            updateWalletAmount = {updateWalletAmount}
+            checkAndStakeSSGT = {checkAndStakeSSGT}
+            checkAndUnStakeSSGT = {checkAndUnStakeSSGT}
+            checkAndHarvest = {checkAndHarvest}
+            >
+        </FarmingCard>
     }
 
     return( 
         <>
-           {getPoolViews()}
+            {renderPool1()}
+            {/*renderPool2()*/}
+            {/*renderPool3()*/}
 
-           {modalStatus === true ? 
+           {/*modalStatus === true ? 
                 <StakeAdder 
                     title="DAO1"
                     tokenName={getTokenName(selectedIndex)}
@@ -284,7 +298,7 @@ const Farming = () => {
                     checkAndStakeSSGT={checkAndStakeSSGT}
                     >
                 </StakeAdder> 
-                : ''}
+           : ''*/}
             {/*unStakeModalStatus === true ? 
                 <StakeWithdraw 
                     title={props.title} 

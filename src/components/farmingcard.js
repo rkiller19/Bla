@@ -35,8 +35,10 @@ const FarmingCard = (props) => {
         }, 4000)
     }
 
-    const getEquivalentUSDRate = (value) => {
-        return +(props.usdRate * value).toFixed(2)
+    const getEquivalentUSDRate = (value, multiplier) => {
+        console.log(value)
+        console.log(multiplier)
+        return +(multiplier * value).toFixed(2)
     }
 
     return(
@@ -55,7 +57,7 @@ const FarmingCard = (props) => {
                 </div>
                 <div className="apy staked">
                     <p>TOTAL LIQUIDITY</p>
-                    <p className="percent">${getEquivalentUSDRate(props.totalstaked)}</p>
+                    <p className="percent">${getEquivalentUSDRate(props.tokenDao1, props.usdDAO1Rate)+getEquivalentUSDRate(props.tokenUSDT1, props.usdUSDTRate)}</p>
                 </div>
                 <div className="apy stakes">
                     <p>EARN</p>
@@ -65,7 +67,7 @@ const FarmingCard = (props) => {
             <div className="stake-buttons">
                 <div className="stake-values">
                     <p>{props.tokenName} STAKED</p>
-                    {<p>{props.ssgtStaked}</p>}
+                    {<p>{props.tokenStaked}</p>}
                 </div>
                 {
                 <div className="stake-button">
@@ -82,7 +84,7 @@ const FarmingCard = (props) => {
             <div className="stake-earned">
                 <div className="stake-values">
                     <p>{props.title} EARNED</p>
-                    <p>{props.ssgtEarned}</p>
+                    <p>{props.tokenEarned}</p>
                 </div>
                 <div className="stake-button">
                     {harvestTransactionState === 'IN_PROGRESS' ?
