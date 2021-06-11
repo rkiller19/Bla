@@ -29,7 +29,7 @@ const StakeAdder = (props) =>{
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.walletBalance)}/>
                     <div className="stake-type">
-                        <p>{props.tokenName}</p>
+                        <p>{props.tokenName.replace(/ *\([^)]*\)*/g, "")}</p>
                     </div>
                 </div>
                 <div className="button-stake">

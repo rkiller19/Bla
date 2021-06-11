@@ -74,7 +74,7 @@ const FarmingCard = (props) => {
             </div>
             <div className="stake-buttons">
                 <div className="stake-values">
-                    <p>{props.tokenName} STAKED</p>
+                    <p>{props.tokenName.replace(/ *\([^)]*\)*/g, "")} STAKED</p>
                     {<p>{props.tokenStaked}</p>}
                 </div>
                 {

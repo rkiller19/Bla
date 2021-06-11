@@ -16,7 +16,7 @@ const config = {
 
 ReactDOM.render(
     <Provider store={store}>
-      <DAppProvider config={config}>
+      <DAppProvider>
         <App />
       </DAppProvider>
     </Provider>,

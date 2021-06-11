@@ -18,7 +18,7 @@ const StakeWithdraw = (props) =>{
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">
-                    <p>{props.tokenName} Staked: {props.tokenStaked}</p>
+                    <p>{props.tokenName.replace(/ *\([^)]*\)*/g, "")} Staked: {props.tokenStaked}</p>
                 </div>
                 <div className="add-on">
                     <div className="input-value">
@@ -26,7 +26,7 @@ const StakeWithdraw = (props) =>{
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.ssgtStaked)}/>
                     <div className="stake-type">
-                        <p>{props.tokenName}</p>
+                        <p>{props.tokenName.replace(/ *\([^)]*\)*/g, "")}</p>
                     </div>
                 </div>
                 <div className="button-stake">
