@@ -359,7 +359,7 @@ const MaticFarming = () => {
         return <FarmingCard
             title="DAO1"
             uniqueKey="1"
-            tokenName="DAO1-USDT QUICKSWAP (60 Days) LP" 
+            tokenName="DAO1-USDT QUICKSWAP LP" 
             alloc="100 DAO1/Day"
             aprRate={12.00} 
             totalstaked={parseFloat(totalStaked)} 
@@ -367,6 +367,7 @@ const MaticFarming = () => {
             tokenStaked={tokenStaked1} 
             tokenEarned={tokenEarned1} 
             logo={StakeLogo1}
+            lockInPeriod="60 Days"
             isNFTEnabled={false} 
             allowance = {allowance}
             walletBalance = {walletBalance}
@@ -389,7 +390,7 @@ const MaticFarming = () => {
         return <FarmingCard
             title="DAO1"
             uniqueKey="2"
-            tokenName="DAO1-USDT QUICKSWAP (30 Days) LP"
+            tokenName="DAO1-USDT QUICKSWAP LP"
             alloc="55 DAO1/Day" 
             aprRate={12.00} 
             totalstaked={parseFloat(totalStaked)} 
@@ -397,6 +398,7 @@ const MaticFarming = () => {
             tokenStaked={tokenStaked2} 
             tokenEarned={tokenEarned2} 
             logo={StakeLogo1}
+            lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance2}
             walletBalance = {walletBalance2}

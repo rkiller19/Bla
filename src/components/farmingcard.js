@@ -68,8 +68,8 @@ const FarmingCard = (props) => {
                     <p className="percent">NA</p> }
                 </div>
                 <div className="apy stakes">
-                    <p>EARN</p>
-                    <p className="percent">DAO1</p>
+                    <p>LOCK</p>
+                    <p className="percent">{props.lockInPeriod}</p>
                 </div>
             </div>
             <div className="stake-buttons">

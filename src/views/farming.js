@@ -679,6 +679,7 @@ const Farming = () => {
             tokenStaked={tokenStaked1} 
             tokenEarned={tokenEarned1} 
             logo={StakeLogo1}
+            lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance}
             walletBalance = {walletBalance}
@@ -709,6 +710,7 @@ const Farming = () => {
             tokenStaked={tokenStaked2} 
             tokenEarned={tokenEarned2} 
             logo={StakeLogo1}
+            lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance2}
             walletBalance = {walletBalance2}
@@ -739,6 +741,7 @@ const Farming = () => {
             tokenStaked={tokenStaked3} 
             tokenEarned={tokenEarned3} 
             logo={StakeLogo1}
+            lockInPeriod="60 Days"
             isNFTEnabled={false} 
             allowance = {allowance3}
             walletBalance = {walletBalance3}
@@ -769,6 +772,7 @@ const Farming = () => {
             tokenStaked={tokenStaked4} 
             tokenEarned={tokenEarned4} 
             logo={StakeLogo1}
+            lockInPeriod="120 Days"
             isNFTEnabled={false} 
             allowance = {allowance4}
             walletBalance = {walletBalance4}
