@@ -1,6 +1,6 @@
 
 
-const modalReducer = (state = {value:false, title:'title', unStakeModal: false, nftModal: false, errorModal: false},action) => {
+const modalReducer = (state = {value:false, title:'', unStakeModal: false, nftModal: false, errorModal: false},action) => {
     switch(action.type){
         case 'MODAL':
             return {value:action.payload.value,title:action.payload.title}

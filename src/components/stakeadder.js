@@ -9,7 +9,7 @@ const StakeAdder = (props) =>{
     const dispatch = useDispatch();
     const selector = useSelector((state) => state.modalReducer.title)
     const close = () =>{
-        dispatch(modalAction(false, selector))
+        dispatch(modalAction(false, ''))
     }
 
     return(
@@ -25,7 +25,7 @@ const StakeAdder = (props) =>{
                 </div>
                 <div className="add-on">
                     <div className="input-value">
-                    <input type="text" placeholder={"Enter "+props.title+" amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
+                    <input type="text" placeholder={"Enter amount"} value={props.walletAmount} onChange={(e) => props.updateWalletAmount(e.target.value)} />
                     </div>
                     <input type="submit" value="MAX" onClick={() => props.updateWalletAmount(props.walletBalance)}/>
                     <div className="stake-type">

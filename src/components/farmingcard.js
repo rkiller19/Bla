@@ -10,20 +10,22 @@ import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 
 const FarmingCard = (props) => {
+    console.log("props", props)
     const stakingTransactionState = useSelector((state) => state.stakingReducer.stakingTransactionState)
     const unStakingTransactionState = useSelector((state) => state.stakingReducer.unStakingTransactionState)
     const harvestTransactionState = useSelector((state) => state.stakingReducer.harvestTransactionState)
     
     const dispatch = useDispatch();
     const stake = () =>{
-        dispatch(modalAction(true, props.title))
+        dispatch(modalAction(true, props.uniqueKey))
     }
     const unStake = () => {
-        dispatch(unStakeModalAction(true,props.title))
+        dispatch(unStakeModalAction(true,props.uniqueKey))
     }
     const selector = useSelector((state) => state.stakedReducer.stake)
     const unStakeSelector = useSelector((state) => state.stakedReducer.unStake)
     const modalStatus = useSelector((state) => state.modalReducer.value);
+    const modalStatusKey = useSelector((state) => state.modalReducer.title);
     const unStakeModalStatus = useSelector((state) => state.modalReducer.unStakeModal);
     const errorModalStatus = useSelector((state) => state.modalReducer.errorModal);
     const errorModalMessage = useSelector((state) => state.modalReducer.title);
@@ -58,7 +60,7 @@ const FarmingCard = (props) => {
             <div className = "stake-details">
                 <div className="apy value">
                     <p>Allocation</p>
-                    <p className="percent" style={{fontSize:"12px"}}>100 DAO1/Day</p>
+                    <p className="percent" style={{fontSize:"12px"}}>{props.alloc}</p>
                 </div>
                 <div className="apy staked">
                     <p>TOTAL LIQUIDITY</p>
@@ -99,10 +101,11 @@ const FarmingCard = (props) => {
                 </div>
             </div>
             </div>
-            {modalStatus === true ? 
+            {modalStatus === true &&  modalStatusKey===props.uniqueKey ? 
                 <StakeAdder 
                     title={props.title}
                     logo={props.logo}
+                    uniqueKey={props.uniqueKey}
                     tokenName={props.tokenName}
                     allowance={props.allowance}
                     walletBalance={props.walletBalance}
