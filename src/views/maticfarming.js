@@ -153,12 +153,12 @@ const MaticFarming = () => {
     const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState, send:sendApproveAllowance } = useContractFunction(tokenContract1, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState, send:withdrawSSGT } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, harvestFarmingTokenFunction)
     
     const { state:depositSSGTFunctionState2, send:depositSSGT2 } = useContractFunction(farmingContract2, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState2, send:sendApproveAllowance2 } = useContractFunction(tokenContract2, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState2, send:withdrawSSGT2 } = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState2, send:harvest2} = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState2, send:harvest2} = useContractFunction(farmingContract2, harvestFarmingTokenFunction)
     
     
     const updateWalletAmount = (inputAmount) => {
