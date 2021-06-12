@@ -14,7 +14,7 @@ const StakeWithdraw = (props) =>{
         <div className="card-shadow">
             <div className="stake-adder-card">
                 <div className="stake-header">
-                    <p>Unstake {props.title}</p>
+                    <p>Withdraw {props.title}</p>
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">
@@ -30,7 +30,7 @@ const StakeWithdraw = (props) =>{
                     </div>
                 </div>
                 <div className="button-stake">
-                    {props.walletAmount.length ===  0 || props.walletAmount === '0' ? <button disabled>Unstake</button> : <button onClick={props.checkAndUnStakeSSGT}>Unstake</button>}
+                    {props.walletAmount.length ===  0 || props.walletAmount === '0' ? <button disabled>Withdraw</button> : <button onClick={props.checkAndUnStakeSSGT}>Withdraw</button>}
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ const StakeAdder = (props) =>{
         <div className="card-shadow">
             <div className="stake-adder-card">
                 <div className="stake-header">
-                    <p>Stake {props.tokenName}</p>
+                    <p>Deposit {props.tokenName}</p>
                     <p onClick={close}>x</p>
                 </div>
                 <div className="balance">
@@ -33,8 +33,7 @@ const StakeAdder = (props) =>{
                     </div>
                 </div>
                 <div className="button-stake">
-                    {props.walletAmount ===  0 || props.walletAmount === '0' ? <button disabled>Stake</button> : <button onClick={props.checkAndStakeSSGT}>Stake</button>}
-                    <button>Buy {props.title}</button>
+                    {props.walletAmount ===  0 || props.walletAmount === '' ? <button disabled>Deposit</button> : <button onClick={props.checkAndStakeSSGT}>Deposit</button>}
                 </div>
             </div>
         </div>

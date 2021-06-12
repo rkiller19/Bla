@@ -339,7 +339,7 @@ const Farming = () => {
         else{
             // Show error to user
             setWalletAmount('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -431,7 +431,7 @@ const Farming = () => {
         else{
             // Show error to user
             setWalletAmount2('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -523,7 +523,7 @@ const Farming = () => {
         else{
             // Show error to user
             setWalletAmount3('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -615,7 +615,7 @@ const Farming = () => {
         else{
             // Show error to user
             setWalletAmount4('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -679,6 +679,7 @@ const Farming = () => {
             tokenStaked={tokenStaked1} 
             tokenEarned={tokenEarned1} 
             logo={StakeLogo1}
+            linkUrl="https://safeswap.yfdai.finance/#/add/0xCE3f6f6672616c39D8B6858F8DAC9902eCa42C84/0xdAC17F958D2ee523a2206206994597C13D831ec7"
             lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance}
@@ -710,6 +711,7 @@ const Farming = () => {
             tokenStaked={tokenStaked2} 
             tokenEarned={tokenEarned2} 
             logo={StakeLogo1}
+            linkUrl="https://app.uniswap.org/#/add/v2/0xCE3f6f6672616c39D8B6858F8DAC9902eCa42C84/0xdAC17F958D2ee523a2206206994597C13D831ec7"
             lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance2}
@@ -741,6 +743,7 @@ const Farming = () => {
             tokenStaked={tokenStaked3} 
             tokenEarned={tokenEarned3} 
             logo={StakeLogo1}
+            linkUrl="https://app.uniswap.org/#/add/v2/0xf4CD3d3Fda8d7Fd6C5a500203e38640A70Bf9577/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
             lockInPeriod="60 Days"
             isNFTEnabled={false} 
             allowance = {allowance3}

@@ -1,5 +1,5 @@
 .stake-cards{
-    width: 470px;
+    width: 500px;
     height: auto;
     background: #FFFFFF;
     box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
@@ -20,6 +20,11 @@
             img{
                 width: 80px;
                 margin-right: 20px;
+            }
+            .link-img{
+                width: 12px;
+                margin-left: 5px;
+                margin-right: 0px;
             }
             .stake-name{
                  color: #0A2148;

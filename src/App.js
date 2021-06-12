@@ -13,8 +13,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path='/' component={ConnectWallet} exact />
-          <Route path='/dashboard' component={Staking} />
-          <Route path='/farming' component={Farming} />
+          <Route path='/farming' component={Staking} />
+          <Route path='/staking' component={Farming} />
           <Route path='/safeswap' component={SafeSwap} />
           <Route path='/safetrade' component={SafeTrade} />
           <Route path='/launchpad' component={LaunchPad} />

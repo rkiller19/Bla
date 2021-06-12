@@ -25,7 +25,7 @@ const ConnectWallet = () => {
     
     useEffect(() => {
         // if connected redirect user to dashboard
-        isConnected && account && history.push("/Dashboard")
+        isConnected && account && history.push("/farming")
     }, [isConnected, account])
 
     const activateWallet = async () => {

@@ -14,10 +14,10 @@ const Navbar = () => {
     const isConnected = useSelector((state) => state.connectionReducer)
 
     let navbarName = window.location.pathname.split('/').join('');
-    if (navbarName === '' || navbarName.toLowerCase() === 'dashboard'){
+    if (navbarName === '' || navbarName.toLowerCase() === 'farming'){
         navbarName = 'Farming'
     }
-    if (navbarName === 'farming'){
+    if (navbarName === 'staking'){
         navbarName = 'Staking'
     }
     const SideBar = () => {

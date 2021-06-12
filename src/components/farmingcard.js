@@ -7,6 +7,7 @@ import StakeWithdraw from '../components/stakeWithdraw'
 import Errorbox from '../components/errorbox'
 import Loading from '../assets/loading.png'
 import { utils } from 'ethers'
+import LinkIcon from '../assets/link_icon.png'
 import { BigNumber } from '@ethersproject/bignumber'
 
 const FarmingCard = (props) => {
@@ -54,6 +55,7 @@ const FarmingCard = (props) => {
                 <img src={props.logo} alt="" />
                 <p className="stake-name">
                 {props.tokenName}
+                <a href={props.linkUrl} target="_blank"><img src={LinkIcon} className="link-img" alt="" /></a>
                 </p>
             </div>
             <div className = "stake-details">
@@ -80,11 +82,11 @@ const FarmingCard = (props) => {
                 {
                 <div className="stake-button">
                     { unStakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Unstaking in progress...</p></div> : <div className="btn">
-                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Unstake&nbsp;&nbsp;&nbsp;-</button> : <button onClick={unStake}>Unstake&nbsp;&nbsp;&nbsp;-</button>}
+                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Withdraw&nbsp;&nbsp;&nbsp;-</button> : <button onClick={unStake}>Withdraw&nbsp;&nbsp;&nbsp;-</button>}
                     </div>
                     }
                     { stakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Staking in progress...</p></div> : <div className="btn">
-                    { (unStakingTransactionState === 'IN_PROGRESS') ? <button disabled>Stake&nbsp;&nbsp;&nbsp;+</button> : <button onClick={stake}>Stake&nbsp;&nbsp;&nbsp;+</button>}
+                    { (unStakingTransactionState === 'IN_PROGRESS') ? <button disabled>Deposit&nbsp;&nbsp;&nbsp;+</button> : <button onClick={stake}>Deposit&nbsp;&nbsp;&nbsp;+</button>}
                     </div>}
                 </div>
                 }
@@ -97,7 +99,7 @@ const FarmingCard = (props) => {
                 <div className="stake-button">
                     {harvestTransactionState === 'IN_PROGRESS' ?
                     <div className="loader"><img src={Loading} alt=""/><div className="transaction-text"><p>Harvesting in progress...</p><a href="#">View transaction</a></div></div> :
-                    <button onClick={props.checkAndHarvest}>Harvest</button>
+                    <button onClick={props.checkAndHarvest}>Claim</button>
                     }
                 </div>
             </div>

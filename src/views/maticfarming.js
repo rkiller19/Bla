@@ -211,7 +211,7 @@ const MaticFarming = () => {
         else{
             // Show error to user
             setWalletAmount('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -303,7 +303,7 @@ const MaticFarming = () => {
         else{
             // Show error to user
             setWalletAmount2('')
-            dispatch(errorModalAction(true, "Not enough balance to Stake!"))
+            dispatch(errorModalAction(true, "Not enough balance to Deposit!"))
         }
     }
 
@@ -367,6 +367,7 @@ const MaticFarming = () => {
             tokenStaked={tokenStaked1} 
             tokenEarned={tokenEarned1} 
             logo={StakeLogo1}
+            linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
             lockInPeriod="60 Days"
             isNFTEnabled={false} 
             allowance = {allowance}
@@ -398,6 +399,7 @@ const MaticFarming = () => {
             tokenStaked={tokenStaked2} 
             tokenEarned={tokenEarned2} 
             logo={StakeLogo1}
+            linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
             lockInPeriod="30 Days"
             isNFTEnabled={false} 
             allowance = {allowance2}
