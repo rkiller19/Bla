@@ -775,6 +775,7 @@ const Farming = () => {
             tokenStaked={tokenStaked4} 
             tokenEarned={tokenEarned4} 
             logo={StakeLogo1}
+            linkUrl="https://safeswap.yfdai.finance/#/swap?outputCurrency=0x6b175474e89094c44da98b954eedeac495271d0f"
             lockInPeriod="120 Days"
             isNFTEnabled={false} 
             allowance = {allowance4}

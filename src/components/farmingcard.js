@@ -99,7 +99,7 @@ const FarmingCard = (props) => {
                 <div className="stake-button">
                     {harvestTransactionState === 'IN_PROGRESS' ?
                     <div className="loader"><img src={Loading} alt=""/><div className="transaction-text"><p>Harvesting in progress...</p><a href="#">View transaction</a></div></div> :
-                    <button onClick={props.checkAndHarvest}>Claim</button>
+                    <button onClick={props.checkAndHarvest}>Harvest</button>
                     }
                 </div>
             </div>
