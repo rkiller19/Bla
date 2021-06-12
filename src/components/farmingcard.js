@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {modalAction, unStakeModalAction} from '../actions/modalAction'
 import {useDispatch,useSelector} from 'react-redux'
 import {staked, unStaked} from '../actions/stakedAction'
@@ -48,6 +48,28 @@ const FarmingCard = (props) => {
         return +(multiplier * value).toFixed(2)
     }
 
+    const getNumberOfDays = () => {
+        
+        const date1 = new Date("06/11/2021");
+        var todayDate = new Date().toISOString().slice(0, 10);
+        const date2 = new Date(todayDate);
+        
+        // One day in milliseconds
+        const oneDay = 1000 * 60 * 60 * 24;
+    
+        // Calculating the time difference between two dates
+        const diffInTime = date2.getTime() - date1.getTime();
+    
+        // Calculating the no. of days between two dates
+        const diffInDays = Math.round(diffInTime / oneDay);
+    
+        return diffInDays;
+    }
+
+    useEffect(()=>{
+        console.log(getNumberOfDays())
+    },[])
+
     return(
         <div className='stake-cards'>
             <div className="stack-cards-child">
@@ -55,7 +77,9 @@ const FarmingCard = (props) => {
                 <img src={props.logo} alt="" />
                 <p className="stake-name">
                 {props.tokenName}
+                {props.linkUrl !== "" ? 
                 <a href={props.linkUrl} target="_blank"><img src={LinkIcon} className="link-img" alt="" /></a>
+                : ''}
                 </p>
             </div>
             <div className = "stake-details">
@@ -82,7 +106,7 @@ const FarmingCard = (props) => {
                 {
                 <div className="stake-button">
                     { unStakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Unstaking in progress...</p></div> : <div className="btn">
-                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Withdraw&nbsp;&nbsp;&nbsp;-</button> : <button onClick={unStake}>Withdraw&nbsp;&nbsp;&nbsp;-</button>}
+                    { (stakingTransactionState === 'IN_PROGRESS') ? <button disabled>Withdraw&nbsp;&nbsp;&nbsp;-</button> : (props.lockIn >= getNumberOfDays() ? <button disabled onClick={unStake}>Withdraw&nbsp;&nbsp;&nbsp;-</button> :<button onClick={unStake}>Withdraw&nbsp;&nbsp;&nbsp;-</button>)}
                     </div>
                     }
                     { stakingTransactionState === 'IN_PROGRESS' ? <div className="loading"><img src={Loading} alt="" /><p>Staking in progress...</p></div> : <div className="btn">

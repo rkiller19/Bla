@@ -369,6 +369,7 @@ const MaticFarming = () => {
             logo={StakeLogo1}
             linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
             lockInPeriod="60 Days"
+            lockIn={60}
             isNFTEnabled={false} 
             allowance = {allowance}
             walletBalance = {walletBalance}
@@ -401,6 +402,7 @@ const MaticFarming = () => {
             logo={StakeLogo1}
             linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
             lockInPeriod="30 Days"
+            lockIn={30}
             isNFTEnabled={false} 
             allowance = {allowance2}
             walletBalance = {walletBalance2}
