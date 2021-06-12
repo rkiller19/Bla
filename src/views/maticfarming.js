@@ -110,7 +110,7 @@ const MaticFarming = () => {
 
         let lpTokenStakedArray = []
         lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_60DAYS_FARMING_ADDRESS,account))
-        lpTokenEarnedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,account))
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,account))
         
         setLpTokenStakedContractAbis(lpTokenStakedArray)
 
@@ -127,10 +127,10 @@ const MaticFarming = () => {
     const lpTokenNameCall = useContractCall(lpTokenNameContractCall(process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS))
 
     useEffect(() => {
-        setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? parseFloat(lpTokenEarnedCall[0][0]._hex) : 0) : 0)
-        setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? parseFloat(lpTokenStakedCall[0][0]._hex) : 0) : 0)
-        setTokenEarned2(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[1] ? parseFloat(lpTokenEarnedCall[1][0]._hex) : 0) : 0)
-        setTokenStaked2(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[1] ? parseFloat(lpTokenStakedCall[1][0]._hex) : 0) : 0)
+        setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? utils.formatUnits(lpTokenEarnedCall[0][0]._hex, 18) : 0) : 0)
+        setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? utils.formatUnits(lpTokenStakedCall[0][0]._hex, 18) : 0) : 0)
+        setTokenEarned2(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[1] ? utils.formatUnits(lpTokenEarnedCall[1][0]._hex, 18) : 0) : 0)
+        setTokenStaked2(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[1] ? utils.formatUnits(lpTokenStakedCall[1][0]._hex, 18) : 0) : 0)
 
         setTokenDao1(balanceOfLPDAO1TokenCall ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18) : 0)
         setTokenUSDT1(balanceOfLPUSDTTokenCall ? utils.formatUnits(balanceOfLPUSDTTokenCall[0]._hex, 18) : 0)

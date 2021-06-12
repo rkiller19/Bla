@@ -197,9 +197,9 @@ const Farming = () => {
 
         let lpTokenStakedArray = []
         lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,account))
-        lpTokenEarnedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,account))
-        lpTokenEarnedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,account))
-        lpTokenEarnedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,account))
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,account))
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,account))
+        lpTokenStakedArray.push(lpTokenStakedContractCall(process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,account))
         
         setLpTokenStakedContractAbis(lpTokenStakedArray)
 
@@ -215,20 +215,20 @@ const Farming = () => {
     const balanceOfLPDAO1TokenCall3 = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_YFDAI_ETHEREUM_ADDRESS, process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS))
     const balanceOfLPUSDTTokenCall3 = useContractCall(balanceOfTokenContractCall(process.env.REACT_APP_WETH_ETHEREUM_ADDRESS, process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS))
     
-    console.log("balanceOfLPDAO1TokenCall3", balanceOfLPDAO1TokenCall3)
-    console.log("balanceOfLPUSDTTokenCall3", balanceOfLPUSDTTokenCall3)
+    console.log("lpTokenEarnedCall", lpTokenEarnedCall)
+    console.log("lpTokenStakedCall", lpTokenStakedCall)
 
     const lpTokenNameCall = useContractCall(lpTokenNameContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS))
 
     useEffect(() => {
-        setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? parseFloat(lpTokenEarnedCall[0][0]._hex) : 0) : 0)
-        setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? parseFloat(lpTokenStakedCall[0][0]._hex) : 0) : 0)
-        setTokenEarned2(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[1] ? parseFloat(lpTokenEarnedCall[1][0]._hex) : 0) : 0)
-        setTokenStaked2(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[1] ? parseFloat(lpTokenStakedCall[1][0]._hex) : 0) : 0)
-        setTokenEarned3(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[2] ? parseFloat(lpTokenEarnedCall[2][0]._hex) : 0) : 0)
-        setTokenStaked3(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[2] ? parseFloat(lpTokenStakedCall[2][0]._hex) : 0) : 0)
-        setTokenEarned4(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[3] ? parseFloat(lpTokenEarnedCall[3][0]._hex) : 0) : 0)
-        setTokenStaked4(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[3] ? parseFloat(lpTokenStakedCall[3][0]._hex) : 0) : 0)
+        setTokenEarned1(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[0] ? utils.formatUnits(lpTokenEarnedCall[0][0]._hex, 18) : 0) : 0)
+        setTokenStaked1(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[0] ? utils.formatUnits(lpTokenStakedCall[0][0]._hex, 18) : 0) : 0)
+        setTokenEarned2(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[1] ? utils.formatUnits(lpTokenEarnedCall[1][0]._hex, 18) : 0) : 0)
+        setTokenStaked2(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[1] ? utils.formatUnits(lpTokenStakedCall[1][0]._hex, 18) : 0) : 0)
+        setTokenEarned3(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[2] ? utils.formatUnits(lpTokenEarnedCall[2][0]._hex, 18) : 0) : 0)
+        setTokenStaked3(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[2] ? utils.formatUnits(lpTokenStakedCall[2][0]._hex, 18) : 0) : 0)
+        setTokenEarned4(lpTokenEarnedCall.length>0 ? (lpTokenEarnedCall[3] ? utils.formatUnits(lpTokenEarnedCall[3][0]._hex, 18) : 0) : 0)
+        setTokenStaked4(lpTokenStakedCall.length>0 ? (lpTokenStakedCall[3] ? utils.formatUnits(lpTokenStakedCall[3][0]._hex, 18) : 0) : 0)
         
 
         setTokenDao1(balanceOfLPDAO1TokenCall ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18) : 0)
