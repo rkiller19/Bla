@@ -8,7 +8,8 @@ import { useEthers, shortenAddress } from '@usedapp/core'
 import MakeQuerablePromise from '../utils/querable-promise'
 
 const Navbar = () => {
-    const { account, deactivate, activateBrowserWallet } = useEthers()
+    const { account, error, deactivate, activateBrowserWallet } = useEthers()
+    
     const dispatch = useDispatch();
     const history = useHistory();
     const isConnected = useSelector((state) => state.connectionReducer)
@@ -45,11 +46,26 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        //console.log(account)
+        if (error) {
+            // show error to user if user denied connection request
+            console.log(error)
+            dispatch(connectionAction(false))
+        }
+    }, [error])
+
+    useEffect(() => {
+        console.log("isConnected", isConnected)
         if ((!isConnected && navbarName === 'Farming')){
             history.push("/") 
         }
-    }, [isConnected])
+    }, [isConnected, account])
+
+    useEffect(() => {
+        if (!account) {
+            // show error to user if user denied connection request
+            dispatch(connectionAction(false))
+        }
+    }, [account])
 
     return (
         <div className="navbar-main">
