@@ -261,22 +261,22 @@ const Farming = () => {
     const { state:depositSSGTFunctionState, send:depositSSGT } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState, send:sendApproveAllowance } = useContractFunction(tokenContract1, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState, send:withdrawSSGT } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState, send:harvest} = useContractFunction(farmingContract1, harvestFarmingTokenFunction)
     
     const { state:depositSSGTFunctionState2, send:depositSSGT2 } = useContractFunction(farmingContract2, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState2, send:sendApproveAllowance2 } = useContractFunction(tokenContract2, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState2, send:withdrawSSGT2 } = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState2, send:harvest2} = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState2, send:harvest2} = useContractFunction(farmingContract2, harvestFarmingTokenFunction)
     
     const { state:depositSSGTFunctionState3, send:depositSSGT3 } = useContractFunction(farmingContract3, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState3, send:sendApproveAllowance3 } = useContractFunction(tokenContract3, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState3, send:withdrawSSGT3 } = useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState3, send:harvest3} = useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState3, send:harvest3} = useContractFunction(farmingContract3, harvestFarmingTokenFunction)
     
     const { state:depositSSGTFunctionState4, send:depositSSGT4 } = useContractFunction(farmingContract4, stakeFarmingTokenFunction)
     const { state:approveAllowanceFunctionState4, send:sendApproveAllowance4 } = useContractFunction(tokenContract4, approveAllowanceFunction)
     const { state:withdrawSSGTFunctionState4, send:withdrawSSGT4 } = useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
-    const { state:harvestFunctionState4, send:harvest4} = useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
+    const { state:harvestFunctionState4, send:harvest4} = useContractFunction(farmingContract4, harvestFarmingTokenFunction)
     
 
     const updateWalletAmount = (inputAmount) => {
