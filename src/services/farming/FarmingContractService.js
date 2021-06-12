@@ -6,7 +6,7 @@ export const farmingAbiInterface = new utils.Interface(FarmingContractAbi)
 export const lpTokenEarnedContractCall = (contractAddress, walletAddress) => ({
     abi: farmingAbiInterface,
     address: contractAddress,
-    method: 'getPendingDivs',
+    method: 'getEstimatedPendingDivs',
     args: [walletAddress]
 })
 
