@@ -11,14 +11,13 @@ import MakeQuerablePromise from '../utils/querable-promise'
 const ConnectWallet = () => {
   const { account, deactivate, activateBrowserWallet } = useEthers()
   const { error } = useEthers()
-  const isConnected = useSelector(state => state.connectionReducer)
+  const isConnected = useSelector((state) => state.connectionReducer)
   const history = useHistory()
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (error) {
       // show error to user if user denied connection request
-      console.log(error)
       dispatch(connectionAction(false))
     }
   }, [error])
@@ -33,12 +32,12 @@ const ConnectWallet = () => {
       activateBrowserWallet()
     )
     activateBrowserWalletPromise.then(
-      function() {
+      function () {
         if (activateBrowserWalletPromise.isFulfilled()) {
           dispatch(connectionAction(true))
         }
       },
-      function() {
+      function () {
         /* code if some error */
 
         dispatch(connectionAction(false))

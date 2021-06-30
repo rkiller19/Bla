@@ -2,7 +2,7 @@ import React from 'react'
 import {
   modalAction,
   unStakeModalAction,
-  nftModalAction
+  nftModalAction,
 } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { staked, unStaked } from '../actions/stakedAction'
@@ -13,19 +13,18 @@ import MintNFT from '../components/mintNFT'
 import Loading from '../assets/loading.png'
 import InfoIcon from '../assets/infoIcon.png'
 
-const StakeCard = props => {
-  // console.log(props)
+const StakeCard = (props) => {
   const stakingTransactionState = useSelector(
-    state => state.stakingReducer.stakingTransactionState
+    (state) => state.stakingReducer.stakingTransactionState
   )
   const unStakingTransactionState = useSelector(
-    state => state.stakingReducer.unStakingTransactionState
+    (state) => state.stakingReducer.unStakingTransactionState
   )
   const nftClaimTransactionState = useSelector(
-    state => state.stakingReducer.nftClaimTransactionState
+    (state) => state.stakingReducer.nftClaimTransactionState
   )
   const harvestTransactionState = useSelector(
-    state => state.stakingReducer.harvestTransactionState
+    (state) => state.stakingReducer.harvestTransactionState
   )
 
   const dispatch = useDispatch()
@@ -39,29 +38,29 @@ const StakeCard = props => {
     dispatch(nftModalAction(true, props.title))
   }
 
-  const selector = useSelector(state => state.stakedReducer.stake)
-  const unStakeSelector = useSelector(state => state.stakedReducer.unStake)
-  const modalStatus = useSelector(state => state.modalReducer.value)
+  const selector = useSelector((state) => state.stakedReducer.stake)
+  const unStakeSelector = useSelector((state) => state.stakedReducer.unStake)
+  const modalStatus = useSelector((state) => state.modalReducer.value)
   const unStakeModalStatus = useSelector(
-    state => state.modalReducer.unStakeModal
+    (state) => state.modalReducer.unStakeModal
   )
-  const nftModalStatus = useSelector(state => state.modalReducer.nftModal)
-  const errorModalStatus = useSelector(state => state.modalReducer.errorModal)
-  const errorModalMessage = useSelector(state => state.modalReducer.title)
+  const nftModalStatus = useSelector((state) => state.modalReducer.nftModal)
+  const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
+  const errorModalMessage = useSelector((state) => state.modalReducer.title)
 
   if (selector === true) {
-    setTimeout(function() {
+    setTimeout(function () {
       // setLoading(true)
       dispatch(staked(false))
     }, 4000)
   }
   if (unStakeSelector === true) {
-    setTimeout(function() {
+    setTimeout(function () {
       dispatch(unStaked(false))
     }, 4000)
   }
 
-  const getEquivalentUSDRate = value => {
+  const getEquivalentUSDRate = (value) => {
     return +(props.usdRate * value).toFixed(2)
   }
 

@@ -3,7 +3,6 @@ import { modalAction } from '../actions/modalAction'
 import { useDispatch } from 'react-redux'
 
 const StakeAdder = (props) => {
-  console.log('StakeAdder', props)
   const dispatch = useDispatch()
   const close = () => {
     dispatch(modalAction(false, ''))

@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
-  const isConnected = useSelector(state => state.connectionReducer)
+  const isConnected = useSelector((state) => state.connectionReducer)
 
   let navbarName = window.location.pathname.split('/').join('')
   if (navbarName === '' || navbarName.toLowerCase() === 'farming') {
@@ -30,12 +30,12 @@ const Navbar = () => {
       activateBrowserWallet()
     )
     activateBrowserWalletPromise.then(
-      function() {
+      function () {
         if (activateBrowserWalletPromise.isFulfilled()) {
           dispatch(connectionAction(true))
         }
       },
-      function() {
+      function () {
         /* code if some error */
 
         dispatch(connectionAction(false))
@@ -51,13 +51,11 @@ const Navbar = () => {
   useEffect(() => {
     if (error) {
       // show error to user if user denied connection request
-      console.log(error)
       dispatch(connectionAction(false))
     }
   }, [error])
 
   useEffect(() => {
-    console.log('isConnected', isConnected)
     if (!isConnected && navbarName === 'Farming') {
       history.push('/')
     }

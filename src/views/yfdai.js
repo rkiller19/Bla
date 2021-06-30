@@ -4,7 +4,7 @@ import StakeLogo1 from '../assets/stakelogo1.png'
 import {
   errorModalAction,
   modalAction,
-  unStakeModalAction
+  unStakeModalAction,
 } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -12,7 +12,7 @@ import {
   useContractCalls,
   useEthers,
   useTokenBalance,
-  useContractFunction
+  useContractFunction,
 } from '@usedapp/core'
 import {
   rewardRateContractCall,
@@ -22,13 +22,13 @@ import {
   stakingContract,
   depositSSGTFunction,
   withdrawSSGTFunction,
-  harvestFunction
+  harvestFunction,
 } from '../services/yfdai/StakingContractService'
 import {
   totalStakedContractCall,
   tokenContract,
   allowanceContractCall,
-  approveAllowanceFunction
+  approveAllowanceFunction,
 } from '../services/yfdai/TokenContractService'
 import { utils } from 'ethers'
 
@@ -41,12 +41,12 @@ import {
   stakingSucess,
   unStakingFailed,
   unStakingInProgress,
-  unStakingSucess
+  unStakingSucess,
 } from '../actions/stakingAction'
 
 const Yfdai = () => {
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
+  const selector = useSelector((state) => state.modalReducer.title)
   const { account } = useEthers()
   const [rewardRate, setRewardRate] = useState(0)
   const [totalStakers, setTotalStakers] = useState(0)
@@ -58,7 +58,7 @@ const Yfdai = () => {
   const [walletAmount, setWalletAmount] = useState('')
   const [usdRate, setUsdRate] = useState(0)
 
-  const formatToPercentage = rewardRateValue => {
+  const formatToPercentage = (rewardRateValue) => {
     return (rewardRateValue / 100).toFixed(2).replace(/[.,]00$/, '')
   }
 
@@ -68,7 +68,6 @@ const Yfdai = () => {
   )
 
   useEffect(() => {
-    console.log('userBalance', userBalance)
     setWalletBalance(
       userBalance ? Math.round(utils.formatEther(userBalance)) : 0
     )
@@ -96,14 +95,14 @@ const Yfdai = () => {
     totalStakedCall,
     ssgtStakedCall,
     ssgtEarnedCall,
-    allowanceCall
+    allowanceCall,
   ] = useContractCalls([
     rewardRateContractCall,
     totalStakersContractCall,
     totalStakedContractCall,
     ssgtStakedContractCall(account),
     ssgtTotalEarnedContractCall(account),
-    allowanceContractCall(account)
+    allowanceContractCall(account),
   ])
 
   useEffect(() => {
@@ -129,28 +128,21 @@ const Yfdai = () => {
     totalStakedCall,
     ssgtEarnedCall,
     ssgtStakedCall,
-    allowanceCall
+    allowanceCall,
   ])
 
-  const {
-    state: depositSSGTFunctionState,
-    send: depositSSGT
-  } = useContractFunction(stakingContract, depositSSGTFunction)
-  const {
-    state: approveAllowanceFunctionState,
-    send: sendApproveAllowance
-  } = useContractFunction(tokenContract, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState,
-    send: withdrawSSGT
-  } = useContractFunction(stakingContract, withdrawSSGTFunction)
+  const { state: depositSSGTFunctionState, send: depositSSGT } =
+    useContractFunction(stakingContract, depositSSGTFunction)
+  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
+    useContractFunction(tokenContract, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
+    useContractFunction(stakingContract, withdrawSSGTFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     stakingContract,
     harvestFunction
   )
 
-  const updateWalletAmount = inputAmount => {
-    console.log('inputAmount', inputAmount)
+  const updateWalletAmount = (inputAmount) => {
     setWalletAmount(inputAmount)
   }
 
@@ -163,7 +155,6 @@ const Yfdai = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState)
     if (
       withdrawSSGTFunctionState &&
       withdrawSSGTFunctionState.status == 'Success'
@@ -193,9 +184,7 @@ const Yfdai = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -209,7 +198,6 @@ const Yfdai = () => {
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState)
     if (
       approveAllowanceFunctionState &&
       approveAllowanceFunctionState.status == 'Success'
@@ -229,7 +217,6 @@ const Yfdai = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState)
     if (
       depositSSGTFunctionState &&
       depositSSGTFunctionState.status == 'Success'
@@ -247,14 +234,12 @@ const Yfdai = () => {
   }, [depositSSGTFunctionState])
 
   const checkAndHarvest = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState)
     if (harvestFunctionState && harvestFunctionState.status == 'Success') {
       dispatch(harvestingSuccess())
     } else if (

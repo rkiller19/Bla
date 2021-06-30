@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { modalAction, unStakeModalAction } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { staked, unStaked } from '../actions/stakedAction'
@@ -9,7 +9,6 @@ import Loading from '../assets/loading.png'
 import LinkIcon from '../assets/link_icon.png'
 
 const FarmingCard = (props) => {
-  console.log('props', props)
   const stakingTransactionState = useSelector(
     (state) => state.stakingReducer.stakingTransactionState
   )
@@ -70,10 +69,6 @@ const FarmingCard = (props) => {
 
     return diffInDays
   }
-
-  useEffect(() => {
-    console.log(getNumberOfDays())
-  }, [])
 
   return (
     <div className="stake-cards">

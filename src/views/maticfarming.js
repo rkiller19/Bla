@@ -110,7 +110,6 @@ const MaticFarming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance)
     setWalletBalance(userBalance ? utils.formatEther(userBalance) : 0)
   }, [userBalance])
 
@@ -119,7 +118,6 @@ const MaticFarming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance2)
     setWalletBalance2(userBalance2 ? utils.formatEther(userBalance2) : 0)
   }, [userBalance2])
 
@@ -294,12 +292,10 @@ const MaticFarming = () => {
   )
 
   const updateWalletAmount = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount(inputAmount)
   }
 
   const updateWalletAmount2 = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount2(inputAmount)
   }
 
@@ -313,7 +309,6 @@ const MaticFarming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState)
     if (
       withdrawSSGTFunctionState &&
       withdrawSSGTFunctionState.status === 'Success'
@@ -332,7 +327,6 @@ const MaticFarming = () => {
 
   const checkAndStakeSSGT = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT')
     if (walletAmount <= walletBalance) {
       if (parseFloat(allowance) > 0 && parseFloat(allowance) > walletAmount) {
         dispatch(stakingInProgress())
@@ -355,13 +349,11 @@ const MaticFarming = () => {
   }
 
   const stakeSSGT = () => {
-    console.log(utils.parseUnits(walletAmount, 18))
     depositSSGT(utils.parseUnits(walletAmount, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState)
     if (
       approveAllowanceFunctionState &&
       approveAllowanceFunctionState.status === 'Success'
@@ -381,7 +373,6 @@ const MaticFarming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState)
     if (
       depositSSGTFunctionState &&
       depositSSGTFunctionState.status === 'Success'
@@ -399,14 +390,12 @@ const MaticFarming = () => {
   }, [depositSSGTFunctionState])
 
   const checkAndHarvest = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState)
     if (harvestFunctionState && harvestFunctionState.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
@@ -429,7 +418,6 @@ const MaticFarming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState2)
     if (
       withdrawSSGTFunctionState2 &&
       withdrawSSGTFunctionState2.status === 'Success'
@@ -448,7 +436,6 @@ const MaticFarming = () => {
 
   const checkAndStakeSSGT2 = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT2')
     if (walletAmount2 <= walletBalance2) {
       if (
         parseFloat(allowance2) > 0 &&
@@ -474,13 +461,11 @@ const MaticFarming = () => {
   }
 
   const stakeSSGT2 = () => {
-    console.log(utils.parseUnits(walletAmount2, 18))
     depositSSGT2(utils.parseUnits(walletAmount2, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState2)
     if (
       approveAllowanceFunctionState2 &&
       approveAllowanceFunctionState2.status === 'Success'
@@ -500,7 +485,6 @@ const MaticFarming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState2)
     if (
       depositSSGTFunctionState2 &&
       depositSSGTFunctionState2.status === 'Success'
@@ -518,14 +502,12 @@ const MaticFarming = () => {
   }, [depositSSGTFunctionState2])
 
   const checkAndHarvest2 = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest2()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState2)
     if (harvestFunctionState2 && harvestFunctionState2.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (

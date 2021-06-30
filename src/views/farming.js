@@ -153,7 +153,6 @@ const Farming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance)
     setWalletBalance(userBalance ? utils.formatEther(userBalance) : 0)
   }, [userBalance])
 
@@ -162,7 +161,6 @@ const Farming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance2)
     setWalletBalance2(userBalance2 ? utils.formatEther(userBalance2) : 0)
   }, [userBalance2])
 
@@ -171,7 +169,6 @@ const Farming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance3)
     setWalletBalance3(userBalance3 ? utils.formatEther(userBalance3) : 0)
   }, [userBalance3])
 
@@ -180,7 +177,6 @@ const Farming = () => {
     account
   )
   useEffect(() => {
-    console.log('userBalance', userBalance4)
     setWalletBalance4(userBalance4 ? utils.formatEther(userBalance4) : 0)
   }, [userBalance4])
 
@@ -281,9 +277,6 @@ const Farming = () => {
       process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS
     )
   )
-
-  console.log('lpTokenEarnedCall', lpTokenEarnedCall)
-  console.log('lpTokenStakedCall', lpTokenStakedCall)
 
   const lpTokenNameCall = useContractCall(
     lpTokenNameContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS)
@@ -470,22 +463,18 @@ const Farming = () => {
   )
 
   const updateWalletAmount = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount(inputAmount)
   }
 
   const updateWalletAmount2 = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount2(inputAmount)
   }
 
   const updateWalletAmount3 = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount3(inputAmount)
   }
 
   const updateWalletAmount4 = (inputAmount) => {
-    console.log('inputAmount', inputAmount)
     setWalletAmount4(inputAmount)
   }
 
@@ -499,7 +488,6 @@ const Farming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState)
     if (
       withdrawSSGTFunctionState &&
       withdrawSSGTFunctionState.status === 'Success'
@@ -518,7 +506,6 @@ const Farming = () => {
 
   const checkAndStakeSSGT = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT')
     if (walletAmount <= walletBalance) {
       if (parseFloat(allowance) > 0 && parseFloat(allowance) > walletAmount) {
         dispatch(stakingInProgress())
@@ -541,13 +528,11 @@ const Farming = () => {
   }
 
   const stakeSSGT = () => {
-    console.log(utils.parseUnits(walletAmount, 18))
     depositSSGT(utils.parseUnits(walletAmount, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState)
     if (
       approveAllowanceFunctionState &&
       approveAllowanceFunctionState.status === 'Success'
@@ -567,7 +552,6 @@ const Farming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState)
     if (
       depositSSGTFunctionState &&
       depositSSGTFunctionState.status === 'Success'
@@ -585,14 +569,12 @@ const Farming = () => {
   }, [depositSSGTFunctionState])
 
   const checkAndHarvest = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState)
     if (harvestFunctionState && harvestFunctionState.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
@@ -615,7 +597,6 @@ const Farming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState2)
     if (
       withdrawSSGTFunctionState2 &&
       withdrawSSGTFunctionState2.status === 'Success'
@@ -634,7 +615,6 @@ const Farming = () => {
 
   const checkAndStakeSSGT2 = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT2')
     if (walletAmount2 <= walletBalance2) {
       if (
         parseFloat(allowance2) > 0 &&
@@ -660,13 +640,11 @@ const Farming = () => {
   }
 
   const stakeSSGT2 = () => {
-    console.log(utils.parseUnits(walletAmount2, 18))
     depositSSGT2(utils.parseUnits(walletAmount2, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState2)
     if (
       approveAllowanceFunctionState2 &&
       approveAllowanceFunctionState2.status === 'Success'
@@ -686,7 +664,6 @@ const Farming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState2)
     if (
       depositSSGTFunctionState2 &&
       depositSSGTFunctionState2.status === 'Success'
@@ -704,14 +681,12 @@ const Farming = () => {
   }, [depositSSGTFunctionState2])
 
   const checkAndHarvest2 = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest2()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState2)
     if (harvestFunctionState2 && harvestFunctionState2.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
@@ -734,7 +709,6 @@ const Farming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState3)
     if (
       withdrawSSGTFunctionState3 &&
       withdrawSSGTFunctionState3.status === 'Success'
@@ -753,7 +727,6 @@ const Farming = () => {
 
   const checkAndStakeSSGT3 = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT3')
     if (walletAmount3 <= walletBalance3) {
       if (
         parseFloat(allowance3) > 0 &&
@@ -779,13 +752,11 @@ const Farming = () => {
   }
 
   const stakeSSGT3 = () => {
-    console.log(utils.parseUnits(walletAmount3, 18))
     depositSSGT3(utils.parseUnits(walletAmount3, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState3)
     if (
       approveAllowanceFunctionState3 &&
       approveAllowanceFunctionState3.status === 'Success'
@@ -805,7 +776,6 @@ const Farming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState3)
     if (
       depositSSGTFunctionState3 &&
       depositSSGTFunctionState3.status === 'Success'
@@ -823,14 +793,12 @@ const Farming = () => {
   }, [depositSSGTFunctionState3])
 
   const checkAndHarvest3 = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest3()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState3)
     if (harvestFunctionState3 && harvestFunctionState3.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
@@ -853,7 +821,6 @@ const Farming = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState4)
     if (
       withdrawSSGTFunctionState4 &&
       withdrawSSGTFunctionState4.status === 'Success'
@@ -872,7 +839,6 @@ const Farming = () => {
 
   const checkAndStakeSSGT4 = () => {
     // Check allowance, if allowance > 0 && < entered amount then proceed
-    console.log('checkAndStakeSSGT3')
     if (walletAmount4 <= walletBalance4) {
       if (
         parseFloat(allowance4) > 0 &&
@@ -898,13 +864,11 @@ const Farming = () => {
   }
 
   const stakeSSGT4 = () => {
-    console.log(utils.parseUnits(walletAmount4, 18))
     depositSSGT4(utils.parseUnits(walletAmount4, 18))
   }
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState4)
     if (
       approveAllowanceFunctionState4 &&
       approveAllowanceFunctionState4.status === 'Success'
@@ -924,7 +888,6 @@ const Farming = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState4)
     if (
       depositSSGTFunctionState4 &&
       depositSSGTFunctionState4.status === 'Success'
@@ -942,14 +905,12 @@ const Farming = () => {
   }, [depositSSGTFunctionState4])
 
   const checkAndHarvest4 = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest4()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState4)
     if (harvestFunctionState4 && harvestFunctionState4.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (

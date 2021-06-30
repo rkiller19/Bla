@@ -5,7 +5,7 @@ import {
   errorModalAction,
   modalAction,
   nftModalAction,
-  unStakeModalAction
+  unStakeModalAction,
 } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -13,7 +13,7 @@ import {
   useContractCalls,
   useEthers,
   useTokenBalance,
-  useContractFunction
+  useContractFunction,
 } from '@usedapp/core'
 import {
   rewardRateContractCall,
@@ -26,20 +26,20 @@ import {
   depositSSGTFunction,
   withdrawSSGTFunction,
   withdrawWithNFTFunction,
-  harvestFunction
+  harvestFunction,
 } from '../services/ssgt/StakingContractService'
 import {
   totalStakedContractCall,
   tokenContract,
   allowanceContractCall,
-  approveAllowanceFunction
+  approveAllowanceFunction,
 } from '../services/ssgt/TokenContractService'
 import {
   nftOwnedContractCall,
   isApprovedForNftContractCall,
   nftContract,
   getTokenListContractCall,
-  setApproveForNftFunction
+  setApproveForNftFunction,
 } from '../services/ssgt/NftContractService'
 import { utils } from 'ethers'
 
@@ -55,12 +55,12 @@ import {
   stakingSucess,
   unStakingFailed,
   unStakingInProgress,
-  unStakingSucess
+  unStakingSucess,
 } from '../actions/stakingAction'
 
 const Ssgt = () => {
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
+  const selector = useSelector((state) => state.modalReducer.title)
   const { account } = useEthers()
   const [rewardRate, setRewardRate] = useState(0)
   const [totalStakers, setTotalStakers] = useState(0)
@@ -77,7 +77,7 @@ const Ssgt = () => {
   const [tokenList, setTokenList] = useState([])
   const [selectedTokenList, setSelectedTokenList] = useState([])
 
-  const formatToPercentage = rewardRateValue => {
+  const formatToPercentage = (rewardRateValue) => {
     return (rewardRateValue / 100).toFixed(2).replace(/[.,]00$/, '')
   }
 
@@ -118,7 +118,7 @@ const Ssgt = () => {
     isApprovedForNftCall,
     allowanceCall,
     totalStakedTokenCall,
-    getTokenListCall
+    getTokenListCall,
   ] = useContractCalls([
     rewardRateContractCall,
     totalStakersContractCall,
@@ -130,7 +130,7 @@ const Ssgt = () => {
     isApprovedForNftContractCall(account),
     allowanceContractCall(account),
     totalStakedTokenContractCall,
-    getTokenListContractCall(account)
+    getTokenListContractCall(account),
   ])
 
   useEffect(() => {
@@ -172,60 +172,49 @@ const Ssgt = () => {
     totalNftTokensOfUserCall,
     allowanceCall,
     totalStakedTokenCall,
-    getTokenListCall
+    getTokenListCall,
   ])
 
-  const {
-    state: depositSSGTFunctionState,
-    send: depositSSGT
-  } = useContractFunction(contract, depositSSGTFunction)
-  const {
-    state: approveAllowanceFunctionState,
-    send: sendApproveAllowance
-  } = useContractFunction(tokenContract, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState,
-    send: withdrawSSGT
-  } = useContractFunction(contract, withdrawSSGTFunction)
-  const {
-    state: setApproveForNftFunctionState,
-    send: setApproveForNft
-  } = useContractFunction(nftContract, setApproveForNftFunction)
-  const {
-    state: withdrawWithNFTFunctionState,
-    send: withdrawWithNFT
-  } = useContractFunction(contract, withdrawWithNFTFunction)
+  const { state: depositSSGTFunctionState, send: depositSSGT } =
+    useContractFunction(contract, depositSSGTFunction)
+  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
+    useContractFunction(tokenContract, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
+    useContractFunction(contract, withdrawSSGTFunction)
+  const { state: setApproveForNftFunctionState, send: setApproveForNft } =
+    useContractFunction(nftContract, setApproveForNftFunction)
+  const { state: withdrawWithNFTFunctionState, send: withdrawWithNFT } =
+    useContractFunction(contract, withdrawWithNFTFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     contract,
     harvestFunction
   )
 
-  const updateWalletAmount = inputAmount => {
+  const updateWalletAmount = (inputAmount) => {
     setWalletAmount(inputAmount)
   }
 
-  const updateTokenIds = async tokenIds => {
+  const updateTokenIds = async (tokenIds) => {
     if (tokenIds.length > 0 && tokenList.length == 0) {
       const temp = await getConvertedIds(tokenIds)
       setTokenList(temp)
     }
   }
 
-  const getConvertedIds = tokenIds => {
-    console.log(tokenIds)
-    const tokenIdsConverted = tokenIds.map(tokenId => {
+  const getConvertedIds = (tokenIds) => {
+    const tokenIdsConverted = tokenIds.map((tokenId) => {
       return parseInt(tokenId)
     })
     return tokenIdsConverted
   }
 
-  const updateTokenIdList = e => {
+  const updateTokenIdList = (e) => {
     const isChecked = e.target.checked
     const itemValue = e.target.value
     if (isChecked) {
       setSelectedTokenList([...selectedTokenList, itemValue])
     } else {
-      const removeItem = selectedTokenList.filter(item => item !== itemValue)
+      const removeItem = selectedTokenList.filter((item) => item !== itemValue)
       setSelectedTokenList(removeItem)
     }
   }
@@ -239,7 +228,6 @@ const Ssgt = () => {
   }
 
   useEffect(() => {
-    console.log(withdrawSSGTFunctionState)
     if (
       withdrawSSGTFunctionState &&
       withdrawSSGTFunctionState.status === 'Success'
@@ -269,9 +257,7 @@ const Ssgt = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_SSGT_CONTRACT_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -285,7 +271,6 @@ const Ssgt = () => {
 
   useEffect(() => {
     // handle state
-    console.log(approveAllowanceFunctionState)
     if (
       approveAllowanceFunctionState &&
       approveAllowanceFunctionState.status === 'Success'
@@ -305,7 +290,6 @@ const Ssgt = () => {
 
   useEffect(() => {
     // handle state
-    console.log(depositSSGTFunctionState)
     if (
       depositSSGTFunctionState &&
       depositSSGTFunctionState.status === 'Success'
@@ -323,7 +307,6 @@ const Ssgt = () => {
   }, [depositSSGTFunctionState])
 
   const checkAndclaimSSGT = () => {
-    console.log('isApprovedForNftClaim', isApprovedForNftClaim)
     dispatch(nftClaimInProgress())
     dispatch(nftModalAction(false, selector))
     !isApprovedForNftClaim
@@ -332,14 +315,12 @@ const Ssgt = () => {
   }
 
   const checkAndHarvest = () => {
-    console.log('checkAndHarvest')
     dispatch(harvestingInProgress())
     harvest()
   }
 
   useEffect(() => {
     // handle state
-    console.log(harvestFunctionState)
     if (harvestFunctionState && harvestFunctionState.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
@@ -353,14 +334,13 @@ const Ssgt = () => {
   }, [harvestFunctionState])
 
   const claimSSGT = () => {
-    selectedTokenList.map(token => {
+    selectedTokenList.map((token) => {
       withdrawWithNFT(token)
     })
   }
 
   useEffect(() => {
     // handle state
-    console.log(setApproveForNftFunctionState)
     if (
       setApproveForNftFunctionState &&
       setApproveForNftFunctionState.status === 'Success'
@@ -379,7 +359,6 @@ const Ssgt = () => {
   }, [setApproveForNftFunctionState])
 
   useEffect(() => {
-    console.log(withdrawWithNFTFunctionState)
     if (
       withdrawWithNFTFunctionState &&
       withdrawWithNFTFunctionState.status === 'Success'
