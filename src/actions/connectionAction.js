@@ -1,6 +1,6 @@
-export const connectionAction = (value) =>{
-    return{
-        type:'CONNECTED',
-        payload:value
-    }
+export const connectionAction = value => {
+  return {
+    type: 'CONNECTED',
+    payload: value
+  }
 }

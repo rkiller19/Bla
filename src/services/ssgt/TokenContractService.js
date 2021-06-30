@@ -7,17 +7,17 @@ const contractAddress = process.env.REACT_APP_SSGT_TOKEN_ADDRESS
 export const tokenContract = new Contract(contractAddress, abiInterface)
 
 export const totalStakedContractCall = {
-    abi: abiInterface,
-    address: contractAddress,
-    method: 'balanceOf',
-    args: [process.env.REACT_APP_SSGT_CONTRACT_ADDRESS]
+  abi: abiInterface,
+  address: contractAddress,
+  method: 'balanceOf',
+  args: [process.env.REACT_APP_SSGT_CONTRACT_ADDRESS]
 }
 
-export const allowanceContractCall = (walletAddress) => ({
-    abi: abiInterface,
-    address: contractAddress,
-    method: 'allowance',
-    args: [walletAddress, process.env.REACT_APP_SSGT_CONTRACT_ADDRESS]
+export const allowanceContractCall = walletAddress => ({
+  abi: abiInterface,
+  address: contractAddress,
+  method: 'allowance',
+  args: [walletAddress, process.env.REACT_APP_SSGT_CONTRACT_ADDRESS]
 })
 
 export const approveAllowanceFunction = 'approve'
