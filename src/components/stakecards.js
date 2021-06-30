@@ -176,7 +176,7 @@ const StakeCard = (props) => {
       {props.isNFTEnabled && (
         <div className="stake-nft-view">
           <div className="stake-nft-title">
-            <p>NFT's</p>
+            <p>{`NFT's`}</p>
             <a href="#" className="info-icon">
               <img src={InfoIcon} alt="" />
             </a>
@@ -194,7 +194,7 @@ const StakeCard = (props) => {
             <div className="stake-nft-container">
               <div>
                 <p className="stake-value-title">OWNED</p>
-                {props.ownedNFT != 0 ? (
+                {props.ownedNFT !== 0 ? (
                   <p className="stake-value">{props.ownedNFT}</p>
                 ) : (
                   <p className="stake-value-disabled">{props.ownedNFT}</p>

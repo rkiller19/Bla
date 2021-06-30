@@ -157,13 +157,13 @@ const Yfdai = () => {
   useEffect(() => {
     if (
       withdrawSSGTFunctionState &&
-      withdrawSSGTFunctionState.status == 'Success'
+      withdrawSSGTFunctionState.status === 'Success'
     ) {
       setWalletAmount('')
       dispatch(unStakingSucess())
     } else if (
       withdrawSSGTFunctionState &&
-      withdrawSSGTFunctionState.status == 'Exception'
+      withdrawSSGTFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(unStakingFailed())
@@ -200,12 +200,12 @@ const Yfdai = () => {
     // handle state
     if (
       approveAllowanceFunctionState &&
-      approveAllowanceFunctionState.status == 'Success'
+      approveAllowanceFunctionState.status === 'Success'
     ) {
       stakeSSGT()
     } else if (
       approveAllowanceFunctionState &&
-      approveAllowanceFunctionState.status == 'Exception'
+      approveAllowanceFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -219,13 +219,13 @@ const Yfdai = () => {
     // handle state
     if (
       depositSSGTFunctionState &&
-      depositSSGTFunctionState.status == 'Success'
+      depositSSGTFunctionState.status === 'Success'
     ) {
       setWalletAmount('')
       dispatch(stakingSucess())
     } else if (
       depositSSGTFunctionState &&
-      depositSSGTFunctionState.status == 'Exception'
+      depositSSGTFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -240,11 +240,11 @@ const Yfdai = () => {
 
   useEffect(() => {
     // handle state
-    if (harvestFunctionState && harvestFunctionState.status == 'Success') {
+    if (harvestFunctionState && harvestFunctionState.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
       harvestFunctionState &&
-      harvestFunctionState.status == 'Exception'
+      harvestFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(harvestingFailed())

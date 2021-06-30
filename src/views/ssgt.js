@@ -195,7 +195,7 @@ const Ssgt = () => {
   }
 
   const updateTokenIds = async (tokenIds) => {
-    if (tokenIds.length > 0 && tokenList.length == 0) {
+    if (tokenIds.length > 0 && tokenList.length === 0) {
       const temp = await getConvertedIds(tokenIds)
       setTokenList(temp)
     }
@@ -334,7 +334,7 @@ const Ssgt = () => {
   }, [harvestFunctionState])
 
   const claimSSGT = () => {
-    selectedTokenList.map((token) => {
+    selectedTokenList.forEach((token) => {
       withdrawWithNFT(token)
     })
   }
