@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEthers } from '@usedapp/core'
+
 import Sidebar from '../components/sidebar'
 import Navbar from '../components/navbar'
 import ConnectWalletImg from '../assets/ConnectWallet.png'
-import { useHistory } from 'react-router-dom'
 import { connectionAction } from '../actions/connectionAction'
-import { useEthers } from '@usedapp/core'
 import MakeQuerablePromise from '../utils/querable-promise'
 
 const ConnectWallet = () => {
   const { account, deactivate, activateBrowserWallet } = useEthers()
   const { error } = useEthers()
-  const isConnected = useSelector((state) => state.connectionReducer)
+  const isConnected = useSelector(state => state.connectionReducer)
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -32,12 +33,12 @@ const ConnectWallet = () => {
       activateBrowserWallet()
     )
     activateBrowserWalletPromise.then(
-      function () {
+      function() {
         if (activateBrowserWalletPromise.isFulfilled()) {
           dispatch(connectionAction(true))
         }
       },
-      function () {
+      function() {
         /* code if some error */
 
         dispatch(connectionAction(false))
