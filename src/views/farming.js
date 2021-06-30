@@ -3,7 +3,7 @@ import StakeLogo1 from '../assets/Logo.png'
 import {
   errorModalAction,
   modalAction,
-  unStakeModalAction
+  unStakeModalAction,
 } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -12,7 +12,7 @@ import {
   useContractCalls,
   useEthers,
   useTokenBalance,
-  useContractFunction
+  useContractFunction,
 } from '@usedapp/core'
 import {
   farmingAbiInterface,
@@ -20,7 +20,7 @@ import {
   lpTokenStakedContractCall,
   stakeFarmingTokenFunction,
   withdrawFarmingTokenFunction,
-  harvestFarmingTokenFunction
+  harvestFarmingTokenFunction,
 } from '../services/farming/FarmingContractService'
 import { utils } from 'ethers'
 import {
@@ -32,7 +32,7 @@ import {
   stakingSucess,
   unStakingFailed,
   unStakingInProgress,
-  unStakingSucess
+  unStakingSucess,
 } from '../actions/stakingAction'
 import FarmingCard from '../components/farmingcard'
 import { lpTokenNameContractCall } from '../services/farming/LPTokenContractService'
@@ -41,7 +41,7 @@ import {
   tokenContract,
   balanceOfTokenContractCall,
   allowanceContractCall,
-  approveAllowanceFunction
+  approveAllowanceFunction,
 } from '../services/farming/TokenContractService'
 import StakeAdder from '../components/stakeadder'
 import StakeWithdraw from '../components/stakeWithdraw'
@@ -50,7 +50,7 @@ import { Contract } from '@ethersproject/contracts'
 
 const Farming = () => {
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
+  const selector = useSelector((state) => state.modalReducer.title)
 
   const [usdDAO1Rate, setUsdDAO1Rate] = useState(0)
   const [usdUSDTRate, setUsdUSDTRate] = useState(0)
@@ -107,19 +107,19 @@ const Farming = () => {
   const [poolInfo, setPoolInfo] = useState([])
   const [tokenName, setTokenName] = useState('')
   const [userBalanceAbis, setUserBalanceAbis] = useState([])
-  const modalStatus = useSelector(state => state.modalReducer.value)
+  const modalStatus = useSelector((state) => state.modalReducer.value)
   const unStakeModalStatus = useSelector(
-    state => state.modalReducer.unStakeModal
+    (state) => state.modalReducer.unStakeModal
   )
-  const errorModalStatus = useSelector(state => state.modalReducer.errorModal)
-  const errorModalMessage = useSelector(state => state.modalReducer.title)
+  const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
+  const errorModalMessage = useSelector((state) => state.modalReducer.title)
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const formatToPercentage = rewardRateValue => {
+  const formatToPercentage = (rewardRateValue) => {
     return (rewardRateValue / 100).toFixed(2).replace(/[.,]00$/, '')
   }
 
-  const stake = id => {
+  const stake = (id) => {
     setSelectedIndex(id)
     dispatch(modalAction(true, 'DAO1'))
   }
@@ -436,7 +436,7 @@ const Farming = () => {
     balanceOfLPDAO1TokenCall2,
     balanceOfLPUSDTTokenCall2,
     balanceOfLPDAO1TokenCall3,
-    balanceOfLPUSDTTokenCall3
+    balanceOfLPUSDTTokenCall3,
   ])
 
   const farmingContract1 = new Contract(
@@ -473,90 +473,66 @@ const Farming = () => {
     tokenAbiInterface
   )
 
-  const {
-    state: depositSSGTFunctionState,
-    send: depositSSGT
-  } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
-  const {
-    state: approveAllowanceFunctionState,
-    send: sendApproveAllowance
-  } = useContractFunction(tokenContract1, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState,
-    send: withdrawSSGT
-  } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+  const { state: depositSSGTFunctionState, send: depositSSGT } =
+    useContractFunction(farmingContract1, stakeFarmingTokenFunction)
+  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
+    useContractFunction(tokenContract1, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
+    useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     farmingContract1,
     harvestFarmingTokenFunction
   )
 
-  const {
-    state: depositSSGTFunctionState2,
-    send: depositSSGT2
-  } = useContractFunction(farmingContract2, stakeFarmingTokenFunction)
-  const {
-    state: approveAllowanceFunctionState2,
-    send: sendApproveAllowance2
-  } = useContractFunction(tokenContract2, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState2,
-    send: withdrawSSGT2
-  } = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
+  const { state: depositSSGTFunctionState2, send: depositSSGT2 } =
+    useContractFunction(farmingContract2, stakeFarmingTokenFunction)
+  const { state: approveAllowanceFunctionState2, send: sendApproveAllowance2 } =
+    useContractFunction(tokenContract2, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState2, send: withdrawSSGT2 } =
+    useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState2, send: harvest2 } = useContractFunction(
     farmingContract2,
     harvestFarmingTokenFunction
   )
 
-  const {
-    state: depositSSGTFunctionState3,
-    send: depositSSGT3
-  } = useContractFunction(farmingContract3, stakeFarmingTokenFunction)
-  const {
-    state: approveAllowanceFunctionState3,
-    send: sendApproveAllowance3
-  } = useContractFunction(tokenContract3, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState3,
-    send: withdrawSSGT3
-  } = useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
+  const { state: depositSSGTFunctionState3, send: depositSSGT3 } =
+    useContractFunction(farmingContract3, stakeFarmingTokenFunction)
+  const { state: approveAllowanceFunctionState3, send: sendApproveAllowance3 } =
+    useContractFunction(tokenContract3, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState3, send: withdrawSSGT3 } =
+    useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState3, send: harvest3 } = useContractFunction(
     farmingContract3,
     harvestFarmingTokenFunction
   )
 
-  const {
-    state: depositSSGTFunctionState4,
-    send: depositSSGT4
-  } = useContractFunction(farmingContract4, stakeFarmingTokenFunction)
-  const {
-    state: approveAllowanceFunctionState4,
-    send: sendApproveAllowance4
-  } = useContractFunction(tokenContract4, approveAllowanceFunction)
-  const {
-    state: withdrawSSGTFunctionState4,
-    send: withdrawSSGT4
-  } = useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
+  const { state: depositSSGTFunctionState4, send: depositSSGT4 } =
+    useContractFunction(farmingContract4, stakeFarmingTokenFunction)
+  const { state: approveAllowanceFunctionState4, send: sendApproveAllowance4 } =
+    useContractFunction(tokenContract4, approveAllowanceFunction)
+  const { state: withdrawSSGTFunctionState4, send: withdrawSSGT4 } =
+    useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState4, send: harvest4 } = useContractFunction(
     farmingContract4,
     harvestFarmingTokenFunction
   )
 
-  const updateWalletAmount = inputAmount => {
+  const updateWalletAmount = (inputAmount) => {
     console.log('inputAmount', inputAmount)
     setWalletAmount(inputAmount)
   }
 
-  const updateWalletAmount2 = inputAmount => {
+  const updateWalletAmount2 = (inputAmount) => {
     console.log('inputAmount', inputAmount)
     setWalletAmount2(inputAmount)
   }
 
-  const updateWalletAmount3 = inputAmount => {
+  const updateWalletAmount3 = (inputAmount) => {
     console.log('inputAmount', inputAmount)
     setWalletAmount3(inputAmount)
   }
 
-  const updateWalletAmount4 = inputAmount => {
+  const updateWalletAmount4 = (inputAmount) => {
     console.log('inputAmount', inputAmount)
     setWalletAmount4(inputAmount)
   }
@@ -574,13 +550,13 @@ const Farming = () => {
     console.log(withdrawSSGTFunctionState)
     if (
       withdrawSSGTFunctionState &&
-      withdrawSSGTFunctionState.status == 'Success'
+      withdrawSSGTFunctionState.status === 'Success'
     ) {
       setWalletAmount('')
       dispatch(unStakingSucess())
     } else if (
       withdrawSSGTFunctionState &&
-      withdrawSSGTFunctionState.status == 'Exception'
+      withdrawSSGTFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(unStakingFailed())
@@ -602,9 +578,7 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -624,12 +598,12 @@ const Farming = () => {
     console.log(approveAllowanceFunctionState)
     if (
       approveAllowanceFunctionState &&
-      approveAllowanceFunctionState.status == 'Success'
+      approveAllowanceFunctionState.status === 'Success'
     ) {
       stakeSSGT()
     } else if (
       approveAllowanceFunctionState &&
-      approveAllowanceFunctionState.status == 'Exception'
+      approveAllowanceFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -644,13 +618,13 @@ const Farming = () => {
     console.log(depositSSGTFunctionState)
     if (
       depositSSGTFunctionState &&
-      depositSSGTFunctionState.status == 'Success'
+      depositSSGTFunctionState.status === 'Success'
     ) {
       setWalletAmount('')
       dispatch(stakingSucess())
     } else if (
       depositSSGTFunctionState &&
-      depositSSGTFunctionState.status == 'Exception'
+      depositSSGTFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -667,11 +641,11 @@ const Farming = () => {
   useEffect(() => {
     // handle state
     console.log(harvestFunctionState)
-    if (harvestFunctionState && harvestFunctionState.status == 'Success') {
+    if (harvestFunctionState && harvestFunctionState.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
       harvestFunctionState &&
-      harvestFunctionState.status == 'Exception'
+      harvestFunctionState.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(harvestingFailed())
@@ -692,13 +666,13 @@ const Farming = () => {
     console.log(withdrawSSGTFunctionState2)
     if (
       withdrawSSGTFunctionState2 &&
-      withdrawSSGTFunctionState2.status == 'Success'
+      withdrawSSGTFunctionState2.status === 'Success'
     ) {
       setWalletAmount2('')
       dispatch(unStakingSucess())
     } else if (
       withdrawSSGTFunctionState2 &&
-      withdrawSSGTFunctionState2.status == 'Exception'
+      withdrawSSGTFunctionState2.status === 'Exception'
     ) {
       setWalletAmount2('')
       dispatch(unStakingFailed())
@@ -723,9 +697,7 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance2(
           process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -745,12 +717,12 @@ const Farming = () => {
     console.log(approveAllowanceFunctionState2)
     if (
       approveAllowanceFunctionState2 &&
-      approveAllowanceFunctionState2.status == 'Success'
+      approveAllowanceFunctionState2.status === 'Success'
     ) {
       stakeSSGT2()
     } else if (
       approveAllowanceFunctionState2 &&
-      approveAllowanceFunctionState2.status == 'Exception'
+      approveAllowanceFunctionState2.status === 'Exception'
     ) {
       setWalletAmount2('')
       dispatch(stakingFailed())
@@ -765,13 +737,13 @@ const Farming = () => {
     console.log(depositSSGTFunctionState2)
     if (
       depositSSGTFunctionState2 &&
-      depositSSGTFunctionState2.status == 'Success'
+      depositSSGTFunctionState2.status === 'Success'
     ) {
       setWalletAmount2('')
       dispatch(stakingSucess())
     } else if (
       depositSSGTFunctionState2 &&
-      depositSSGTFunctionState2.status == 'Exception'
+      depositSSGTFunctionState2.status === 'Exception'
     ) {
       setWalletAmount2('')
       dispatch(stakingFailed())
@@ -788,11 +760,11 @@ const Farming = () => {
   useEffect(() => {
     // handle state
     console.log(harvestFunctionState2)
-    if (harvestFunctionState2 && harvestFunctionState2.status == 'Success') {
+    if (harvestFunctionState2 && harvestFunctionState2.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
       harvestFunctionState2 &&
-      harvestFunctionState2.status == 'Exception'
+      harvestFunctionState2.status === 'Exception'
     ) {
       setWalletAmount2('')
       dispatch(harvestingFailed())
@@ -813,13 +785,13 @@ const Farming = () => {
     console.log(withdrawSSGTFunctionState3)
     if (
       withdrawSSGTFunctionState3 &&
-      withdrawSSGTFunctionState3.status == 'Success'
+      withdrawSSGTFunctionState3.status === 'Success'
     ) {
       setWalletAmount3('')
       dispatch(unStakingSucess())
     } else if (
       withdrawSSGTFunctionState3 &&
-      withdrawSSGTFunctionState3.status == 'Exception'
+      withdrawSSGTFunctionState3.status === 'Exception'
     ) {
       setWalletAmount3('')
       dispatch(unStakingFailed())
@@ -844,9 +816,7 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance3(
           process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -866,12 +836,12 @@ const Farming = () => {
     console.log(approveAllowanceFunctionState3)
     if (
       approveAllowanceFunctionState3 &&
-      approveAllowanceFunctionState3.status == 'Success'
+      approveAllowanceFunctionState3.status === 'Success'
     ) {
       stakeSSGT3()
     } else if (
       approveAllowanceFunctionState3 &&
-      approveAllowanceFunctionState3.status == 'Exception'
+      approveAllowanceFunctionState3.status === 'Exception'
     ) {
       setWalletAmount3('')
       dispatch(stakingFailed())
@@ -886,13 +856,13 @@ const Farming = () => {
     console.log(depositSSGTFunctionState3)
     if (
       depositSSGTFunctionState3 &&
-      depositSSGTFunctionState3.status == 'Success'
+      depositSSGTFunctionState3.status === 'Success'
     ) {
       setWalletAmount3('')
       dispatch(stakingSucess())
     } else if (
       depositSSGTFunctionState3 &&
-      depositSSGTFunctionState3.status == 'Exception'
+      depositSSGTFunctionState3.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -909,11 +879,11 @@ const Farming = () => {
   useEffect(() => {
     // handle state
     console.log(harvestFunctionState3)
-    if (harvestFunctionState3 && harvestFunctionState3.status == 'Success') {
+    if (harvestFunctionState3 && harvestFunctionState3.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
       harvestFunctionState3 &&
-      harvestFunctionState3.status == 'Exception'
+      harvestFunctionState3.status === 'Exception'
     ) {
       setWalletAmount3('')
       dispatch(harvestingFailed())
@@ -934,13 +904,13 @@ const Farming = () => {
     console.log(withdrawSSGTFunctionState4)
     if (
       withdrawSSGTFunctionState4 &&
-      withdrawSSGTFunctionState4.status == 'Success'
+      withdrawSSGTFunctionState4.status === 'Success'
     ) {
       setWalletAmount4('')
       dispatch(unStakingSucess())
     } else if (
       withdrawSSGTFunctionState4 &&
-      withdrawSSGTFunctionState4.status == 'Exception'
+      withdrawSSGTFunctionState4.status === 'Exception'
     ) {
       setWalletAmount4('')
       dispatch(unStakingFailed())
@@ -965,9 +935,7 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance4(
           process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,
-          BigNumber.from(2)
-            .pow(256)
-            .sub(1)
+          BigNumber.from(2).pow(256).sub(1)
         )
       }
     } else {
@@ -987,12 +955,12 @@ const Farming = () => {
     console.log(approveAllowanceFunctionState4)
     if (
       approveAllowanceFunctionState4 &&
-      approveAllowanceFunctionState4.status == 'Success'
+      approveAllowanceFunctionState4.status === 'Success'
     ) {
       stakeSSGT4()
     } else if (
       approveAllowanceFunctionState4 &&
-      approveAllowanceFunctionState4.status == 'Exception'
+      approveAllowanceFunctionState4.status === 'Exception'
     ) {
       setWalletAmount4('')
       dispatch(stakingFailed())
@@ -1007,13 +975,13 @@ const Farming = () => {
     console.log(depositSSGTFunctionState4)
     if (
       depositSSGTFunctionState4 &&
-      depositSSGTFunctionState4.status == 'Success'
+      depositSSGTFunctionState4.status === 'Success'
     ) {
       setWalletAmount4('')
       dispatch(stakingSucess())
     } else if (
       depositSSGTFunctionState4 &&
-      depositSSGTFunctionState4.status == 'Exception'
+      depositSSGTFunctionState4.status === 'Exception'
     ) {
       setWalletAmount('')
       dispatch(stakingFailed())
@@ -1030,11 +998,11 @@ const Farming = () => {
   useEffect(() => {
     // handle state
     console.log(harvestFunctionState4)
-    if (harvestFunctionState4 && harvestFunctionState4.status == 'Success') {
+    if (harvestFunctionState4 && harvestFunctionState4.status === 'Success') {
       dispatch(harvestingSuccess())
     } else if (
       harvestFunctionState4 &&
-      harvestFunctionState4.status == 'Exception'
+      harvestFunctionState4.status === 'Exception'
     ) {
       setWalletAmount4('')
       dispatch(harvestingFailed())

@@ -1,3 +1,4 @@
+import React from 'react'
 import ConnectWallet from './pages/connectWallet'
 import Staking from './pages/staking'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
