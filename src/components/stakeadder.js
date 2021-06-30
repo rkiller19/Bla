@@ -1,12 +1,10 @@
 import React from 'react'
 import { modalAction } from '../actions/modalAction'
-import { useDispatch, useSelector } from 'react-redux'
-import { utils } from 'ethers'
+import { useDispatch } from 'react-redux'
 
-const StakeAdder = props => {
+const StakeAdder = (props) => {
   console.log('StakeAdder', props)
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
   const close = () => {
     dispatch(modalAction(false, ''))
   }
@@ -28,7 +26,7 @@ const StakeAdder = props => {
               type="text"
               placeholder={'Enter amount'}
               value={props.walletAmount}
-              onChange={e => props.updateWalletAmount(e.target.value)}
+              onChange={(e) => props.updateWalletAmount(e.target.value)}
             />
           </div>
           <input

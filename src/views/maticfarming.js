@@ -38,9 +38,7 @@ import FarmingCard from '../components/farmingcard'
 import { lpTokenNameContractCall } from '../services/farming/LPTokenContractService'
 import {
   tokenAbiInterface,
-  tokenContract,
   balanceOfTokenContractCall,
-  allowanceContractCall,
   approveAllowanceFunction,
 } from '../services/farming/TokenContractService'
 import { Contract } from '@ethersproject/contracts'
@@ -59,7 +57,7 @@ const MaticFarming = () => {
   const [tokenUSDT1, setTokenUSDT1] = useState(0)
   const [walletAmount, setWalletAmount] = useState('')
   const [walletBalance, setWalletBalance] = useState(0)
-  const [allowance, setAllowance] = useState(0)
+  const [allowance] = useState(0)
 
   const [tokenStaked2, setTokenStaked2] = useState(0)
   const [tokenEarned2, setTokenEarned2] = useState(0)
@@ -67,31 +65,15 @@ const MaticFarming = () => {
   const [tokenUSDT2, setTokenUSDT2] = useState(0)
   const [walletAmount2, setWalletAmount2] = useState('')
   const [walletBalance2, setWalletBalance2] = useState(0)
-  const [allowance2, setAllowance2] = useState(0)
+  const [allowance2] = useState(0)
 
   const { account } = useEthers()
-  const [poolCount, setPoolCount] = useState(0)
-  const [aprRate, setAprRate] = useState(0)
-  const [totalStakers, setTotalStakers] = useState(0)
-  const [totalStaked, setTotalStaked] = useState(0)
-  const [ssgtStaked, setSsgtStaked] = useState(0)
-  const [ssgtEarned, setSsgtEarned] = useState(0)
+  const [totalStakers] = useState(0)
+  const [totalStaked] = useState(0)
 
-  const [usdRate, setUsdRate] = useState(0)
-  const [poolInfoContractAbis, setPoolInfoContractAbis] = useState([])
+  const [usdRate] = useState(0)
   const [lpTokenEarnedContractAbis, setLpTokenEarnedContractAbis] = useState([])
   const [lpTokenStakedContractAbis, setLpTokenStakedContractAbis] = useState([])
-  const [tokenNameContractAbis, setTokenNameContractAbis] = useState([])
-  const [poolInfo, setPoolInfo] = useState([])
-  const [tokenName, setTokenName] = useState('')
-  const [userBalanceAbis, setUserBalanceAbis] = useState([])
-  const modalStatus = useSelector((state) => state.modalReducer.value)
-  const unStakeModalStatus = useSelector(
-    (state) => state.modalReducer.unStakeModal
-  )
-  const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
-  const errorModalMessage = useSelector((state) => state.modalReducer.title)
-  const [selectedIndex, setSelectedIndex] = useState(-1)
 
   useEffect(async () => {
     const usddao1rate = await getDAO1USDRate()

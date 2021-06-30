@@ -38,14 +38,9 @@ import FarmingCard from '../components/farmingcard'
 import { lpTokenNameContractCall } from '../services/farming/LPTokenContractService'
 import {
   tokenAbiInterface,
-  tokenContract,
   balanceOfTokenContractCall,
-  allowanceContractCall,
   approveAllowanceFunction,
 } from '../services/farming/TokenContractService'
-import StakeAdder from '../components/stakeadder'
-import StakeWithdraw from '../components/stakeWithdraw'
-import Errorbox from '../components/errorbox'
 import { Contract } from '@ethersproject/contracts'
 
 const Farming = () => {
@@ -56,7 +51,6 @@ const Farming = () => {
   const [usdUSDTRate, setUsdUSDTRate] = useState(0)
   const [usdYFDAIRate, setUsdYFDAIRate] = useState(0)
   const [usdWETHRate, setUsdWETHRate] = useState(0)
-  const [usdDAIRate, setUsdDAIRate] = useState(0)
 
   /* Elements for Pool 1 */
   const [tokenStaked1, setTokenStaked1] = useState(0)
@@ -65,7 +59,7 @@ const Farming = () => {
   const [tokenUSDT1, setTokenUSDT1] = useState(0)
   const [walletAmount, setWalletAmount] = useState('')
   const [walletBalance, setWalletBalance] = useState(0)
-  const [allowance, setAllowance] = useState(0)
+  const [allowance] = useState(0)
 
   const [tokenStaked2, setTokenStaked2] = useState(0)
   const [tokenEarned2, setTokenEarned2] = useState(0)
@@ -73,7 +67,7 @@ const Farming = () => {
   const [tokenUSDT2, setTokenUSDT2] = useState(0)
   const [walletAmount2, setWalletAmount2] = useState('')
   const [walletBalance2, setWalletBalance2] = useState(0)
-  const [allowance2, setAllowance2] = useState(0)
+  const [allowance2] = useState(0)
 
   const [tokenStaked3, setTokenStaked3] = useState(0)
   const [tokenEarned3, setTokenEarned3] = useState(0)
@@ -81,64 +75,33 @@ const Farming = () => {
   const [tokenUSDT3, setTokenUSDT3] = useState(0)
   const [walletAmount3, setWalletAmount3] = useState('')
   const [walletBalance3, setWalletBalance3] = useState(0)
-  const [allowance3, setAllowance3] = useState(0)
+  const [allowance3] = useState(0)
 
   const [tokenStaked4, setTokenStaked4] = useState(0)
   const [tokenEarned4, setTokenEarned4] = useState(0)
-  const [tokenDao4, setTokenDao4] = useState(0)
-  const [tokenUSDT4, setTokenUSDT4] = useState(0)
+  const [tokenDao4] = useState(0)
+  const [tokenUSDT4] = useState(0)
   const [walletAmount4, setWalletAmount4] = useState('')
   const [walletBalance4, setWalletBalance4] = useState(0)
-  const [allowance4, setAllowance4] = useState(0)
+  const [allowance4] = useState(0)
 
   const { account } = useEthers()
-  const [poolCount, setPoolCount] = useState(0)
-  const [aprRate, setAprRate] = useState(0)
-  const [totalStakers, setTotalStakers] = useState(0)
-  const [totalStaked, setTotalStaked] = useState(0)
-  const [ssgtStaked, setSsgtStaked] = useState(0)
-  const [ssgtEarned, setSsgtEarned] = useState(0)
+  const [totalStakers] = useState(0)
+  const [totalStaked] = useState(0)
 
-  const [usdRate, setUsdRate] = useState(0)
-  const [poolInfoContractAbis, setPoolInfoContractAbis] = useState([])
+  const [usdRate] = useState(0)
   const [lpTokenEarnedContractAbis, setLpTokenEarnedContractAbis] = useState([])
   const [lpTokenStakedContractAbis, setLpTokenStakedContractAbis] = useState([])
-  const [tokenNameContractAbis, setTokenNameContractAbis] = useState([])
-  const [poolInfo, setPoolInfo] = useState([])
-  const [tokenName, setTokenName] = useState('')
-  const [userBalanceAbis, setUserBalanceAbis] = useState([])
-  const modalStatus = useSelector((state) => state.modalReducer.value)
-  const unStakeModalStatus = useSelector(
-    (state) => state.modalReducer.unStakeModal
-  )
-  const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
-  const errorModalMessage = useSelector((state) => state.modalReducer.title)
-  const [selectedIndex, setSelectedIndex] = useState(-1)
-
-  const formatToPercentage = (rewardRateValue) => {
-    return (rewardRateValue / 100).toFixed(2).replace(/[.,]00$/, '')
-  }
-
-  const stake = (id) => {
-    setSelectedIndex(id)
-    dispatch(modalAction(true, 'DAO1'))
-  }
-  const unStake = () => {
-    setSelectedIndex(-1)
-    dispatch(unStakeModalAction(true, 'DAO1'))
-  }
 
   useEffect(async () => {
     const usddao1rate = await getDAO1USDRate()
     const usdusdtrate = await getUSDTUSDRate()
     const usdyfdairate = await getYFDAIUSDRate()
     const usdwethrate = await getWETHUSDRate()
-    const usddairate = await getDAIUSDRate()
     setUsdDAO1Rate(usddao1rate)
     setUsdUSDTRate(usdusdtrate)
     setUsdYFDAIRate(usdyfdairate)
     setUsdWETHRate(usdwethrate)
-    setUsdDAIRate(usddairate)
   }, [])
 
   const getYFDAIUSDRateUrl = () => {
@@ -155,17 +118,6 @@ const Farming = () => {
 
   const getUSDTUSDRateURL = () => {
     return 'https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=USD'
-  }
-
-  const getDAIUSDRateURL = () => {
-    return 'https://api.coingecko.com/api/v3/simple/price?ids=dai&vs_currencies=USD'
-  }
-
-  const getDAIUSDRate = async () => {
-    const url = getDAIUSDRateURL()
-    const response = await fetch(url)
-    const jsonData = await response.json()
-    return jsonData.dai.usd
   }
 
   const getDAO1USDRate = async () => {
