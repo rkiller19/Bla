@@ -22,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{ts,tsx,js,jsx}\"",
+    "linting": "eslint src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +53,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-react": "7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0"
+    "eslint-plugin-react-hooks": "4.2.0",
+    "prettier-eslint-cli": "^5.0.1"
   }
 }
