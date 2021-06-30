@@ -1,10 +1,11 @@
 import React from 'react'
-import { modalAction, unStakeModalAction } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { modalAction, unStakeModalAction } from '../actions/modalAction'
 import { staked, unStaked } from '../actions/stakedAction'
-import StakeAdder from '../components/stakeadder'
-import StakeWithdraw from '../components/stakeWithdraw'
-import Errorbox from '../components/errorbox'
+import StakeAdder from './stakeadder'
+import StakeWithdraw from './stakeWithdraw'
+import Errorbox from './errorbox'
 import Loading from '../assets/loading.png'
 import LinkIcon from '../assets/link_icon.png'
 

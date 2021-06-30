@@ -1,6 +1,7 @@
 import React from 'react'
-import { nftModalAction } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { nftModalAction } from '../actions/modalAction'
 
 const MintNFT = (props) => {
   const dispatch = useDispatch()

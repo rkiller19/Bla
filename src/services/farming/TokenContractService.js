@@ -1,6 +1,7 @@
-import TokenContractAbi from '../../abi/farming/Token.json'
 import { Contract } from '@ethersproject/contracts'
 import { utils } from 'ethers'
+
+import TokenContractAbi from '../../abi/farming/Token.json'
 
 export const tokenAbiInterface = new utils.Interface(TokenContractAbi)
 export const tokenContract = new Contract(

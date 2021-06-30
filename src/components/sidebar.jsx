@@ -1,8 +1,10 @@
 import React from 'react'
-import Logo from '../assets/Logo.png'
-import { useSelector, useDispatch } from 'react-redux'
-import { inandout } from '../actions/sidebarAction'
 import { NavLink } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
+import Logo from '../assets/Logo.png'
+import { inandout } from '../actions/sidebarAction'
+
 const Sidebar = () => {
   let navbarName = window.location.pathname.split('/').join('')
   if (navbarName === '' || navbarName === 'farming') {

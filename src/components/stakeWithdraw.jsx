@@ -1,23 +1,27 @@
 import React from 'react'
-import { modalAction } from '../actions/modalAction'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const StakeAdder = (props) => {
+import { unStakeModalAction } from '../actions/modalAction'
+
+const StakeWithdraw = (props) => {
   const dispatch = useDispatch()
+  const selector = useSelector((state) => state.modalReducer.title)
   const close = () => {
-    dispatch(modalAction(false, ''))
+    dispatch(unStakeModalAction(false, selector))
   }
 
   return (
     <div className="card-shadow">
       <div className="stake-adder-card">
         <div className="stake-header">
-          <p>Deposit {props.tokenName}</p>
+          <p>Withdraw {props.title}</p>
           <p onClick={close}>x</p>
         </div>
         <div className="balance">
-          {/* <p>Balance in wallet: {utils.commify(utils.parseEther(props.walletBalance))}</p> */}
-          <p>Balance in wallet: {props.walletBalance}</p>
+          <p>
+            {props.tokenName.replace(/ *\([^)]*\)*/g, '')} Staked:{' '}
+            {props.tokenStaked}
+          </p>
         </div>
         <div className="add-on">
           <div className="input-value">
@@ -31,21 +35,22 @@ const StakeAdder = (props) => {
           <input
             type="submit"
             value="MAX"
-            onClick={() => props.updateWalletAmount(props.walletBalance)}
+            onClick={() => props.updateWalletAmount(props.tokenStaked)}
           />
           <div className="stake-type">
             <p>{props.tokenName.replace(/ *\([^)]*\)*/g, '')}</p>
           </div>
         </div>
         <div className="button-stake">
-          {props.walletAmount === 0 || props.walletAmount === '' ? (
-            <button disabled>Deposit</button>
+          {props.walletAmount === '' ||
+          (props.walletAmount && props.walletAmount.length === 0) ? (
+            <button disabled>Withdraw</button>
           ) : (
-            <button onClick={props.checkAndStakeSSGT}>Deposit</button>
+            <button onClick={props.checkAndUnStakeSSGT}>Withdraw</button>
           )}
         </div>
       </div>
     </div>
   )
 }
-export default StakeAdder
+export default StakeWithdraw

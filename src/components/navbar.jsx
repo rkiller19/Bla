@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEthers, shortenAddress } from '@usedapp/core'
+
+import WalletLogo from '../assets/Vector.png'
 import { inandout } from '../actions/sidebarAction'
 import { connectionAction } from '../actions/connectionAction'
-import WalletLogo from '../assets/Vector.png'
-import { useHistory } from 'react-router-dom'
-import { useEthers, shortenAddress } from '@usedapp/core'
 import MakeQuerablePromise from '../utils/querable-promise'
 
 const Navbar = () => {

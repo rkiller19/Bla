@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import StakeCard from '../components/stakecards'
-import StakeLogo1 from '../assets/stakelogo1.png'
-import {
-  errorModalAction,
-  modalAction,
-  unStakeModalAction,
-} from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
 import {
@@ -14,6 +7,10 @@ import {
   useTokenBalance,
   useContractFunction,
 } from '@usedapp/core'
+import { utils } from 'ethers'
+
+import StakeLogo1 from '../assets/stakelogo1.png'
+import StakeCard from '../components/stakecards'
 import {
   rewardRateContractCall,
   totalStakersContractCall,
@@ -30,8 +27,11 @@ import {
   allowanceContractCall,
   approveAllowanceFunction,
 } from '../services/yfdai/TokenContractService'
-import { utils } from 'ethers'
-
+import {
+  errorModalAction,
+  modalAction,
+  unStakeModalAction,
+} from '../actions/modalAction'
 import {
   harvestingFailed,
   harvestingInProgress,

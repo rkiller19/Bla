@@ -1,15 +1,16 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
   modalAction,
   unStakeModalAction,
   nftModalAction,
 } from '../actions/modalAction'
-import { useDispatch, useSelector } from 'react-redux'
 import { staked, unStaked } from '../actions/stakedAction'
-import StakeAdder from '../components/stakeadder'
-import StakeWithdraw from '../components/stakeWithdraw'
-import Errorbox from '../components/errorbox'
-import MintNFT from '../components/mintNFT'
+import StakeAdder from './stakeadder'
+import StakeWithdraw from './stakeWithdraw'
+import Errorbox from './errorbox'
+import MintNFT from './mintNFT'
 import Loading from '../assets/loading.png'
 import InfoIcon from '../assets/infoIcon.png'
 

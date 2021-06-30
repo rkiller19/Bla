@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './sass/index.scss'
-import App from './App'
+import { DAppProvider } from '@usedapp/core'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+
+import './sass/index.scss'
+import App from './App'
 import { rootReducer } from './reducers'
-import { DAppProvider } from '@usedapp/core'
 
 const store = createStore(
   rootReducer,

@@ -1,5 +1,6 @@
-import FarmingContractAbi from '../../abi/farming/Farming.json'
 import { utils } from 'ethers'
+
+import FarmingContractAbi from '../../abi/farming/Farming.json'
 
 export const farmingAbiInterface = new utils.Interface(FarmingContractAbi)
 

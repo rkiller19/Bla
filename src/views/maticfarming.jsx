@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import StakeLogo1 from '../assets/Logo.png'
-import {
-  errorModalAction,
-  modalAction,
-  unStakeModalAction,
-} from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigNumber } from '@ethersproject/bignumber'
 import {
@@ -14,6 +8,11 @@ import {
   useTokenBalance,
   useContractFunction,
 } from '@usedapp/core'
+import { utils } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
+
+import StakeLogo1 from '../assets/Logo.png'
+import FarmingCard from '../components/farmingcard'
 import {
   farmingAbiInterface,
   lpTokenEarnedContractCall,
@@ -22,7 +21,12 @@ import {
   withdrawFarmingTokenFunction,
   harvestFarmingTokenFunction,
 } from '../services/farming/FarmingContractService'
-import { utils } from 'ethers'
+import { lpTokenNameContractCall } from '../services/farming/LPTokenContractService'
+import {
+  tokenAbiInterface,
+  balanceOfTokenContractCall,
+  approveAllowanceFunction,
+} from '../services/farming/TokenContractService'
 import {
   harvestingFailed,
   harvestingInProgress,
@@ -34,14 +38,11 @@ import {
   unStakingInProgress,
   unStakingSucess,
 } from '../actions/stakingAction'
-import FarmingCard from '../components/farmingcard'
-import { lpTokenNameContractCall } from '../services/farming/LPTokenContractService'
 import {
-  tokenAbiInterface,
-  balanceOfTokenContractCall,
-  approveAllowanceFunction,
-} from '../services/farming/TokenContractService'
-import { Contract } from '@ethersproject/contracts'
+  errorModalAction,
+  modalAction,
+  unStakeModalAction,
+} from '../actions/modalAction'
 
 const MaticFarming = () => {
   const dispatch = useDispatch()
