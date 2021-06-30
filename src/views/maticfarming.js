@@ -107,7 +107,7 @@ const MaticFarming = () => {
 
   const userBalance = useTokenBalance(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance(userBalance ? utils.formatEther(userBalance) : 0)
@@ -115,7 +115,7 @@ const MaticFarming = () => {
 
   const userBalance2 = useTokenBalance(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance2(userBalance2 ? utils.formatEther(userBalance2) : 0)
@@ -126,14 +126,14 @@ const MaticFarming = () => {
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_DAO1_USDT_QUICKSWAP_60DAYS_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
 
     setLpTokenEarnedContractAbis(lpTokenEarnedArray)
@@ -142,14 +142,14 @@ const MaticFarming = () => {
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_DAO1_USDT_QUICKSWAP_60DAYS_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
 
     setLpTokenStakedContractAbis(lpTokenStakedArray)
@@ -161,32 +161,32 @@ const MaticFarming = () => {
   const balanceOfLPDAO1TokenCall = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_DAO1_MATIC_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPUSDTTokenCall = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_USDT_MATIC_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPDAO1TokenCall2 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_DAO1_MATIC_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPUSDTTokenCall2 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_USDT_MATIC_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
+    ),
   )
 
   const lpTokenNameCall = useContractCall(
     lpTokenNameContractCall(
-      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
+    ),
   )
 
   useEffect(() => {
@@ -195,49 +195,49 @@ const MaticFarming = () => {
         ? lpTokenEarnedCall[0]
           ? utils.formatUnits(lpTokenEarnedCall[0][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked1(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[0]
           ? utils.formatUnits(lpTokenStakedCall[0][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenEarned2(
       lpTokenEarnedCall.length > 0
         ? lpTokenEarnedCall[1]
           ? utils.formatUnits(lpTokenEarnedCall[1][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked2(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[1]
           ? utils.formatUnits(lpTokenStakedCall[1][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
 
     setTokenDao1(
       balanceOfLPDAO1TokenCall
         ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenUSDT1(
       balanceOfLPUSDTTokenCall
         ? utils.formatUnits(balanceOfLPUSDTTokenCall[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenDao2(
       balanceOfLPDAO1TokenCall2
         ? utils.formatUnits(balanceOfLPDAO1TokenCall2[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenUSDT2(
       balanceOfLPUSDTTokenCall2
         ? utils.formatUnits(balanceOfLPUSDTTokenCall2[0]._hex, 18)
-        : 0
+        : 0,
     )
 
     // setTokenName(lpTokenNameCall?)
@@ -253,42 +253,54 @@ const MaticFarming = () => {
 
   const farmingContract1 = new Contract(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_60DAYS_FARMING_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
   const farmingContract2 = new Contract(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
 
   const tokenContract1 = new Contract(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
   const tokenContract2 = new Contract(
     process.env.REACT_APP_DAO1_USDT_QUICKSWAP_LP_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
 
-  const { state: depositSSGTFunctionState, send: depositSSGT } =
-    useContractFunction(farmingContract1, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
-    useContractFunction(tokenContract1, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
-    useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState,
+    send: depositSSGT,
+  } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState,
+    send: sendApproveAllowance,
+  } = useContractFunction(tokenContract1, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState,
+    send: withdrawSSGT,
+  } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     farmingContract1,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
-  const { state: depositSSGTFunctionState2, send: depositSSGT2 } =
-    useContractFunction(farmingContract2, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState2, send: sendApproveAllowance2 } =
-    useContractFunction(tokenContract2, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState2, send: withdrawSSGT2 } =
-    useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState2,
+    send: depositSSGT2,
+  } = useContractFunction(farmingContract2, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState2,
+    send: sendApproveAllowance2,
+  } = useContractFunction(tokenContract2, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState2,
+    send: withdrawSSGT2,
+  } = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState2, send: harvest2 } = useContractFunction(
     farmingContract2,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
   const updateWalletAmount = (inputAmount) => {
@@ -338,7 +350,9 @@ const MaticFarming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_DAO1_USDT_QUICKSWAP_60DAYS_FARMING_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -366,7 +380,7 @@ const MaticFarming = () => {
       setWalletAmount('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState])
@@ -450,7 +464,9 @@ const MaticFarming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance2(
           process.env.REACT_APP_DAO1_USDT_QUICKSWAP_30DAYS_FARMING_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -478,7 +494,7 @@ const MaticFarming = () => {
       setWalletAmount2('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState2.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState2.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState2])

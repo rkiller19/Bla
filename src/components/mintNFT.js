@@ -2,9 +2,9 @@ import React from 'react'
 import { nftModalAction } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 
-const MintNFT = props => {
+const MintNFT = (props) => {
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
+  const selector = useSelector((state) => state.modalReducer.title)
   const close = () => {
     dispatch(nftModalAction(false, selector))
   }
@@ -21,7 +21,7 @@ const MintNFT = props => {
         </div>
         <div className="add-on">
           <ul className="checkbox">
-            {props.tokenList?.map(item => (
+            {props.tokenList?.map((item) => (
               <li key={item}>
                 <input
                   type="checkbox"
@@ -29,7 +29,7 @@ const MintNFT = props => {
                   key={item}
                   value={item}
                   className="token_check"
-                  onChange={e => props.updateTokenIdList(e)}
+                  onChange={(e) => props.updateTokenIdList(e)}
                 />
                 <span className="token_label"> TokenId [{item}]</span>
               </li>

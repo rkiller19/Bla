@@ -10,14 +10,14 @@ export const totalStakedContractCall = {
   abi: abiInterface,
   address: contractAddress,
   method: 'balanceOf',
-  args: [process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS]
+  args: [process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS],
 }
 
-export const allowanceContractCall = walletAddress => ({
+export const allowanceContractCall = (walletAddress) => ({
   abi: abiInterface,
   address: contractAddress,
   method: 'allowance',
-  args: [walletAddress, process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS]
+  args: [walletAddress, process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS],
 })
 
 export const approveAllowanceFunction = 'approve'

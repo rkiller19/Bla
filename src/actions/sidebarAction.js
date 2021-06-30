@@ -1,6 +1,6 @@
-export const inandout = value => {
+export const inandout = (value) => {
   return {
     type: 'INANDOUT',
-    payload: value
+    payload: value,
   }
 }

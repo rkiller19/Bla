@@ -4,9 +4,9 @@ const modalReducer = (
     title: '',
     unStakeModal: false,
     nftModal: false,
-    errorModal: false
+    errorModal: false,
   },
-  action
+  action,
 ) => {
   switch (action.type) {
     case 'MODAL':

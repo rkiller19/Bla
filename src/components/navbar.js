@@ -27,19 +27,19 @@ const Navbar = () => {
 
   const activateWallet = async () => {
     const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet()
+      activateBrowserWallet(),
     )
     activateBrowserWalletPromise.then(
-      function () {
+      function() {
         if (activateBrowserWalletPromise.isFulfilled()) {
           dispatch(connectionAction(true))
         }
       },
-      function () {
+      function() {
         /* code if some error */
 
         dispatch(connectionAction(false))
-      }
+      },
     )
   }
 

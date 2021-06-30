@@ -64,12 +64,12 @@ const Yfdai = () => {
 
   const userBalance = useTokenBalance(
     process.env.REACT_APP_YFDAI_TOKEN_ADDRESS,
-    account
+    account,
   )
 
   useEffect(() => {
     setWalletBalance(
-      userBalance ? Math.round(utils.formatEther(userBalance)) : 0
+      userBalance ? Math.round(utils.formatEther(userBalance)) : 0,
     )
   }, [userBalance])
 
@@ -107,20 +107,20 @@ const Yfdai = () => {
 
   useEffect(() => {
     setRewardRate(
-      rewardRateCall ? formatToPercentage(parseInt(rewardRateCall)) : 0
+      rewardRateCall ? formatToPercentage(parseInt(rewardRateCall)) : 0,
     )
     setTotalStakers(totalStakersCall ? parseInt(totalStakersCall) : 0)
     setTotalStaked(
-      totalStakedCall ? utils.formatUnits(totalStakedCall[0]._hex, 18) : 0
+      totalStakedCall ? utils.formatUnits(totalStakedCall[0]._hex, 18) : 0,
     )
     setSsgtStaked(
-      ssgtStakedCall ? utils.formatUnits(ssgtStakedCall[0]._hex, 18) : 0
+      ssgtStakedCall ? utils.formatUnits(ssgtStakedCall[0]._hex, 18) : 0,
     )
     setSsgtEarned(
-      ssgtEarnedCall ? utils.formatUnits(ssgtEarnedCall[0]._hex, 18) : 0
+      ssgtEarnedCall ? utils.formatUnits(ssgtEarnedCall[0]._hex, 18) : 0,
     )
     setAllowance(
-      allowanceCall ? utils.formatUnits(allowanceCall[0]._hex, 'ether') : 0
+      allowanceCall ? utils.formatUnits(allowanceCall[0]._hex, 'ether') : 0,
     )
   }, [
     rewardRateCall,
@@ -131,15 +131,21 @@ const Yfdai = () => {
     allowanceCall,
   ])
 
-  const { state: depositSSGTFunctionState, send: depositSSGT } =
-    useContractFunction(stakingContract, depositSSGTFunction)
-  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
-    useContractFunction(tokenContract, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
-    useContractFunction(stakingContract, withdrawSSGTFunction)
+  const {
+    state: depositSSGTFunctionState,
+    send: depositSSGT,
+  } = useContractFunction(stakingContract, depositSSGTFunction)
+  const {
+    state: approveAllowanceFunctionState,
+    send: sendApproveAllowance,
+  } = useContractFunction(tokenContract, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState,
+    send: withdrawSSGT,
+  } = useContractFunction(stakingContract, withdrawSSGTFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     stakingContract,
-    harvestFunction
+    harvestFunction,
   )
 
   const updateWalletAmount = (inputAmount) => {
@@ -184,7 +190,9 @@ const Yfdai = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_YFDAI_CONTRACT_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -210,7 +218,7 @@ const Yfdai = () => {
       setWalletAmount('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState])

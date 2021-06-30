@@ -150,7 +150,7 @@ const Farming = () => {
 
   const userBalance = useTokenBalance(
     process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance(userBalance ? utils.formatEther(userBalance) : 0)
@@ -158,7 +158,7 @@ const Farming = () => {
 
   const userBalance2 = useTokenBalance(
     process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance2(userBalance2 ? utils.formatEther(userBalance2) : 0)
@@ -166,7 +166,7 @@ const Farming = () => {
 
   const userBalance3 = useTokenBalance(
     process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance3(userBalance3 ? utils.formatEther(userBalance3) : 0)
@@ -174,7 +174,7 @@ const Farming = () => {
 
   const userBalance4 = useTokenBalance(
     process.env.REACT_APP_DA01_DAI_ETHEREUM_ADDRESS,
-    account
+    account,
   )
   useEffect(() => {
     setWalletBalance4(userBalance4 ? utils.formatEther(userBalance4) : 0)
@@ -185,26 +185,26 @@ const Farming = () => {
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenEarnedArray.push(
       lpTokenEarnedContractCall(
         process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
 
     setLpTokenEarnedContractAbis(lpTokenEarnedArray)
@@ -213,26 +213,26 @@ const Farming = () => {
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
     lpTokenStakedArray.push(
       lpTokenStakedContractCall(
         process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,
-        account
-      )
+        account,
+      ),
     )
 
     setLpTokenStakedContractAbis(lpTokenStakedArray)
@@ -244,42 +244,44 @@ const Farming = () => {
   const balanceOfLPDAO1TokenCall = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_DAO1_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPUSDTTokenCall = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_USDT_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPDAO1TokenCall2 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_DAO1_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPUSDTTokenCall2 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_USDT_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPDAO1TokenCall3 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_YFDAI_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS,
+    ),
   )
   const balanceOfLPUSDTTokenCall3 = useContractCall(
     balanceOfTokenContractCall(
       process.env.REACT_APP_WETH_ETHEREUM_ADDRESS,
-      process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS
-    )
+      process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS,
+    ),
   )
 
   const lpTokenNameCall = useContractCall(
-    lpTokenNameContractCall(process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS)
+    lpTokenNameContractCall(
+      process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS,
+    ),
   )
 
   useEffect(() => {
@@ -288,87 +290,87 @@ const Farming = () => {
         ? lpTokenEarnedCall[0]
           ? utils.formatUnits(lpTokenEarnedCall[0][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked1(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[0]
           ? utils.formatUnits(lpTokenStakedCall[0][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenEarned2(
       lpTokenEarnedCall.length > 0
         ? lpTokenEarnedCall[1]
           ? utils.formatUnits(lpTokenEarnedCall[1][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked2(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[1]
           ? utils.formatUnits(lpTokenStakedCall[1][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenEarned3(
       lpTokenEarnedCall.length > 0
         ? lpTokenEarnedCall[2]
           ? utils.formatUnits(lpTokenEarnedCall[2][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked3(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[2]
           ? utils.formatUnits(lpTokenStakedCall[2][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenEarned4(
       lpTokenEarnedCall.length > 0
         ? lpTokenEarnedCall[3]
           ? utils.formatUnits(lpTokenEarnedCall[3][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
     setTokenStaked4(
       lpTokenStakedCall.length > 0
         ? lpTokenStakedCall[3]
           ? utils.formatUnits(lpTokenStakedCall[3][0]._hex, 18)
           : 0
-        : 0
+        : 0,
     )
 
     setTokenDao1(
       balanceOfLPDAO1TokenCall
         ? utils.formatUnits(balanceOfLPDAO1TokenCall[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenUSDT1(
       balanceOfLPUSDTTokenCall
         ? utils.formatUnits(balanceOfLPUSDTTokenCall[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenDao2(
       balanceOfLPDAO1TokenCall2
         ? utils.formatUnits(balanceOfLPDAO1TokenCall2[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenUSDT2(
       balanceOfLPUSDTTokenCall2
         ? utils.formatUnits(balanceOfLPUSDTTokenCall2[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenDao3(
       balanceOfLPDAO1TokenCall3
         ? utils.formatUnits(balanceOfLPDAO1TokenCall3[0]._hex, 18)
-        : 0
+        : 0,
     )
     setTokenUSDT3(
       balanceOfLPUSDTTokenCall3
         ? utils.formatUnits(balanceOfLPUSDTTokenCall3[0]._hex, 18)
-        : 0
+        : 0,
     )
 
     // setTokenName(lpTokenNameCall?)
@@ -386,80 +388,104 @@ const Farming = () => {
 
   const farmingContract1 = new Contract(
     process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
   const farmingContract2 = new Contract(
     process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
   const farmingContract3 = new Contract(
     process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
   const farmingContract4 = new Contract(
     process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,
-    farmingAbiInterface
+    farmingAbiInterface,
   )
 
   const tokenContract1 = new Contract(
     process.env.REACT_APP_DAO1_USDT_SAFESWAP_LP_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
   const tokenContract2 = new Contract(
     process.env.REACT_APP_DAO1_USDT_UNISWAP_LP_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
   const tokenContract3 = new Contract(
     process.env.REACT_APP_YFDAI_USDT_UNISWAP_LP_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
   const tokenContract4 = new Contract(
     process.env.REACT_APP_DA01_DAI_ETHEREUM_ADDRESS,
-    tokenAbiInterface
+    tokenAbiInterface,
   )
 
-  const { state: depositSSGTFunctionState, send: depositSSGT } =
-    useContractFunction(farmingContract1, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState, send: sendApproveAllowance } =
-    useContractFunction(tokenContract1, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState, send: withdrawSSGT } =
-    useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState,
+    send: depositSSGT,
+  } = useContractFunction(farmingContract1, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState,
+    send: sendApproveAllowance,
+  } = useContractFunction(tokenContract1, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState,
+    send: withdrawSSGT,
+  } = useContractFunction(farmingContract1, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState, send: harvest } = useContractFunction(
     farmingContract1,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
-  const { state: depositSSGTFunctionState2, send: depositSSGT2 } =
-    useContractFunction(farmingContract2, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState2, send: sendApproveAllowance2 } =
-    useContractFunction(tokenContract2, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState2, send: withdrawSSGT2 } =
-    useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState2,
+    send: depositSSGT2,
+  } = useContractFunction(farmingContract2, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState2,
+    send: sendApproveAllowance2,
+  } = useContractFunction(tokenContract2, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState2,
+    send: withdrawSSGT2,
+  } = useContractFunction(farmingContract2, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState2, send: harvest2 } = useContractFunction(
     farmingContract2,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
-  const { state: depositSSGTFunctionState3, send: depositSSGT3 } =
-    useContractFunction(farmingContract3, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState3, send: sendApproveAllowance3 } =
-    useContractFunction(tokenContract3, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState3, send: withdrawSSGT3 } =
-    useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState3,
+    send: depositSSGT3,
+  } = useContractFunction(farmingContract3, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState3,
+    send: sendApproveAllowance3,
+  } = useContractFunction(tokenContract3, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState3,
+    send: withdrawSSGT3,
+  } = useContractFunction(farmingContract3, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState3, send: harvest3 } = useContractFunction(
     farmingContract3,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
-  const { state: depositSSGTFunctionState4, send: depositSSGT4 } =
-    useContractFunction(farmingContract4, stakeFarmingTokenFunction)
-  const { state: approveAllowanceFunctionState4, send: sendApproveAllowance4 } =
-    useContractFunction(tokenContract4, approveAllowanceFunction)
-  const { state: withdrawSSGTFunctionState4, send: withdrawSSGT4 } =
-    useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
+  const {
+    state: depositSSGTFunctionState4,
+    send: depositSSGT4,
+  } = useContractFunction(farmingContract4, stakeFarmingTokenFunction)
+  const {
+    state: approveAllowanceFunctionState4,
+    send: sendApproveAllowance4,
+  } = useContractFunction(tokenContract4, approveAllowanceFunction)
+  const {
+    state: withdrawSSGTFunctionState4,
+    send: withdrawSSGT4,
+  } = useContractFunction(farmingContract4, withdrawFarmingTokenFunction)
   const { state: harvestFunctionState4, send: harvest4 } = useContractFunction(
     farmingContract4,
-    harvestFarmingTokenFunction
+    harvestFarmingTokenFunction,
   )
 
   const updateWalletAmount = (inputAmount) => {
@@ -517,7 +543,9 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance(
           process.env.REACT_APP_DAO1_USDT_SAFESWAP_FARMING_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -545,7 +573,7 @@ const Farming = () => {
       setWalletAmount('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState])
@@ -629,7 +657,9 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance2(
           process.env.REACT_APP_DAO1_USDT_UNISWAP_FARMING_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -657,7 +687,7 @@ const Farming = () => {
       setWalletAmount2('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState2.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState2.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState2])
@@ -741,7 +771,9 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance3(
           process.env.REACT_APP_YFDAI_USDT_UNISWAP_FARMING_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -769,7 +801,7 @@ const Farming = () => {
       setWalletAmount3('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState3.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState3.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState3])
@@ -853,7 +885,9 @@ const Farming = () => {
         dispatch(modalAction(false, selector))
         sendApproveAllowance4(
           process.env.REACT_APP_DAO1_DAI_VAULT_ADDRESS,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2)
+            .pow(256)
+            .sub(1),
         )
       }
     } else {
@@ -881,7 +915,7 @@ const Farming = () => {
       setWalletAmount4('')
       dispatch(stakingFailed())
       dispatch(
-        errorModalAction(true, approveAllowanceFunctionState4.errorMessage)
+        errorModalAction(true, approveAllowanceFunctionState4.errorMessage),
       )
     }
   }, [approveAllowanceFunctionState4])

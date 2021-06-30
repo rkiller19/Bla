@@ -10,13 +10,13 @@ import LinkIcon from '../assets/link_icon.png'
 
 const FarmingCard = (props) => {
   const stakingTransactionState = useSelector(
-    (state) => state.stakingReducer.stakingTransactionState
+    (state) => state.stakingReducer.stakingTransactionState,
   )
   const unStakingTransactionState = useSelector(
-    (state) => state.stakingReducer.unStakingTransactionState
+    (state) => state.stakingReducer.unStakingTransactionState,
   )
   const harvestTransactionState = useSelector(
-    (state) => state.stakingReducer.harvestTransactionState
+    (state) => state.stakingReducer.harvestTransactionState,
   )
 
   const dispatch = useDispatch()
@@ -31,20 +31,20 @@ const FarmingCard = (props) => {
   const modalStatus = useSelector((state) => state.modalReducer.value)
   const modalStatusKey = useSelector((state) => state.modalReducer.title)
   const unStakeModalStatus = useSelector(
-    (state) => state.modalReducer.unStakeModal
+    (state) => state.modalReducer.unStakeModal,
   )
   const unStakeModalStatusKey = useSelector((state) => state.modalReducer.title)
   const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
   const errorModalMessage = useSelector((state) => state.modalReducer.title)
 
   if (selector === true) {
-    setTimeout(function () {
+    setTimeout(function() {
       // setLoading(true)
       dispatch(staked(false))
     }, 4000)
   }
   if (unStakeSelector === true) {
-    setTimeout(function () {
+    setTimeout(function() {
       dispatch(unStaked(false))
     }, 4000)
   }

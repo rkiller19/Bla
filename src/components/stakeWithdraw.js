@@ -2,9 +2,9 @@ import React from 'react'
 import { unStakeModalAction } from '../actions/modalAction'
 import { useDispatch, useSelector } from 'react-redux'
 
-const StakeWithdraw = props => {
+const StakeWithdraw = (props) => {
   const dispatch = useDispatch()
-  const selector = useSelector(state => state.modalReducer.title)
+  const selector = useSelector((state) => state.modalReducer.title)
   const close = () => {
     dispatch(unStakeModalAction(false, selector))
   }
@@ -28,7 +28,7 @@ const StakeWithdraw = props => {
               type="text"
               placeholder={'Enter amount'}
               value={props.walletAmount}
-              onChange={e => props.updateWalletAmount(e.target.value)}
+              onChange={(e) => props.updateWalletAmount(e.target.value)}
             />
           </div>
           <input

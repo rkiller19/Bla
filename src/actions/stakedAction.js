@@ -1,20 +1,20 @@
-export const staked = value => {
+export const staked = (value) => {
   return {
     type: 'STAKED',
-    payload: value
+    payload: value,
   }
 }
 
-export const unStaked = value => {
+export const unStaked = (value) => {
   return {
     type: 'UNSTAKED',
-    value
+    value,
   }
 }
 
-export const nft = value => {
+export const nft = (value) => {
   return {
     type: 'NFT',
-    value
+    value,
   }
 }

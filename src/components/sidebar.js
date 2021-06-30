@@ -9,7 +9,7 @@ const Sidebar = () => {
     navbarName = 'Farming'
   }
   const dispatch = useDispatch()
-  const sideBarValue = useSelector(state => state.sideBarReducer)
+  const sideBarValue = useSelector((state) => state.sideBarReducer)
   const handleSidebar = () => {
     dispatch(inandout(false))
   }

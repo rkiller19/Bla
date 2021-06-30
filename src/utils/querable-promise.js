@@ -23,7 +23,7 @@ function MakeQuerablePromise(promise) {
       isRejected = true
       isPending = false
       throw e
-    }
+    },
   )
 
   result.isFulfilled = function() {

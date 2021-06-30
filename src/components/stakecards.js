@@ -15,16 +15,16 @@ import InfoIcon from '../assets/infoIcon.png'
 
 const StakeCard = (props) => {
   const stakingTransactionState = useSelector(
-    (state) => state.stakingReducer.stakingTransactionState
+    (state) => state.stakingReducer.stakingTransactionState,
   )
   const unStakingTransactionState = useSelector(
-    (state) => state.stakingReducer.unStakingTransactionState
+    (state) => state.stakingReducer.unStakingTransactionState,
   )
   const nftClaimTransactionState = useSelector(
-    (state) => state.stakingReducer.nftClaimTransactionState
+    (state) => state.stakingReducer.nftClaimTransactionState,
   )
   const harvestTransactionState = useSelector(
-    (state) => state.stakingReducer.harvestTransactionState
+    (state) => state.stakingReducer.harvestTransactionState,
   )
 
   const dispatch = useDispatch()
@@ -42,20 +42,20 @@ const StakeCard = (props) => {
   const unStakeSelector = useSelector((state) => state.stakedReducer.unStake)
   const modalStatus = useSelector((state) => state.modalReducer.value)
   const unStakeModalStatus = useSelector(
-    (state) => state.modalReducer.unStakeModal
+    (state) => state.modalReducer.unStakeModal,
   )
   const nftModalStatus = useSelector((state) => state.modalReducer.nftModal)
   const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
   const errorModalMessage = useSelector((state) => state.modalReducer.title)
 
   if (selector === true) {
-    setTimeout(function () {
+    setTimeout(function() {
       // setLoading(true)
       dispatch(staked(false))
     }, 4000)
   }
   if (unStakeSelector === true) {
-    setTimeout(function () {
+    setTimeout(function() {
       dispatch(unStaked(false))
     }, 4000)
   }
@@ -100,7 +100,7 @@ const StakeCard = (props) => {
                 <p>
                   ~
                   {getEquivalentUSDRate(
-                    props.ssgtStaked + props.totalNftTokens
+                    props.ssgtStaked + props.totalNftTokens,
                   )}{' '}
                   USD
                 </p>

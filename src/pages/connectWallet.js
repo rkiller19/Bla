@@ -12,7 +12,7 @@ import MakeQuerablePromise from '../utils/querable-promise'
 const ConnectWallet = () => {
   const { account, deactivate, activateBrowserWallet } = useEthers()
   const { error } = useEthers()
-  const isConnected = useSelector(state => state.connectionReducer)
+  const isConnected = useSelector((state) => state.connectionReducer)
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -30,7 +30,7 @@ const ConnectWallet = () => {
 
   const activateWallet = async () => {
     const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet()
+      activateBrowserWallet(),
     )
     activateBrowserWalletPromise.then(
       function() {
@@ -42,7 +42,7 @@ const ConnectWallet = () => {
         /* code if some error */
 
         dispatch(connectionAction(false))
-      }
+      },
     )
   }
 
