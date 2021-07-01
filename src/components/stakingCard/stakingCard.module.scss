@@ -1,0 +1,20 @@
+.Card{
+    border: 5px solid rgb(15, 187, 187);
+
+    &Head{
+        border: 5px solid green;
+    }
+
+    &StakingConditions{
+        border: 5px solid purple;
+    }
+
+    &StakingList{
+        border: 5px solid blue;
+    }
+
+    &Footer{
+        border: 5px solid grey;
+    }
+
+}
