@@ -1,0 +1,18 @@
+.button {
+  border: none;
+  background-color: #e3434a;
+  padding: 10px;
+  color: #fff;
+  border-radius: 10px;
+  transition: 0.3s all;
+  cursor: pointer;
+
+  &Disabled {
+    background-color: transparent;
+    color: #000;
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
