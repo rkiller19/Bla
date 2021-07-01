@@ -121,11 +121,11 @@ const StakeCard = (props) => {
                 <div className="btn">
                   {stakingTransactionState === 'IN_PROGRESS' ||
                   nftClaimTransactionState === 'IN_PROGRESS' ? (
-                    <button disabled onClick={unStake}>
+                    <button className="button" disabled onClick={unStake}>
                       Unstake&nbsp;&nbsp;&nbsp;-
                     </button>
                   ) : (
-                    <button onClick={unStake}>
+                    <button className="button" onClick={unStake}>
                       Unstake&nbsp;&nbsp;&nbsp;-
                     </button>
                   )}
@@ -140,11 +140,13 @@ const StakeCard = (props) => {
                 <div className="btn">
                   {unStakingTransactionState === 'IN_PROGRESS' ||
                   nftClaimTransactionState === 'IN_PROGRESS' ? (
-                    <button disabled onClick={stake}>
+                    <button className="button" disabled onClick={stake}>
                       Stake&nbsp;&nbsp;&nbsp;+
                     </button>
                   ) : (
-                    <button onClick={stake}>Stake&nbsp;&nbsp;&nbsp;+</button>
+                    <button className="button" onClick={stake}>
+                      Stake&nbsp;&nbsp;&nbsp;+
+                    </button>
                   )}
                 </div>
               )}
@@ -169,7 +171,9 @@ const StakeCard = (props) => {
                 </div>
               </div>
             ) : (
-              <button onClick={props.checkAndHarvest}>Harvest</button>
+              <button className="button" onClick={props.checkAndHarvest}>
+                Harvest
+              </button>
             )}
           </div>
         </div>
@@ -216,11 +220,15 @@ const StakeCard = (props) => {
                   <div className="btn">
                     {unStakingTransactionState === 'IN_PROGRESS' ||
                     stakingTransactionState === 'IN_PROGRESS' ? (
-                      <button disab onClick={mintNFT} className="stake-button">
+                      <button
+                        disab
+                        onClick={mintNFT}
+                        className="button stake-button"
+                      >
                         Claim {props.title}
                       </button>
                     ) : (
-                      <button onClick={mintNFT} className="stake-button">
+                      <button onClick={mintNFT} className="button stake-button">
                         Claim {props.title}
                       </button>
                     )}

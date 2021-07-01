@@ -63,12 +63,12 @@ const ConnectWallet = () => {
             <p>Connect wallet</p>
             <p>DAO1 Farms are available on Ethereum and Polygon.</p>
             {!isConnected && (
-              <button onClick={activateWallet}>
+              <button className="button" onClick={activateWallet}>
                 <img src={ConnectWalletImg} alt="" /> Connect wallet
               </button>
             )}
             {isConnected && (
-              <button onClick={deactivateWallet}>
+              <button className="button" onClick={deactivateWallet}>
                 <img src={ConnectWalletImg} alt="" /> Disconnect wallet
               </button>
             )}

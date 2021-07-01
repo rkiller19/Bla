@@ -44,9 +44,13 @@ const StakeWithdraw = (props) => {
         <div className="button-stake">
           {props.walletAmount === '' ||
           (props.walletAmount && props.walletAmount.length === 0) ? (
-            <button disabled>Withdraw</button>
+            <button className="button" disabled>
+              Withdraw
+            </button>
           ) : (
-            <button onClick={props.checkAndUnStakeSSGT}>Withdraw</button>
+            <button className="button" onClick={props.checkAndUnStakeSSGT}>
+              Withdraw
+            </button>
           )}
         </div>
       </div>

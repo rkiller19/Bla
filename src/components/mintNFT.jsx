@@ -39,9 +39,13 @@ const MintNFT = (props) => {
         </div>
         <div className="button-stake">
           {props.selectedTokenList.length === 0 ? (
-            <button disabled>Claim</button>
+            <button className="button" disabled>
+              Claim
+            </button>
           ) : (
-            <button onClick={props.checkAndclaimSSGT}>Claim</button>
+            <button className="button" onClick={props.checkAndclaimSSGT}>
+              Claim
+            </button>
           )}
         </div>
       </div>

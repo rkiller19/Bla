@@ -3,10 +3,10 @@ import { useEthers, ChainId } from '@usedapp/core'
 
 import Sidebar from '../components/sidebar'
 import Navbar from '../components/navbar'
-import Farming from '../views/farming'
+import FarmingView from '../views/farming'
 import MaticFarming from '../views/maticfarming'
 
-const Staking = () => {
+const Farming = () => {
   const { chainId } = useEthers()
 
   const isMaticEnabled = () => {
@@ -38,7 +38,7 @@ const Staking = () => {
           <div className="cards">
             <div className="stake-cards-list">
               {isMaticEnabled() && <MaticFarming></MaticFarming>}
-              {isEthereumEnabled() && <Farming></Farming>}
+              {isEthereumEnabled() && <FarmingView></FarmingView>}
             </div>
           </div>
         )}
@@ -47,4 +47,4 @@ const Staking = () => {
   )
 }
 
-export default Staking
+export default Farming

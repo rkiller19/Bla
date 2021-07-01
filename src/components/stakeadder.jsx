@@ -40,9 +40,13 @@ const StakeAdder = (props) => {
         </div>
         <div className="button-stake">
           {props.walletAmount === 0 || props.walletAmount === '' ? (
-            <button disabled>Deposit</button>
+            <button className="button" disabled>
+              Deposit
+            </button>
           ) : (
-            <button onClick={props.checkAndStakeSSGT}>Deposit</button>
+            <button className="button" onClick={props.checkAndStakeSSGT}>
+              Deposit
+            </button>
           )}
         </div>
       </div>

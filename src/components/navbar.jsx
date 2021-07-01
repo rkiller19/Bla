@@ -87,10 +87,14 @@ const Navbar = () => {
           </div>
         )}
         {!isConnected && (
-          <button onClick={activateWallet}>Connect Wallet</button>
+          <button className="button" onClick={activateWallet}>
+            Connect Wallet
+          </button>
         )}
         {isConnected && (
-          <button onClick={deactivateWallet}>Disconnect Wallet</button>
+          <button className="button" onClick={deactivateWallet}>
+            Disconnect Wallet
+          </button>
         )}
       </div>
     </div>

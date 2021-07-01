@@ -126,13 +126,15 @@ const FarmingCard = (props) => {
               ) : (
                 <div className="btn">
                   {stakingTransactionState === 'IN_PROGRESS' ? (
-                    <button disabled>Withdraw&nbsp;&nbsp;&nbsp;-</button>
+                    <button className="button" disabled>
+                      Withdraw&nbsp;&nbsp;&nbsp;-
+                    </button>
                   ) : props.lockIn >= getNumberOfDays() ? (
-                    <button disabled onClick={unStake}>
+                    <button className="button" disabled onClick={unStake}>
                       Withdraw&nbsp;&nbsp;&nbsp;-
                     </button>
                   ) : (
-                    <button onClick={unStake}>
+                    <button className="button" onClick={unStake}>
                       Withdraw&nbsp;&nbsp;&nbsp;-
                     </button>
                   )}
@@ -146,9 +148,13 @@ const FarmingCard = (props) => {
               ) : (
                 <div className="btn">
                   {unStakingTransactionState === 'IN_PROGRESS' ? (
-                    <button disabled>Deposit&nbsp;&nbsp;&nbsp;+</button>
+                    <button className="button" disabled>
+                      Deposit&nbsp;&nbsp;&nbsp;+
+                    </button>
                   ) : (
-                    <button onClick={stake}>Deposit&nbsp;&nbsp;&nbsp;+</button>
+                    <button className="button" onClick={stake}>
+                      Deposit&nbsp;&nbsp;&nbsp;+
+                    </button>
                   )}
                 </div>
               )}
@@ -170,7 +176,9 @@ const FarmingCard = (props) => {
                 </div>
               </div>
             ) : (
-              <button onClick={props.checkAndHarvest}>Harvest</button>
+              <button className="button" onClick={props.checkAndHarvest}>
+                Harvest
+              </button>
             )}
           </div>
         </div>
