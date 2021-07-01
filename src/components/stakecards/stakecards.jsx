@@ -1,20 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { StakeWithdraw, StakeAdder, ErrorBox, MintNFT } from '../'
 import {
   modalAction,
   unStakeModalAction,
   nftModalAction,
-} from '../actions/modalAction'
-import { staked, unStaked } from '../actions/stakedAction'
-import StakeAdder from './stakeadder'
-import StakeWithdraw from './stakeWithdraw'
-import Errorbox from './errorbox'
-import MintNFT from './mintNFT'
-import Loading from '../assets/loading.png'
-import InfoIcon from '../assets/infoIcon.png'
+} from '../../actions/modalAction'
+import { staked, unStaked } from '../../actions/stakedAction'
+import Loading from '../../assets/loading.png'
+import InfoIcon from '../../assets/infoIcon.png'
 
-const StakeCard = (props) => {
+export const StakeCards = (props) => {
   const stakingTransactionState = useSelector(
     (state) => state.stakingReducer.stakingTransactionState,
   )
@@ -278,12 +275,10 @@ const StakeCard = (props) => {
         ''
       )}
       {errorModalStatus === true ? (
-        <Errorbox errorMessage={errorModalMessage}></Errorbox>
+        <ErrorBox errorMessage={errorModalMessage}></ErrorBox>
       ) : (
         ''
       )}
     </div>
   )
 }
-
-export default StakeCard

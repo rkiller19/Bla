@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import AlertIcon from '../assets/alert-icon.png'
-import { errorModalAction } from '../actions/modalAction'
+import AlertIcon from '../../assets/alert-icon.png'
+import { errorModalAction } from '../../actions/modalAction'
 
-const Errorbox = ({ errorMessage }) => {
+export const ErrorBox = ({ errorMessage }) => {
   const dispatch = useDispatch()
   const close = () => {
     dispatch(errorModalAction(false))
@@ -26,4 +26,4 @@ const Errorbox = ({ errorMessage }) => {
     </div>
   )
 }
-export default Errorbox
+

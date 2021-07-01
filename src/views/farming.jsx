@@ -12,7 +12,7 @@ import { utils } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 
 import StakeLogo1 from '../assets/Logo.png'
-import FarmingCard from '../components/farmingcard'
+import { FarmingCard } from '../components'
 import {
   farmingAbiInterface,
   lpTokenEarnedContractCall,

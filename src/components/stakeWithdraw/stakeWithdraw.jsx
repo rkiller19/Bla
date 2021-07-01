@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { unStakeModalAction } from '../actions/modalAction'
+import { unStakeModalAction } from '../../actions/modalAction'
 
-const StakeWithdraw = (props) => {
+export const StakeWithdraw = (props) => {
   const dispatch = useDispatch()
   const selector = useSelector((state) => state.modalReducer.title)
   const close = () => {
@@ -57,4 +57,4 @@ const StakeWithdraw = (props) => {
     </div>
   )
 }
-export default StakeWithdraw
+

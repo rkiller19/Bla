@@ -1,12 +1,11 @@
 import React from 'react'
 import { useEthers, ChainId } from '@usedapp/core'
 
-import Sidebar from '../components/sidebar'
-import Navbar from '../components/navbar'
+import { Navbar, Sidebar } from '../components'
 import FarmingView from '../views/farming'
 import MaticFarming from '../views/maticfarming'
 
-const Farming = () => {
+export const Farming = () => {
   const { chainId } = useEthers()
 
   const isMaticEnabled = () => {
@@ -46,5 +45,3 @@ const Farming = () => {
     </div>
   )
 }
-
-export default Farming

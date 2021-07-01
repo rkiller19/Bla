@@ -10,7 +10,7 @@ import {
 import { utils } from 'ethers'
 
 import StakeLogo2 from '../assets/Logo.png'
-import StakeCard from '../components/stakecards'
+import { StakeCards } from '../components'
 import {
   errorModalAction,
   modalAction,
@@ -391,7 +391,7 @@ const Ssgt = () => {
   }, [withdrawWithNFTFunctionState])
 
   return (
-    <StakeCard
+    <StakeCards
       title="SSGT"
       percent={rewardRate}
       totalstaked={parseFloat(totalStaked)}
@@ -415,7 +415,7 @@ const Ssgt = () => {
       checkAndHarvest={checkAndHarvest}
       usdRate={usdRate}
       tokenList={tokenList}
-    ></StakeCard>
+    ></StakeCards>
   )
 }
 

@@ -10,7 +10,7 @@ import {
 import { utils } from 'ethers'
 
 import StakeLogo1 from '../assets/stakelogo1.png'
-import StakeCard from '../components/stakecards'
+import { StakeCards } from '../components'
 import {
   rewardRateContractCall,
   totalStakersContractCall,
@@ -261,7 +261,7 @@ const Yfdai = () => {
   }, [harvestFunctionState])
 
   return (
-    <StakeCard
+    <StakeCards
       title="YFDAI"
       percent={rewardRate}
       totalstaked={parseFloat(totalStaked)}
@@ -278,7 +278,7 @@ const Yfdai = () => {
       checkAndUnStakeSSGT={checkAndUnStakeSSGT}
       checkAndHarvest={checkAndHarvest}
       usdRate={usdRate}
-    ></StakeCard>
+    ></StakeCards>
   )
 }
 

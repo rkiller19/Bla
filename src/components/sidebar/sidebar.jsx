@@ -2,10 +2,10 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Logo from '../assets/Logo.png'
-import { inandout } from '../actions/sidebarAction'
+import Logo from '../../assets/Logo.png'
+import { inandout } from '../../actions/sidebarAction'
 
-const Sidebar = () => {
+export const Sidebar = () => {
   let navbarName = window.location.pathname.split('/').join('')
   if (navbarName === '' || navbarName === 'farming') {
     navbarName = 'Farming'
@@ -48,4 +48,3 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar

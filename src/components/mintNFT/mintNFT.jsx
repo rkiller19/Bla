@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { nftModalAction } from '../actions/modalAction'
+import { nftModalAction } from '../../actions/modalAction'
 
-const MintNFT = (props) => {
+export const MintNFT = (props) => {
   const dispatch = useDispatch()
   const selector = useSelector((state) => state.modalReducer.title)
   const close = () => {
@@ -52,4 +52,3 @@ const MintNFT = (props) => {
     </div>
   )
 }
-export default MintNFT

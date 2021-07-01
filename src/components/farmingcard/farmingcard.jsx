@@ -1,15 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { modalAction, unStakeModalAction } from '../actions/modalAction'
-import { staked, unStaked } from '../actions/stakedAction'
-import StakeAdder from './stakeadder'
-import StakeWithdraw from './stakeWithdraw'
-import Errorbox from './errorbox'
-import Loading from '../assets/loading.png'
-import LinkIcon from '../assets/link_icon.png'
+import { StakeWithdraw, StakeAdder, ErrorBox } from '../'
+import { modalAction, unStakeModalAction } from '../../actions/modalAction'
+import { staked, unStaked } from '../../actions/stakedAction'
+import Loading from '../../assets/loading.png'
+import LinkIcon from '../../assets/link_icon.png'
 
-const FarmingCard = (props) => {
+export const FarmingCard = (props) => {
   const stakingTransactionState = useSelector(
     (state) => state.stakingReducer.stakingTransactionState,
   )
@@ -215,12 +213,10 @@ const FarmingCard = (props) => {
         ''
       )}
       {errorModalStatus === true ? (
-        <Errorbox errorMessage={errorModalMessage}></Errorbox>
+        <ErrorBox errorMessage={errorModalMessage}></ErrorBox>
       ) : (
         ''
       )}
     </div>
   )
 }
-
-export default FarmingCard

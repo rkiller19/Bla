@@ -5,7 +5,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 import './sass/index.scss'
-import App from './App'
+import {App} from './App'
 import { rootReducer } from './reducers'
 
 const store = createStore(

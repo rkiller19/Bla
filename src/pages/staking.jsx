@@ -1,9 +1,7 @@
 import React from 'react'
 
-import Sidebar from '../components/sidebar'
-import Navbar from '../components/navbar'
-import { StakingCard } from '../components'
-const Staking = () => {
+import { Navbar, Sidebar, StakingCard } from '../components'
+export const Staking = () => {
   return (
     <div className="connectWallet">
       <div className="side-nav">
@@ -18,5 +16,3 @@ const Staking = () => {
     </div>
   )
 }
-
-export default Staking

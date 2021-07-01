@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEthers, shortenAddress } from '@usedapp/core'
 
-import WalletLogo from '../assets/Vector.png'
-import { inandout } from '../actions/sidebarAction'
-import { connectionAction } from '../actions/connectionAction'
-import MakeQuerablePromise from '../utils/querable-promise'
+import WalletLogo from '../../assets/Vector.png'
+import { inandout } from '../../actions/sidebarAction'
+import { connectionAction } from '../../actions/connectionAction'
+import MakeQuerablePromise from '../../utils/querable-promise'
 
-const Navbar = () => {
+export const Navbar = () => {
   const { account, error, deactivate, activateBrowserWallet } = useEthers()
 
   const dispatch = useDispatch()
@@ -101,4 +101,3 @@ const Navbar = () => {
   )
 }
 
-export default Navbar

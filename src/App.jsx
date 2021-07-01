@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import ConnectWallet from './pages/connectWallet'
-import Staking from './pages/staking'
-import Farming from './pages/farming'
+import {ConnectWallet} from './pages/connectWallet'
+import {Staking} from './pages/staking'
+import {Farming} from './pages/farming'
 
-function App() {
+export function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+

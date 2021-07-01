@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { modalAction } from '../actions/modalAction'
+import { modalAction } from '../../actions/modalAction'
 
-const StakeAdder = (props) => {
+export const StakeAdder = (props) => {
   const dispatch = useDispatch()
   const close = () => {
     dispatch(modalAction(false, ''))
@@ -53,4 +53,4 @@ const StakeAdder = (props) => {
     </div>
   )
 }
-export default StakeAdder
+
