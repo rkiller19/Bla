@@ -3,9 +3,9 @@ import classnames from 'classnames'
 
 import { button, buttonDisabled } from './button.module.scss'
 
-export function Button({ children, type, ...props }) {
-  const classNames = classnames(button, {
-    [buttonDisabled]: type === 'disabled',
+export function Button({ children, type, disabled, className, ...props }) {
+  const classNames = classnames(className, button, {
+    [buttonDisabled]: disabled,
   })
 
   return (
