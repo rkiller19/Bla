@@ -1,0 +1,17 @@
+@import '../../sass/variables.scss';
+
+.layout {
+  background-color: $main-bg;
+  color: $main-text;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+}
+
+.mainSection {
+  flex: 1 1 auto;
+}
+
+.mainContent {
+  padding: 60px 100px;
+}

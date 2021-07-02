@@ -1,0 +1,48 @@
+@import '../../sass/variables.scss';
+
+.sidebar {
+  flex: 0 0 220px;
+  min-height: 100%;
+  background-color: $secondary-bg;
+
+  &Logo {
+    height: $navbar-height;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &Nav {
+    &List {
+      padding: 60px 0;
+    }
+    &Item {
+      padding: 0;
+    }
+    &Link {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      color: $light-text;
+      text-decoration: none;
+      padding: 18px 30px;
+      width: 100%;
+      font-size: 17px;
+      transition: 0.3s background-color, 0.3s color;
+
+      &Icon {
+        margin-right: 30px;
+      }
+
+      &:hover,
+      &Active {
+        color: $main-text;
+        background-color: $light-bg;
+      }
+      &Active {
+        border-right: 4px solid $red;
+      }
+    }
+  }
+}
