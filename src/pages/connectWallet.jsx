@@ -53,10 +53,10 @@ export const ConnectWallet = () => {
   return (
     <div className="connectWallet">
       <div className="side-nav">
-        <Sidebar></Sidebar>
+        <Sidebar />
       </div>
       <div className="main">
-        <Navbar></Navbar>
+        <Navbar />
         <div className="card-element">
           <div className="card-content">
             <p>Connect wallet</p>

@@ -73,9 +73,9 @@ export const Navbar = () => {
     <div className="navbar-main">
       <div className="navbar-name">
         <div className="burger" onClick={SideBar}>
-          <div className="burger-icon"></div>
-          <div className="burger-icon"></div>
-          <div className="burger-icon"></div>
+          <div className="burger-icon" />
+          <div className="burger-icon" />
+          <div className="burger-icon" />
         </div>
         <p>{navbarName}</p>
       </div>
@@ -100,4 +100,3 @@ export const Navbar = () => {
     </div>
   )
 }
-

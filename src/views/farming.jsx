@@ -988,7 +988,7 @@ const Farming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT}
         checkAndHarvest={checkAndHarvest}
-      ></FarmingCard>
+      />
     )
   }
 
@@ -1022,7 +1022,7 @@ const Farming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT2}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT2}
         checkAndHarvest={checkAndHarvest2}
-      ></FarmingCard>
+      />
     )
   }
 
@@ -1056,7 +1056,7 @@ const Farming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT3}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT3}
         checkAndHarvest={checkAndHarvest3}
-      ></FarmingCard>
+      />
     )
   }
 
@@ -1090,7 +1090,7 @@ const Farming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT4}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT4}
         checkAndHarvest={checkAndHarvest4}
-      ></FarmingCard>
+      />
     )
   }
 

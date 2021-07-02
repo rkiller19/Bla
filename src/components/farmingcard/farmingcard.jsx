@@ -192,7 +192,7 @@ export const FarmingCard = (props) => {
           walletAmount={props.walletAmount}
           updateWalletAmount={props.updateWalletAmount}
           checkAndStakeSSGT={props.checkAndStakeSSGT}
-        ></StakeAdder>
+        />
       ) : (
         ''
       )}
@@ -213,7 +213,7 @@ export const FarmingCard = (props) => {
         ''
       )}
       {errorModalStatus === true ? (
-        <ErrorBox errorMessage={errorModalMessage}></ErrorBox>
+        <ErrorBox errorMessage={errorModalMessage} />
       ) : (
         ''
       )}

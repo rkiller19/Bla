@@ -415,7 +415,7 @@ const Ssgt = () => {
       checkAndHarvest={checkAndHarvest}
       usdRate={usdRate}
       tokenList={tokenList}
-    ></StakeCards>
+    />
   )
 }
 

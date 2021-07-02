@@ -19,10 +19,10 @@ export const Farming = () => {
   return (
     <div className={'stacking-connected connectWallet'}>
       <div className="side-nav">
-        <Sidebar></Sidebar>
+        <Sidebar />
       </div>
       <div className="main">
-        <Navbar></Navbar>
+        <Navbar />
         {!isMaticEnabled() && !isEthereumEnabled() ? (
           <div className="card-element">
             <div className="card-content">
@@ -36,8 +36,8 @@ export const Farming = () => {
         ) : (
           <div className="cards">
             <div className="stake-cards-list">
-              {isMaticEnabled() && <MaticFarming></MaticFarming>}
-              {isEthereumEnabled() && <FarmingView></FarmingView>}
+              {isMaticEnabled() && <MaticFarming />}
+              {isEthereumEnabled() && <FarmingView />}
             </div>
           </div>
         )}

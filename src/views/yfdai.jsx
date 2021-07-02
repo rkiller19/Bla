@@ -278,7 +278,7 @@ const Yfdai = () => {
       checkAndUnStakeSSGT={checkAndUnStakeSSGT}
       checkAndHarvest={checkAndHarvest}
       usdRate={usdRate}
-    ></StakeCards>
+    />
   )
 }
 

@@ -567,7 +567,7 @@ const MaticFarming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT}
         checkAndHarvest={checkAndHarvest}
-      ></FarmingCard>
+      />
     )
   }
 
@@ -601,7 +601,7 @@ const MaticFarming = () => {
         checkAndStakeSSGT={checkAndStakeSSGT2}
         checkAndUnStakeSSGT={checkAndUnStakeSSGT2}
         checkAndHarvest={checkAndHarvest2}
-      ></FarmingCard>
+      />
     )
   }
 
