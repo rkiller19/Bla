@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEthers, ChainId } from '@usedapp/core'
 
-import { Navbar, Sidebar } from '../components'
-import FarmingView from '../views/farming'
-import MaticFarming from '../views/maticfarming'
+import { Navbar, Sidebar } from '../../components'
+import FarmingView from '../../views/farming'
+import MaticFarming from '../../views/maticfarming'
 
 export const Farming = () => {
   const { chainId } = useEthers()

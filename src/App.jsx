@@ -1,9 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import {ConnectWallet} from './pages/connectWallet'
-import {Staking} from './pages/staking'
-import {Farming} from './pages/farming'
+import { ConnectWallet, Staking, Farming } from './pages'
 
 export function App() {
   return (
@@ -18,5 +16,3 @@ export function App() {
     </div>
   )
 }
-
-

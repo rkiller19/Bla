@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 
-import { Navbar, Sidebar } from '../components'
-import ConnectWalletImg from '../assets/ConnectWallet.png'
-import { connectionAction } from '../actions/connectionAction'
-import MakeQuerablePromise from '../utils/querable-promise'
+import { Navbar, Sidebar } from '../../components'
+import ConnectWalletImg from '../../assets/ConnectWallet.png'
+import { connectionAction } from '../../actions/connectionAction'
+import MakeQuerablePromise from '../../utils/querable-promise'
 
 export const ConnectWallet = () => {
   const { account, deactivate, activateBrowserWallet } = useEthers()

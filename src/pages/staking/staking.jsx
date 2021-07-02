@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Navbar, Sidebar, StakingCard } from '../components'
+import { Navbar, Sidebar, StakingCard } from '../../components'
 export const Staking = () => {
   return (
     <div className="connectWallet">
