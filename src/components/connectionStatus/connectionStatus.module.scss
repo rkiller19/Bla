@@ -1,0 +1,19 @@
+@import '../../sass/variables.scss';
+
+.connectionStatus {
+  display: flex;
+  align-items: center;
+}
+.walletIcon {
+  margin-right: 12px;
+}
+.accountAddress {
+  margin-right: 24px;
+}
+.connectButton {
+  color: $light-text;
+
+  &:hover {
+    color: $main-text;
+  }
+}
