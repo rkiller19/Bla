@@ -1,20 +1,174 @@
-.Card{
-    border: 5px solid rgb(15, 187, 187);
+@import '../../sass/variables.scss';
 
-    &Head{
-        border: 5px solid green;
+.card {
+  box-shadow: 0px 5px 20px rgba(37, 37, 37, 0.05);
+  border-radius: 10px;
+  background-color: $secondary-bg;
+  padding: 24px 20px;
+
+  &Head {
+    display: flex;
+    align-items: center;
+
+    &Logo {
+      padding: 17px;
+      border: 1px solid $light-text;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 65px;
+      }
+    }
+  }
+
+  &Label {
+    color: $light-text;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  &InfoText {
+    color: $main-text;
+    font-size: 13px;
+  }
+
+  &Name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 16px;
+
+    &Text {
+      font-size: 17px;
+    }
+  }
+
+  &StakingConditions {
+    margin: 16px 0;
+    background-color: $light-bg;
+    border-radius: 4px;
+    padding: 15px 20px;
+    display: flex;
+
+    &Item {
+      padding: 0 18px;
+      border-left: 1px solid $main-text;
+
+      &:first-child {
+        padding-left: 0;
+        border-left: none;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &Staking {
+    &List {
+      margin-bottom: 28px;
     }
 
-    &StakingConditions{
-        border: 5px solid purple;
+    &Item {
+      &Head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+      }
+
+      &Info {
+        display: flex;
+
+        &Block {
+          margin-right: 20px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+
+      &Buttons {
+        display: flex;
+
+        button {
+          margin-right: 8px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+
+      &Details {
+        background-color: $light-bg;
+        padding: 20px;
+        font-size: 13px;
+        color: $light-text;
+
+        &Hide {
+          padding: 0;
+          height: 1px;
+          overflow: hidden;
+        }
+
+        &Row {
+          display: flex;
+          margin-bottom: 7px;
+        }
+
+        &Name {
+          flex: 0 0 65%;
+        }
+
+        &Value {
+          flex: 0 0 35%;
+        }
+      }
+    }
+  }
+
+  &ArrowButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 8px;
+    margin-right: -8px;
+    border-radius: 4px;
+    transition: 0.3s all;
+
+    &Active {
+      img {
+        transform: rotate(180deg);
+      }
     }
 
-    &StakingList{
-        border: 5px solid blue;
+    &:hover {
+      background-color: $light-bg;
     }
+  }
 
-    &Footer{
-        border: 5px solid grey;
+  &Footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &TatalStaked {
+    &Value {
+      color: $red;
+      font-size: 21px;
     }
+  }
 
+  &Button {
+    padding-left: 0;
+    padding-right: 0;
+    width: 80px;
+  }
 }
