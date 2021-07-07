@@ -1,0 +1,20 @@
+@import '../../sass/variables.scss';
+
+.connectMessage {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+
+  &InnerContainer {
+    background-color: $secondary-bg;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &Title {
+      margin-bottom: 20px;
+    }
+  }
+}
