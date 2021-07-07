@@ -1,38 +1,46 @@
 import React from 'react'
+import classnames from 'classnames'
 
 import { h1, h2, h3, h4, h5, h6 } from './title.module.scss'
 
-export function Title({ level, children }) {
+export function Title({ level, children, className, ...props }) {
   let TitleTag
-  let className
+  let levelClassName
 
   switch (level) {
     case 1:
       TitleTag = 'h1'
-      className = h1
+      levelClassName = h1
       break
     case 2:
       TitleTag = 'h2'
-      className = h2
+      levelClassName = h2
       break
     case 3:
       TitleTag = 'h3'
-      className = h3
+      levelClassName = h3
       break
     case 4:
       TitleTag = 'h4'
-      className = h4
+      levelClassName = h4
       break
     case 5:
       TitleTag = 'h5'
-      className = h5
+      levelClassName = h5
       break
     case 6:
       TitleTag = 'h6'
-      className = h6
+      levelClassName = h6
       break
     default:
       TitleTag = 'span'
   }
-  return <TitleTag className={className}>{children}</TitleTag>
+
+  const classNames = classnames(levelClassName, className)
+
+  return (
+    <TitleTag className={classNames} {...props}>
+      {children}
+    </TitleTag>
+  )
 }
