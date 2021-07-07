@@ -5,6 +5,8 @@
   font-family: 'DM Sans', sans-serif;
 }
 
+@import './variables';
+@import './common';
 @import './sidebar';
 @import './navbar';
 @import './connectwallet';

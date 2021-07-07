@@ -1,18 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import classnames from 'classnames'
 
 import CoinsIcon from '../../assets/coins-red.png'
 import PickIcon from '../../assets/pick-grey.png'
 import Logo from '../../assets/white-logo.png'
 import {
   sidebar,
+  sidebarBackgroundLayer,
+  sidebarBackgroundLayerHidden,
+  sidebarHidden,
   sidebarLogo,
   sidebarNavList,
   sidebarNavItem,
   sidebarNavLink,
   sidebarNavLinkIcon,
   sidebarNavLinkActive,
+  closeMenuButton,
 } from './sidebarNew.module.scss'
+import { openMenuHandler } from '../../actions/menuActions'
 
 const linksList = [
   { path: '/staking', exact: true, text: 'Staking', icon: CoinsIcon },
@@ -36,15 +43,34 @@ function NavLinks({ linksList }) {
 }
 
 export function SidebarNew() {
-  return (
-    <div className={sidebar}>
-      <div className={sidebarLogo}>
-        <img src={Logo} alt="DAO1" />
-      </div>
+  const isMenuOpen = useSelector((state) => state.menuReducer.isOpen)
+  const classNames = isMenuOpen ? sidebar : classnames(sidebar, sidebarHidden)
+  const backgroundLayesClassNames = isMenuOpen
+    ? sidebarBackgroundLayer
+    : classnames(sidebarBackgroundLayerHidden)
 
-      <ul className={sidebarNavList}>
-        <NavLinks linksList={linksList} />
-      </ul>
-    </div>
+  const dispatch = useDispatch()
+
+  const closeMenu = () => {
+    dispatch(openMenuHandler(false))
+  }
+
+  return (
+    <>
+      <div onClick={closeMenu} className={backgroundLayesClassNames}></div>
+      <div className={classNames}>
+        <button onClick={closeMenu} className={closeMenuButton}>
+          <span></span>
+          <span></span>
+        </button>
+        <div className={sidebarLogo}>
+          <img src={Logo} alt="DAO1" />
+        </div>
+
+        <ul className={sidebarNavList}>
+          <NavLinks linksList={linksList} />
+        </ul>
+      </div>
+    </>
   )
 }

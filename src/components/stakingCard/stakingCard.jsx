@@ -14,6 +14,7 @@ import {
   cardStakingConditions,
   cardStakingConditionsItem,
   cardStakingList,
+  cardStakingListEmpty,
   cardStakingItem,
   cardStakingItemHead,
   cardStakingItemInfo,
@@ -50,136 +51,144 @@ export function StakingCard({
   }
 
   const StakingHistory = () =>
-    stakingHistory.map(({ staked, claimed, expires, details }, idx) => {
-      const isActive = visibleDetailedBlock === idx
-      const hiddenClassNames = classnames(
-        cardStakingItemDetails,
-        cardStakingItemDetailsHide,
-      )
-      const detailsClassNames = isActive
-        ? cardStakingItemDetails
-        : hiddenClassNames
-      const activeArrowClassNames = classnames(
-        cardArrowButton,
-        cardArrowButtonActive,
-      )
-      const arrowButtonClassnames = isActive
-        ? activeArrowClassNames
-        : cardArrowButton
+    !stakingHistory || stakingHistory.length === 0 ? (
+      <div className={cardStakingListEmpty}>Empty! No information</div>
+    ) : (
+      stakingHistory.map(({ staked, claimed, expires, details }, idx) => {
+        const isActive = visibleDetailedBlock === idx
+        const hiddenClassNames = classnames(
+          cardStakingItemDetails,
+          cardStakingItemDetailsHide,
+        )
+        const detailsClassNames = isActive
+          ? cardStakingItemDetails
+          : hiddenClassNames
+        const activeArrowClassNames = classnames(
+          cardArrowButton,
+          cardArrowButtonActive,
+        )
+        const arrowButtonClassnames = isActive
+          ? activeArrowClassNames
+          : cardArrowButton
 
-      return (
-        <div key={idx} className={cardStakingItem}>
-          <div className={cardStakingItemHead}>
-            <div className={cardStakingItemInfo}>
-              <div className={cardStakingItemInfoBlock}>
-                <div className={cardLabel}>DAO1 Staked</div>
-                <div className={cardInfoText}>{staked}</div>
+        return (
+          <div key={idx} className={cardStakingItem}>
+            <div className={cardStakingItemHead}>
+              <div className={cardStakingItemInfo}>
+                <div className={cardStakingItemInfoBlock}>
+                  <div className={cardLabel}>DAO1 Staked</div>
+                  <div className={cardInfoText}>{staked}</div>
+                </div>
+                <div className={cardStakingItemInfoBlock}>
+                  <div className={cardLabel}>Claimable</div>
+                  <div className={cardInfoText}>{claimed}</div>
+                </div>
+                <div className={cardStakingItemInfoBlock}>
+                  <div className={cardLabel}>Expires</div>
+                  <div className={cardInfoText}>{expires}</div>
+                </div>
               </div>
-              <div className={cardStakingItemInfoBlock}>
-                <div className={cardLabel}>Claimable</div>
-                <div className={cardInfoText}>{claimed}</div>
-              </div>
-              <div className={cardStakingItemInfoBlock}>
-                <div className={cardLabel}>Expires</div>
-                <div className={cardInfoText}>{expires}</div>
+
+              <div className={cardStakingItemButtons}>
+                <Button className={cardButton}>Claimed</Button>
+                <Button className={cardButton} disabled>
+                  Unstaked
+                </Button>
+                <button
+                  onClick={() => accordionClickHandler(idx)}
+                  className={arrowButtonClassnames}
+                >
+                  <img src={ArrowIcon} alt="Arrow" />
+                </button>
               </div>
             </div>
 
-            <div className={cardStakingItemButtons}>
-              <Button className={cardButton}>Claimed</Button>
-              <Button className={cardButton} disabled>
-                Unstaked
-              </Button>
-              <button
-                onClick={() => accordionClickHandler(idx)}
-                className={arrowButtonClassnames}
-              >
-                <img src={ArrowIcon} alt="Arrow" />
-              </button>
+            <div className={detailsClassNames}>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Stake Identifier
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.identifier}
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>Stake status</div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.status}
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Start date (stake placement)
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.start}
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  End date (stake expiration)
+                </div>
+                <div className={cardStakingItemDetailsValue}>{details.end}</div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>Staked amount</div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.amount} DAO1
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Fee for early (before expire) unstake
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.feeForEarlyUnstake}
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Total yield (for entire period)
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.totalYield}
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Locked yield (releases over time)
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.lockedYield} DAO1
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Released yield (claimed + claimable)
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.releasedYield} DAO1
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>Claimed yield</div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.claimedYield} DAO1
+                </div>
+              </div>
+              <div className={cardStakingItemDetailsRow}>
+                <div className={cardStakingItemDetailsName}>
+                  Claimable now (available for withdrawal)
+                </div>
+                <div className={cardStakingItemDetailsValue}>
+                  {details.claimedNow} DAO1
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className={detailsClassNames}>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>Stake Identifier</div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.identifier}
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>Stake status</div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.status}
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Start date (stake placement)
-              </div>
-              <div className={cardStakingItemDetailsValue}>{details.start}</div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                End date (stake expiration)
-              </div>
-              <div className={cardStakingItemDetailsValue}>{details.end}</div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>Staked amount</div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.amount} DAO1
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Fee for early (before expire) unstake
-              </div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.feeForEarlyUnstake}
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Total yield (for entire period)
-              </div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.totalYield}
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Locked yield (releases over time)
-              </div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.lockedYield} DAO1
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Released yield (claimed + claimable)
-              </div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.releasedYield} DAO1
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>Claimed yield</div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.claimedYield} DAO1
-              </div>
-            </div>
-            <div className={cardStakingItemDetailsRow}>
-              <div className={cardStakingItemDetailsName}>
-                Claimable now (available for withdrawal)
-              </div>
-              <div className={cardStakingItemDetailsValue}>
-                {details.claimedNow} DAO1
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    })
+        )
+      })
+    )
 
   return (
     <div className={card}>

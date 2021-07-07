@@ -4,6 +4,7 @@ import modalReducer from './modalReducer'
 import connectionReducer from './connectionReducer'
 import stakedReducer from './stakedReducer'
 import stakingReducer from './stakingReducer'
+import { menuReducer } from './menuReducers'
 
 export const rootReducer = combineReducers({
   sideBarReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   connectionReducer,
   stakedReducer,
   stakingReducer,
+  menuReducer,
 })

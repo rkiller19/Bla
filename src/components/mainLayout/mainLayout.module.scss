@@ -13,5 +13,13 @@
 }
 
 .mainContent {
+  display: flex;
+  flex-wrap: wrap;
   padding: 60px 100px;
+}
+
+@media screen and (max-width: 1354px) {
+  .mainContent {
+    padding: 40px 20px;
+  }
 }

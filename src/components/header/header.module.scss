@@ -7,4 +7,41 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 100px;
+
+  &LeftSide {
+    display: flex;
+    align-items: center;
+  }
+
+  &BurgerButton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $medium-width) {
+  .header {
+    padding: 0 20px;
+
+    &BurgerButton {
+      display: flex;
+      flex-direction: column;
+      background-color: transparent;
+      border: none;
+      margin-right: 5px;
+      color: $main-text;
+      border-radius: 4px;
+      padding: 6px;
+
+      span {
+        width: 25px;
+        height: 2px;
+        background-color: $main-text;
+        margin-bottom: 6px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }

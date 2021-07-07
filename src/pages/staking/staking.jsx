@@ -4,8 +4,8 @@ import { MainLayout, StakingCard } from '../../components'
 
 const datiledStakingFakeData = [
   {
-    staked: '0.0',
-    claimed: '0.0',
+    staked: 0,
+    claimed: 0,
     expires: 'Expired',
     details: {
       identifier: 2,
@@ -22,9 +22,9 @@ const datiledStakingFakeData = [
     },
   },
   {
-    staked: 0.0,
-    claimed: 0.0,
-    expires: 'Expired',
+    staked: 0,
+    claimed: 0.0001,
+    expires: '10 Jul 2021',
     details: {
       identifier: 2,
       status: 'Active',
@@ -40,8 +40,8 @@ const datiledStakingFakeData = [
     },
   },
   {
-    staked: 0.0,
-    claimed: 0.0,
+    staked: 123.123,
+    claimed: 0.0001,
     expires: 'Expired',
     details: {
       identifier: 2,
@@ -62,12 +62,34 @@ const datiledStakingFakeData = [
 export const Staking = () => {
   return (
     <MainLayout>
-      <StakingCard
-        name="DAO1 — FIXED 30 DAYS"
-        daysAmount={30}
-        yieldPercent={1.55}
-        stakingHistory={datiledStakingFakeData}
-      />
+      <div className="col">
+        <StakingCard
+          name="DAO1 — FIXED 30 DAYS"
+          daysAmount={30}
+          yieldPercent={1.55}
+          stakingHistory={datiledStakingFakeData}
+        />
+        <StakingCard
+          name="DAO1 — FIXED 60 DAYS"
+          daysAmount={60}
+          yieldPercent={4.5}
+          stakingHistory={[]}
+        />
+      </div>
+      <div className="col">
+        <StakingCard
+          name="DAO1 — FIXED 60 DAYS"
+          daysAmount={60}
+          yieldPercent={4.5}
+          stakingHistory={[]}
+        />
+        <StakingCard
+          name="DAO1 — FIXED 90 DAYS"
+          daysAmount={90}
+          yieldPercent={11.05}
+          stakingHistory={datiledStakingFakeData}
+        />
+      </div>
     </MainLayout>
   )
 }

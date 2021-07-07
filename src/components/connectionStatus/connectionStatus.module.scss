@@ -9,11 +9,38 @@
 }
 .accountAddress {
   margin-right: 24px;
+
+  &Block {
+    display: flex;
+    align-items: center;
+  }
 }
 .connectButton {
   color: $light-text;
 
   &:hover {
     color: $main-text;
+  }
+}
+
+@media screen and (max-width: $medium-width) {
+  .connectionStatus {
+    flex-direction: column;
+  }
+
+  .accountAddress {
+    font-size: 11px;
+    margin-right: 0;
+
+    &Block {
+      display: flex;
+      align-items: center;
+      order: 2;
+    }
+  }
+
+  .connectButton {
+    order: 1;
+    margin-bottom: 10px;
   }
 }
