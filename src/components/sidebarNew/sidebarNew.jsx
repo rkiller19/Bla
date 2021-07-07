@@ -20,6 +20,7 @@ import {
   closeMenuButton,
 } from './sidebarNew.module.scss'
 import { openMenuHandler } from '../../actions/menuActions'
+import { CloseButton } from '../'
 
 const linksList = [
   { path: '/staking', exact: true, text: 'Staking', icon: CoinsIcon },
@@ -59,10 +60,7 @@ export function SidebarNew() {
     <>
       <div onClick={closeMenu} className={backgroundLayesClassNames}></div>
       <div className={classNames}>
-        <button onClick={closeMenu} className={closeMenuButton}>
-          <span></span>
-          <span></span>
-        </button>
+        <CloseButton onClick={closeMenu} className={closeMenuButton} />
         <div className={sidebarLogo}>
           <img src={Logo} alt="DAO1" />
         </div>
