@@ -181,6 +181,21 @@
   }
 }
 
+.stakeModal {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: 100%;
+
+  &Title {
+    margin-bottom: 10px;
+  }
+
+  &Input {
+    margin-bottom: 20px;
+  }
+}
+
 @media screen and (max-width: $medium-width) {
   .card {
     &Head {
@@ -229,5 +244,9 @@
         }
       }
     }
+  }
+
+  .stakeModal {
+    width: 240px;
   }
 }

@@ -31,8 +31,11 @@ import {
   cardTatalStaked,
   cardTatalStakedValue,
   cardButton,
+  stakeModal,
+  stakeModalTitle,
+  stakeModalInput,
 } from './stakingCard.module.scss'
-import { Button } from '../'
+import { Button, Modal, Title, Input } from '../'
 
 export function StakingCard({
   name,
@@ -40,6 +43,7 @@ export function StakingCard({
   yieldPercent,
   stakingHistory,
 }) {
+  const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
   const accordionClickHandler = (id) => {
     if (id === visibleDetailedBlock) {
@@ -191,47 +195,66 @@ export function StakingCard({
     )
 
   return (
-    <div className={card}>
-      <div className={cardHead}>
-        <div className={cardHeadLogo}>
-          <img src={DAO1Logo} alt="DAO1" />
+    <>
+      <Modal
+        isOpen={isStakeModalOpen}
+        closeHandler={() => setIsStakeModalOpen(false)}
+      >
+        <div className={stakeModal}>
+          <Title className={stakeModalTitle} level={3}>
+            Stake DAO1
+          </Title>
+          <Input className={stakeModalInput} />
+          <Button>Stake</Button>
         </div>
-        <div className={cardName}>
-          <span className={cardLabel}>Name</span>
-          <span className={cardNameText}>{name}</span>
+      </Modal>
+      <div className={card}>
+        <div className={cardHead}>
+          <div className={cardHeadLogo}>
+            <img src={DAO1Logo} alt="DAO1" />
+          </div>
+          <div className={cardName}>
+            <span className={cardLabel}>Name</span>
+            <span className={cardNameText}>{name}</span>
+          </div>
         </div>
-      </div>
 
-      <div className={cardStakingConditions}>
-        <div className={cardStakingConditionsItem}>
-          <div className={cardLabel}>{daysAmount}D yield</div>
-          <div className={cardInfoText}>{yieldPercent}%</div>
+        <div className={cardStakingConditions}>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>{daysAmount}D yield</div>
+            <div className={cardInfoText}>{yieldPercent}%</div>
+          </div>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>Daily yield</div>
+            <div className={cardInfoText}>0.0516%</div>
+          </div>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>APY-{daysAmount}D compound</div>
+            <div className={cardInfoText}>20.2%</div>
+          </div>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>Duration</div>
+            <div className={cardInfoText}>{daysAmount} Days</div>
+          </div>
         </div>
-        <div className={cardStakingConditionsItem}>
-          <div className={cardLabel}>Daily yield</div>
-          <div className={cardInfoText}>0.0516%</div>
-        </div>
-        <div className={cardStakingConditionsItem}>
-          <div className={cardLabel}>APY-{daysAmount}D compound</div>
-          <div className={cardInfoText}>20.2%</div>
-        </div>
-        <div className={cardStakingConditionsItem}>
-          <div className={cardLabel}>Duration</div>
-          <div className={cardInfoText}>{daysAmount} Days</div>
-        </div>
-      </div>
 
-      <div className={cardStakingList}>
-        <StakingHistory />
-      </div>
-
-      <div className={cardFooter}>
-        <div className={cardTatalStaked}>
-          <div className={cardLabel}>Total Staked:</div>
-          <div className={cardTatalStakedValue}>246.246 DAO1</div>
+        <div className={cardStakingList}>
+          <StakingHistory />
         </div>
-        <Button className={cardButton}>Stake</Button>
+
+        <div className={cardFooter}>
+          <div className={cardTatalStaked}>
+            <div className={cardLabel}>Total Staked:</div>
+            <div className={cardTatalStakedValue}>246.246 DAO1</div>
+          </div>
+          <Button
+            onClick={() => setIsStakeModalOpen(true)}
+            className={cardButton}
+          >
+            Stake
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
