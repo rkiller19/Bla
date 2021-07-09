@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import classnames from 'classnames'
+import equal from 'fast-deep-equal'
 
 import DAO1Logo from '../../assets/white-logo.png'
 import ArrowIcon from '../../assets/arrow-down.png'
@@ -36,15 +37,46 @@ import {
   stakeModalInput,
 } from './stakingCard.module.scss'
 import { Button, Modal, Title, Input } from '../'
+import { getContractApi } from '../../services/staking/FixedStaking'
 
 export function StakingCard({
   name,
   daysAmount,
   yieldPercent,
-  stakingHistory,
+  contractAddress,
 }) {
+  const { getStakes, stake, unstake, harvest } = getContractApi(contractAddress)
+  const [stakingHistory, setStakingHistory] = useState([])
+  const [totalStaked, setTotalStaked] = useState(0)
+  const [stakeAmount, setStakeAmount] = useState('')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
+
+  useEffect(() => {
+    getStakes().then(({ stakes, totalStaked }) => {
+      setStakingHistory(stakes)
+      setTotalStaked(totalStaked)
+    })
+  }, [])
+
+  useEffect(() => {
+    // Rerender component when stakes data is changed. Temporary solution
+    const interval = setInterval(() => {
+      getStakes().then(({ stakes, totalStaked }) => {
+        if (stakingHistory) {
+          for (let i = 0; i < stakes.length; i++) {
+            if (!equal(stakes[i], stakingHistory[i])) {
+              setStakingHistory(stakes)
+              setTotalStaked(totalStaked)
+              clearInterval(interval)
+              return
+            }
+          }
+        }
+      })
+    }, 2000)
+  }, [stakingHistory])
+
   const accordionClickHandler = (id) => {
     if (id === visibleDetailedBlock) {
       setVisibleDetailedBlock(null)
@@ -54,144 +86,91 @@ export function StakingCard({
     setVisibleDetailedBlock(id)
   }
 
+  const stakeAmountHandler = (e) => {
+    e.preventDefault()
+
+    setStakeAmount(e.target.value)
+  }
+
   const StakingHistory = () =>
     !stakingHistory || stakingHistory.length === 0 ? (
       <div className={cardStakingListEmpty}>Empty! No information</div>
     ) : (
-      stakingHistory.map(({ staked, claimed, expires, details }, idx) => {
-        const isActive = visibleDetailedBlock === idx
-        const hiddenClassNames = classnames(
-          cardStakingItemDetails,
-          cardStakingItemDetailsHide,
-        )
-        const detailsClassNames = isActive
-          ? cardStakingItemDetails
-          : hiddenClassNames
-        const activeArrowClassNames = classnames(
-          cardArrowButton,
-          cardArrowButtonActive,
-        )
-        const arrowButtonClassnames = isActive
-          ? activeArrowClassNames
-          : cardArrowButton
+      stakingHistory.map(
+        (
+          { active, staked, harvestable, allowHarvest, expires, details },
+          idx,
+        ) => {
+          const isActive = visibleDetailedBlock === idx
+          const hiddenClassNames = classnames(
+            cardStakingItemDetails,
+            cardStakingItemDetailsHide,
+          )
+          const detailsClassNames = isActive
+            ? cardStakingItemDetails
+            : hiddenClassNames
+          const activeArrowClassNames = classnames(
+            cardArrowButton,
+            cardArrowButtonActive,
+          )
+          const arrowButtonClassnames = isActive
+            ? activeArrowClassNames
+            : cardArrowButton
 
-        return (
-          <div key={idx} className={cardStakingItem}>
-            <div className={cardStakingItemHead}>
-              <div className={cardStakingItemInfo}>
-                <div className={cardStakingItemInfoBlock}>
-                  <div className={cardLabel}>DAO1 Staked</div>
-                  <div className={cardInfoText}>{staked}</div>
+          return (
+            <div key={idx} className={cardStakingItem}>
+              <div className={cardStakingItemHead}>
+                <div className={cardStakingItemInfo}>
+                  <div className={cardStakingItemInfoBlock}>
+                    <div className={cardLabel}>DAO1 Staked</div>
+                    <div className={cardInfoText}>{staked}</div>
+                  </div>
+                  <div className={cardStakingItemInfoBlock}>
+                    <div className={cardLabel}>Harvestable</div>
+                    <div className={cardInfoText}>{harvestable}</div>
+                  </div>
+                  <div className={cardStakingItemInfoBlock}>
+                    <div className={cardLabel}>Expires</div>
+                    <div className={cardInfoText}>{expires}</div>
+                  </div>
                 </div>
-                <div className={cardStakingItemInfoBlock}>
-                  <div className={cardLabel}>Claimable</div>
-                  <div className={cardInfoText}>{claimed}</div>
-                </div>
-                <div className={cardStakingItemInfoBlock}>
-                  <div className={cardLabel}>Expires</div>
-                  <div className={cardInfoText}>{expires}</div>
+                <div className={cardStakingItemButtons}>
+                  <Button
+                    disabled={!allowHarvest}
+                    onClick={() => allowHarvest && harvest(idx)}
+                    className={cardButton}
+                  >
+                    Harvest
+                  </Button>
+                  <Button
+                    disabled={!active}
+                    onClick={() => active && unstake(idx)}
+                    className={cardButton}
+                  >
+                    Unstake
+                  </Button>
+                  <button
+                    onClick={() => accordionClickHandler(idx)}
+                    className={arrowButtonClassnames}
+                  >
+                    <img src={ArrowIcon} alt="Arrow" />
+                  </button>
                 </div>
               </div>
 
-              <div className={cardStakingItemButtons}>
-                <Button className={cardButton}>Claimed</Button>
-                <Button className={cardButton} disabled>
-                  Unstaked
-                </Button>
-                <button
-                  onClick={() => accordionClickHandler(idx)}
-                  className={arrowButtonClassnames}
-                >
-                  <img src={ArrowIcon} alt="Arrow" />
-                </button>
+              <div className={detailsClassNames}>
+                {details &&
+                  details.map(({ name, value }, idx) => (
+                    <div key={idx} className={cardStakingItemDetailsRow}>
+                      <div className={cardStakingItemDetailsName}>{name}</div>
+                      <div className={cardStakingItemDetailsValue}>{value}</div>
+                    </div>
+                  ))}
               </div>
             </div>
-
-            <div className={detailsClassNames}>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Stake Identifier
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.identifier}
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>Stake status</div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.status}
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Start date (stake placement)
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.start}
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  End date (stake expiration)
-                </div>
-                <div className={cardStakingItemDetailsValue}>{details.end}</div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>Staked amount</div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.amount} DAO1
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Fee for early (before expire) unstake
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.feeForEarlyUnstake}
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Total yield (for entire period)
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.totalYield}
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Locked yield (releases over time)
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.lockedYield} DAO1
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Released yield (claimed + claimable)
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.releasedYield} DAO1
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>Claimed yield</div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.claimedYield} DAO1
-                </div>
-              </div>
-              <div className={cardStakingItemDetailsRow}>
-                <div className={cardStakingItemDetailsName}>
-                  Claimable now (available for withdrawal)
-                </div>
-                <div className={cardStakingItemDetailsValue}>
-                  {details.claimedNow} DAO1
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      })
+          )
+        },
+      )
     )
 
   return (
@@ -204,8 +183,19 @@ export function StakingCard({
           <Title className={stakeModalTitle} level={3}>
             Stake DAO1
           </Title>
-          <Input className={stakeModalInput} />
-          <Button>Stake</Button>
+          <Input
+            onChange={stakeAmountHandler}
+            value={stakeAmount}
+            className={stakeModalInput}
+          />
+          <Button
+            onClick={() => {
+              stake(stakeAmount)
+              setIsStakeModalOpen(false)
+            }}
+          >
+            Stake
+          </Button>
         </div>
       </Modal>
       <div className={card}>
@@ -245,7 +235,7 @@ export function StakingCard({
         <div className={cardFooter}>
           <div className={cardTatalStaked}>
             <div className={cardLabel}>Total Staked:</div>
-            <div className={cardTatalStakedValue}>246.246 DAO1</div>
+            <div className={cardTatalStakedValue}>{totalStaked} DAO1</div>
           </div>
           <Button
             onClick={() => setIsStakeModalOpen(true)}
