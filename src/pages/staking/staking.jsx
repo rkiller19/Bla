@@ -1,6 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEthers } from '@usedapp/core'
+import { useSelector } from 'react-redux'
 
 import {
   connectMessage,
@@ -8,8 +7,7 @@ import {
   connectMessageInnerContainerTitle,
 } from './staking.module.scss'
 import { MainLayout, StakingCard, Title, Button } from '../../components'
-import { connectionAction } from '../../actions/connectionAction'
-import MakeQuerablePromise from '../../utils/querable-promise'
+import { withWalletConnection } from '../../utils/withWalletConnection'
 
 const datiledStakingFakeData = [
   {
@@ -68,28 +66,8 @@ const datiledStakingFakeData = [
   },
 ]
 
-export const Staking = () => {
-  const { activateBrowserWallet } = useEthers()
+const StakingPure = ({ activateWallet }) => {
   const isConnected = useSelector((state) => state.connectionReducer)
-  const dispatch = useDispatch()
-
-  const activateWallet = async () => {
-    const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet(),
-    )
-    activateBrowserWalletPromise.then(
-      function() {
-        if (activateBrowserWalletPromise.isFulfilled()) {
-          dispatch(connectionAction(true))
-        }
-      },
-      function() {
-        /* code if some error */
-
-        dispatch(connectionAction(false))
-      },
-    )
-  }
 
   const Content = () => {
     if (isConnected) {
@@ -145,3 +123,5 @@ export const Staking = () => {
     </MainLayout>
   )
 }
+
+export const Staking = withWalletConnection(StakingPure)

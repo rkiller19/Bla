@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEthers, shortenAddress } from '@usedapp/core'
 
 import WalletIcon from '../../assets/wallet-red.png'
@@ -11,37 +11,12 @@ import {
   accountAddress,
   connectButton,
 } from './connectionStatus.module.scss'
-import { connectionAction } from '../../actions/connectionAction'
-import MakeQuerablePromise from '../../utils/querable-promise'
+import { withWalletConnection } from '../../utils/withWalletConnection'
 
-export function ConnectionStatus() {
-  const { account, error, deactivate, activateBrowserWallet } = useEthers()
+function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
+  const { account, error } = useEthers()
 
-  const dispatch = useDispatch()
   const isConnected = useSelector((state) => state.connectionReducer)
-
-  const activateWallet = async () => {
-    const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet(),
-    )
-    activateBrowserWalletPromise.then(
-      function() {
-        if (activateBrowserWalletPromise.isFulfilled()) {
-          dispatch(connectionAction(true))
-        }
-      },
-      function() {
-        /* code if some error */
-
-        dispatch(connectionAction(false))
-      },
-    )
-  }
-
-  const deactivateWallet = () => {
-    deactivate()
-    dispatch(connectionAction(false))
-  }
 
   const ConnectionResult = () => {
     if (error) {
@@ -81,3 +56,5 @@ export function ConnectionStatus() {
     </div>
   )
 }
+
+export const ConnectionStatus = withWalletConnection(ConnectionStatusPure)

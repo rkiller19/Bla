@@ -6,10 +6,10 @@ import { useEthers, shortenAddress } from '@usedapp/core'
 import WalletLogo from '../../assets/Vector.png'
 import { inandout } from '../../actions/sidebarAction'
 import { connectionAction } from '../../actions/connectionAction'
-import MakeQuerablePromise from '../../utils/querable-promise'
+import { withWalletConnection } from '../../utils/withWalletConnection'
 
-export const Navbar = () => {
-  const { account, error, deactivate, activateBrowserWallet } = useEthers()
+const NavbarPure = ({ activateWallet, deactivateWallet }) => {
+  const { account, error } = useEthers()
 
   const dispatch = useDispatch()
   const history = useHistory()
@@ -24,29 +24,6 @@ export const Navbar = () => {
   }
   const SideBar = () => {
     dispatch(inandout(true))
-  }
-
-  const activateWallet = async () => {
-    const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet(),
-    )
-    activateBrowserWalletPromise.then(
-      function() {
-        if (activateBrowserWalletPromise.isFulfilled()) {
-          dispatch(connectionAction(true))
-        }
-      },
-      function() {
-        /* code if some error */
-
-        dispatch(connectionAction(false))
-      },
-    )
-  }
-
-  const deactivateWallet = () => {
-    deactivate()
-    dispatch(connectionAction(false))
   }
 
   useEffect(() => {
@@ -100,3 +77,5 @@ export const Navbar = () => {
     </div>
   )
 }
+
+export const Navbar = withWalletConnection(NavbarPure)

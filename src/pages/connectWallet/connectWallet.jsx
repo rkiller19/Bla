@@ -6,10 +6,10 @@ import { useEthers } from '@usedapp/core'
 import { Navbar, Sidebar } from '../../components'
 import ConnectWalletImg from '../../assets/ConnectWallet.png'
 import { connectionAction } from '../../actions/connectionAction'
-import MakeQuerablePromise from '../../utils/querable-promise'
+import { withWalletConnection } from '../../utils/withWalletConnection'
 
-export const ConnectWallet = () => {
-  const { account, deactivate, activateBrowserWallet } = useEthers()
+const ConnectWalletPure = ({ activateWallet, deactivateWallet }) => {
+  const { account } = useEthers()
   const { error } = useEthers()
   const isConnected = useSelector((state) => state.connectionReducer)
   const history = useHistory()
@@ -26,29 +26,6 @@ export const ConnectWallet = () => {
     // if connected redirect user to dashboard
     isConnected && account && history.push('/farming')
   }, [isConnected, account])
-
-  const activateWallet = async () => {
-    const activateBrowserWalletPromise = MakeQuerablePromise(
-      activateBrowserWallet(),
-    )
-    activateBrowserWalletPromise.then(
-      function() {
-        if (activateBrowserWalletPromise.isFulfilled()) {
-          dispatch(connectionAction(true))
-        }
-      },
-      function() {
-        /* code if some error */
-
-        dispatch(connectionAction(false))
-      },
-    )
-  }
-
-  const deactivateWallet = () => {
-    deactivate()
-    dispatch(connectionAction(false))
-  }
 
   return (
     <div className="connectWallet">
@@ -78,3 +55,5 @@ export const ConnectWallet = () => {
     </div>
   )
 }
+
+export const ConnectWallet = withWalletConnection(ConnectWalletPure)
