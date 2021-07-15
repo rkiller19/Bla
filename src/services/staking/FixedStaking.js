@@ -11,8 +11,10 @@ import { formatDate } from '../../utils/formatDate'
 export function getContractApi(address) {
   const contract = new ethers.Contract(address, FixedStakingAbi, signer)
 
-  async function getStakes() {
+  async function getData() {
     try {
+      const stakeDurationDays = (await contract.stakeDurationDays()).toNumber()
+      const rewardRate = (await contract.rewardRate()).toNumber() / 100
       const address = await signer.getAddress()
       const stakesLength = (await contract.getStakesLength(address)).toNumber()
       const stakes = []
@@ -95,6 +97,8 @@ export function getContractApi(address) {
       })
 
       return {
+        stakeDurationDays,
+        rewardRate,
         totalStaked: formatAttoToToken(totalStaked),
         stakes: formatedStakes,
       }
@@ -129,5 +133,5 @@ export function getContractApi(address) {
     }
   }
 
-  return { getStakes, stake, unstake, harvest }
+  return { getData, stake, unstake, harvest }
 }

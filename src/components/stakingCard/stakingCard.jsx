@@ -39,13 +39,10 @@ import {
 import { Button, Modal, Title, Input } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
 
-export function StakingCard({
-  name,
-  daysAmount,
-  yieldPercent,
-  contractAddress,
-}) {
-  const { getStakes, stake, unstake, harvest } = getContractApi(contractAddress)
+export function StakingCard({ name, contractAddress }) {
+  const { getData, stake, unstake, harvest } = getContractApi(contractAddress)
+  const [stakeDurationDays, setStakeDurationDays] = useState(0)
+  const [rewardRate, setRewardRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
   const [totalStaked, setTotalStaked] = useState(0)
   const [stakeAmount, setStakeAmount] = useState('')
@@ -53,16 +50,18 @@ export function StakingCard({
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
 
   useEffect(() => {
-    getStakes().then(({ stakes, totalStaked }) => {
+    getData().then(({ stakeDurationDays, rewardRate, stakes, totalStaked }) => {
+      setStakeDurationDays(stakeDurationDays)
+      setRewardRate(rewardRate)
       setStakingHistory(stakes)
       setTotalStaked(totalStaked)
     })
   }, [])
 
   useEffect(() => {
-    // Rerender component when stakes data is changed. Temporary solution
+    // Rerender component when stakes data is changed
     const interval = setInterval(() => {
-      getStakes().then(({ stakes, totalStaked }) => {
+      getData().then(({ stakes, totalStaked }) => {
         if (stakingHistory) {
           for (let i = 0; i < stakes.length; i++) {
             if (!equal(stakes[i], stakingHistory[i])) {
@@ -211,20 +210,20 @@ export function StakingCard({
 
         <div className={cardStakingConditions}>
           <div className={cardStakingConditionsItem}>
-            <div className={cardLabel}>{daysAmount}D yield</div>
-            <div className={cardInfoText}>{yieldPercent}%</div>
+            <div className={cardLabel}>{stakeDurationDays}D yield</div>
+            <div className={cardInfoText}>{rewardRate}%</div>
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>Daily yield</div>
             <div className={cardInfoText}>0.0516%</div>
           </div>
           <div className={cardStakingConditionsItem}>
-            <div className={cardLabel}>APY-{daysAmount}D compound</div>
+            <div className={cardLabel}>APY-{stakeDurationDays}D compound</div>
             <div className={cardInfoText}>20.2%</div>
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>Duration</div>
-            <div className={cardInfoText}>{daysAmount} Days</div>
+            <div className={cardInfoText}>{stakeDurationDays} Days</div>
           </div>
         </div>
 
