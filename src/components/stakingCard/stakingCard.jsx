@@ -35,12 +35,15 @@ import {
   stakeModal,
   stakeModalTitle,
   stakeModalInput,
+  loader,
+  loaderTxHash,
 } from './stakingCard.module.scss'
-import { Button, Modal, Title, Input } from '../'
+import { Button, Modal, Title, Input, Spinner } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
 
 export function StakingCard({ name, contractAddress }) {
   const { getData, stake, unstake, harvest } = getContractApi(contractAddress)
+  const [loading, setLoading] = useState(true)
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
   const [rewardRate, setRewardRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
@@ -48,9 +51,11 @@ export function StakingCard({ name, contractAddress }) {
   const [stakeAmount, setStakeAmount] = useState('')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
+  const [txHash, setTxHash] = useState('')
 
   useEffect(() => {
     getData().then(({ stakeDurationDays, rewardRate, stakes, totalStaked }) => {
+      setLoading(false)
       setStakeDurationDays(stakeDurationDays)
       setRewardRate(rewardRate)
       setStakingHistory(stakes)
@@ -136,14 +141,52 @@ export function StakingCard({ name, contractAddress }) {
                 <div className={cardStakingItemButtons}>
                   <Button
                     disabled={!allowHarvest}
-                    onClick={() => allowHarvest && harvest(idx)}
+                    onClick={() => {
+                      allowHarvest &&
+                        harvest(idx)
+                          .then((tx) => {
+                            setTxHash(tx.hash)
+                            setLoading(true)
+
+                            tx.wait()
+                              .then(() => {
+                                setLoading(false)
+                              })
+                              .catch((err) => {
+                                setLoading(false)
+                                console.log(err)
+                              })
+                          })
+                          .catch((err) => {
+                            console.log(err)
+                          })
+                    }}
                     className={cardButton}
                   >
                     Harvest
                   </Button>
                   <Button
                     disabled={!active}
-                    onClick={() => active && unstake(idx)}
+                    onClick={() => {
+                      active &&
+                        unstake(idx)
+                          .then((tx) => {
+                            setTxHash(tx.hash)
+                            setLoading(true)
+
+                            tx.wait()
+                              .then(() => {
+                                setLoading(false)
+                              })
+                              .catch((err) => {
+                                setLoading(false)
+                                console.log(err)
+                              })
+                          })
+                          .catch((err) => {
+                            console.log(err)
+                          })
+                    }}
                     className={cardButton}
                   >
                     Unstake
@@ -189,8 +232,24 @@ export function StakingCard({ name, contractAddress }) {
           />
           <Button
             onClick={() => {
-              stake(stakeAmount)
               setIsStakeModalOpen(false)
+              stake(stakeAmount)
+                .then((tx) => {
+                  setTxHash(tx.hash)
+                  setLoading(true)
+
+                  tx.wait()
+                    .then(() => {
+                      setLoading(false)
+                    })
+                    .catch((err) => {
+                      setLoading(false)
+                      console.log(err)
+                    })
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
             }}
           >
             Stake
@@ -198,6 +257,12 @@ export function StakingCard({ name, contractAddress }) {
         </div>
       </Modal>
       <div className={card}>
+        {loading && (
+          <div className={loader}>
+            <Spinner />
+            <span className={loaderTxHash}>{txHash}</span>
+          </div>
+        )}
         <div className={cardHead}>
           <div className={cardHeadLogo}>
             <img src={DAO1Logo} alt="DAO1" />

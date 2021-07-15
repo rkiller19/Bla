@@ -111,7 +111,7 @@ export function getContractApi(address) {
     try {
       const amountBN = formatTokenToAtto(amount)
 
-      contract.stake(amountBN)
+      return contract.stake(amountBN)
     } catch (error) {
       console.log(error)
     }
@@ -119,7 +119,7 @@ export function getContractApi(address) {
 
   async function unstake(id) {
     try {
-      contract.unstake(id)
+      return contract.unstake(id)
     } catch (error) {
       console.log(error)
     }
@@ -127,7 +127,7 @@ export function getContractApi(address) {
 
   async function harvest(id) {
     try {
-      contract.harvest(id)
+      return contract.harvest(id)
     } catch (error) {
       console.log(error)
     }
