@@ -10,28 +10,32 @@ import {
 } from '../../utils/ether-utilities'
 import { formatDate } from '../../utils/formatDate'
 
-const {
-  REACT_APP_FIXED_STAKING_30_ADDRESS: FixedStakingAddress,
-  REACT_APP_DAO1_ADDRESS: DAO1Address,
-} = process.env
+const { REACT_APP_DAO1_ADDRESS: DAO1Address } = process.env
 
 const DAO1Signer = new ethers.Contract(DAO1Address, DAO1Abi, signer)
 
-export function getContractApi(address) {
-  const contract = new ethers.Contract(address, FixedStakingAbi, signer)
+export function getContractApi(contractAddress) {
+  const contract = new ethers.Contract(contractAddress, FixedStakingAbi, signer)
 
   async function getData() {
     try {
       const stakeDurationDays = (await contract.stakeDurationDays()).toNumber()
       const rewardRate = (await contract.rewardRate()).toNumber() / 100
-      const address = await signer.getAddress()
-      const stakesLength = (await contract.getStakesLength(address)).toNumber()
+      const signerAddress = await signer.getAddress()
+      const stakesLength = (
+        await contract.getStakesLength(signerAddress)
+      ).toNumber()
       const stakes = []
       let totalStaked = ethers.BigNumber.from('0')
-      const tokensBalance = (await DAO1Signer.balanceOf(address)).toString()
+      const tokensBalance = (
+        await DAO1Signer.balanceOf(signerAddress)
+      ).toString()
+      const allowance = (
+        await DAO1Signer.allowance(signerAddress, contractAddress)
+      ).toString()
 
       for (let i = 0; i < stakesLength; i++) {
-        const stake = await contract.getStake(address, i)
+        const stake = await contract.getStake(signerAddress, i)
         stakes.push(stake)
       }
 
@@ -112,6 +116,7 @@ export function getContractApi(address) {
         totalStaked: formatAttoToToken(totalStaked),
         stakes: formatedStakes,
         tokensBalance: formatAttoToToken(tokensBalance),
+        allowance,
       }
     } catch (error) {
       console.log(error)
@@ -144,5 +149,13 @@ export function getContractApi(address) {
     }
   }
 
-  return { getData, stake, unstake, harvest }
+  async function approve() {
+    try {
+      return DAO1Signer.approve(contractAddress, ethers.constants.MaxUint256)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { getData, stake, unstake, harvest, approve }
 }

@@ -43,17 +43,21 @@ import { Button, Modal, Title, Input, Spinner } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
 
 export function StakingCard({ name, contractAddress }) {
-  const { getData, stake, unstake, harvest } = getContractApi(contractAddress)
+  const { getData, stake, unstake, harvest, approve } = getContractApi(
+    contractAddress,
+  )
   const [loading, setLoading] = useState(true)
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
   const [rewardRate, setRewardRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
   const [totalStaked, setTotalStaked] = useState(0)
   const [tokensBalance, setTokensBalance] = useState(0)
+  const [allowance, setAllowance] = useState(0)
   const [stakeAmount, setStakeAmount] = useState('')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
   const [txHash, setTxHash] = useState('')
+  const [allowanceEnough, setAllowanceEnough] = useState(true)
 
   useEffect(() => {
     getData().then(
@@ -63,6 +67,7 @@ export function StakingCard({ name, contractAddress }) {
         stakes,
         totalStaked,
         tokensBalance,
+        allowance,
       }) => {
         setLoading(false)
         setStakeDurationDays(stakeDurationDays)
@@ -70,6 +75,7 @@ export function StakingCard({ name, contractAddress }) {
         setStakingHistory(stakes)
         setTotalStaked(totalStaked)
         setTokensBalance(tokensBalance)
+        setAllowance(allowance)
       },
     )
   }, [])
@@ -92,6 +98,10 @@ export function StakingCard({ name, contractAddress }) {
     }, 2000)
   }, [stakingHistory])
 
+  useEffect(() => {
+    setAllowanceEnough(Number(stakeAmount) <= Number(allowance))
+  }, [stakeAmount, allowance])
+
   const accordionClickHandler = (id) => {
     if (id === visibleDetailedBlock) {
       setVisibleDetailedBlock(null)
@@ -103,8 +113,51 @@ export function StakingCard({ name, contractAddress }) {
 
   const stakeAmountHandler = (e) => {
     e.preventDefault()
-
     setStakeAmount(e.target.value)
+  }
+
+  const stakeHandler = () => {
+    setIsStakeModalOpen(false)
+    stake(String(stakeAmount))
+      .then((tx) => {
+        setTxHash(tx.hash)
+        setLoading(true)
+
+        tx.wait()
+          .then(() => {
+            setLoading(false)
+          })
+          .catch((err) => {
+            setLoading(false)
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const approveHandler = () => {
+    approve()
+      .then((tx) => {
+        setTxHash(tx.hash)
+        setLoading(true)
+
+        tx.wait()
+          .then(() => {
+            setLoading(false)
+            getData().then(({ allowance }) => {
+              setAllowance(allowance)
+            })
+          })
+          .catch((err) => {
+            setLoading(false)
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const StakingHistory = () =>
@@ -249,30 +302,12 @@ export function StakingCard({ name, contractAddress }) {
           >
             Max
           </Button>
-          <Button
-            onClick={() => {
-              setIsStakeModalOpen(false)
-              stake(String(stakeAmount))
-                .then((tx) => {
-                  setTxHash(tx.hash)
-                  setLoading(true)
 
-                  tx.wait()
-                    .then(() => {
-                      setLoading(false)
-                    })
-                    .catch((err) => {
-                      setLoading(false)
-                      console.log(err)
-                    })
-                })
-                .catch((err) => {
-                  console.log(err)
-                })
-            }}
-          >
-            Stake
-          </Button>
+          {allowanceEnough ? (
+            <Button onClick={stakeHandler}>Stake</Button>
+          ) : (
+            <Button onClick={approveHandler}>Approve</Button>
+          )}
         </div>
       </Modal>
       <div className={card}>
