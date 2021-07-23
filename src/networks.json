@@ -1,0 +1,36 @@
+{
+  "1": {
+    "blockExplorer": "https://etherscan.io/address/",
+    "name": "Mainnet",
+    "fixedStakingContracts": ["", "", ""],
+    "tokenContract": ""
+  },
+  "4": {
+    "blockExplorer": "https://rinkeby.etherscan.io/address/",
+    "name": "Rinkeby",
+    "fixedStakingContracts": ["", "", ""],
+    "tokenContract": ""
+  },
+  "137": {
+    "blockExplorer": "https://polygonscan.com/address/",
+    "name": "Polygon",
+    "fixedStakingContracts": ["", "", ""],
+    "tokenContract": ""
+  },
+  "80001": {
+    "blockExplorer": "https://mumbai.polygonscan.com/address/",
+    "name": "Mumbai",
+    "fixedStakingContracts": ["", "", ""],
+    "tokenContract": ""
+  },
+  "1337": {
+    "blockExplorer": "",
+    "name": "Staging",
+    "fixedStakingContracts": [
+      "0x6Ead1E7837Df8C175b95dd2D1250b7432051bEB6",
+      "0x96Db7b0BbdbC2aaF949b01c5672Bd044e336F099",
+      "0x7bAf8Ef9B533d87b265f824334Dd8ED3fB82e400"
+    ],
+    "tokenContract": "0x539FC649E5Cb328E7Ac0f5C2e7daaBfb6A380Efc"
+  }
+}
