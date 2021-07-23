@@ -193,6 +193,21 @@
   }
 
   &Input {
+    flex: 1 1 auto;
+
+    &Container {
+      display: flex;
+      width: 100%;
+    }
+  }
+
+  &MaxButton {
+    margin-left: 10px;
+  }
+
+  &Balance {
+    font-size: 13px;
+    margin-top: 10px;
     margin-bottom: 20px;
   }
 }
@@ -215,10 +230,6 @@
     word-wrap: break-word;
     text-align: center;
   }
-}
-
-.buttonMax {
-  margin-bottom: 20px;
 }
 
 @media screen and (max-width: $medium-width) {

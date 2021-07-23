@@ -34,10 +34,12 @@ import {
   cardButton,
   stakeModal,
   stakeModalTitle,
+  stakeModalInputContainer,
   stakeModalInput,
+  stakeModalMaxButton,
+  stakeModalBalance,
   loader,
   loaderTxHash,
-  buttonMax,
 } from './stakingCard.module.scss'
 import { Button, Modal, Title, Input, Spinner } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
@@ -53,7 +55,7 @@ export function StakingCard({ name, contractAddress }) {
   const [totalStaked, setTotalStaked] = useState(0)
   const [tokensBalance, setTokensBalance] = useState(0)
   const [allowance, setAllowance] = useState(0)
-  const [stakeAmount, setStakeAmount] = useState('')
+  const [stakeAmount, setStakeAmount] = useState('0.0')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
   const [txHash, setTxHash] = useState('')
@@ -289,19 +291,24 @@ export function StakingCard({ name, contractAddress }) {
           <Title className={stakeModalTitle} level={3}>
             Stake DAO1
           </Title>
-          <Input
-            onChange={stakeAmountHandler}
-            value={stakeAmount}
-            className={stakeModalInput}
-          />
-          <Button
-            className={buttonMax}
-            onClick={() => {
-              setStakeAmount(tokensBalance)
-            }}
-          >
-            Max
-          </Button>
+          <div className={stakeModalInputContainer}>
+            <Input
+              onChange={stakeAmountHandler}
+              value={stakeAmount}
+              className={stakeModalInput}
+            />
+            <Button
+              className={stakeModalMaxButton}
+              onClick={() => {
+                setStakeAmount(tokensBalance)
+              }}
+            >
+              Max
+            </Button>
+          </div>
+          <span className={stakeModalBalance}>
+            Balance: {Number(tokensBalance)}
+          </span>
 
           {allowanceEnough ? (
             <Button onClick={stakeHandler}>Stake</Button>
