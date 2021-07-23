@@ -1,44 +1,38 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useEthers } from '@usedapp/core'
+
+import NetworksConfig from '../../networks.json'
 
 import {
   connectMessage,
   connectMessageInnerContainer,
   connectMessageInnerContainerTitle,
+  stakingCardsContainer,
 } from './staking.module.scss'
 import { MainLayout, StakingCard, Title, Button } from '../../components'
 import { withWalletConnection } from '../../utils/withWalletConnection'
 
-const {
-  REACT_APP_FIXED_STAKING_30_ADDRESS: FixedStaking30DaysAddress,
-  REACT_APP_FIXED_STAKING_60_ADDRESS: FixedStaking60DaysAddress,
-  REACT_APP_FIXED_STAKING_90_ADDRESS: FixedStaking90DaysAddress,
-} = process.env
-
 const StakingPure = ({ activateWallet }) => {
+  const { chainId } = useEthers()
   const isConnected = useSelector((state) => state.connectionReducer)
 
   const Content = () => {
     if (isConnected) {
+      const tokenContract = NetworksConfig[chainId].tokenContract
+      const fixedStakingContracts =
+        NetworksConfig[chainId].fixedStakingContracts
+
       return (
-        <>
-          <div className="col">
+        <div className={stakingCardsContainer}>
+          {fixedStakingContracts.map((contractAddress, idx) => (
             <StakingCard
-              name="DAO1 — FIXED 30 DAYS"
-              contractAddress={FixedStaking30DaysAddress}
+              key={idx}
+              contractAddress={contractAddress}
+              tokenContract={tokenContract}
             />
-            <StakingCard
-              name="DAO1 — FIXED 60 DAYS"
-              contractAddress={FixedStaking60DaysAddress}
-            />
-          </div>
-          <div className="col">
-            <StakingCard
-              name="DAO1 — FIXED 90 DAYS"
-              contractAddress={FixedStaking90DaysAddress}
-            />
-          </div>
-        </>
+          ))}
+        </div>
       )
     }
 

@@ -21,7 +21,13 @@ const config = {
     [ChainId.Localhost]: 'https://farm-staging.dao1.org/rpc-ganache',
     ...MULTICALL_ADDRESSES,
   },
-  supportedChains: [ChainId.Mainnet, ChainId.Localhost, 137],
+  supportedChains: [
+    ChainId.Mainnet,
+    ChainId.Rinkeby,
+    ChainId.Polygon,
+    ChainId.Mumbai,
+    ChainId.Localhost,
+  ],
 }
 
 ReactDOM.render(

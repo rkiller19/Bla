@@ -6,6 +6,7 @@ import DAO1Logo from '../../assets/white-logo.png'
 import ArrowIcon from '../../assets/arrow-down.png'
 import {
   card,
+  cardWrapper,
   cardHead,
   cardHeadLogo,
   cardLabel,
@@ -44,9 +45,10 @@ import {
 import { Button, Modal, Title, Input, Spinner } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
 
-export function StakingCard({ name, contractAddress }) {
+export function StakingCard({ name, contractAddress, tokenContract }) {
   const { getData, stake, unstake, harvest, approve } = getContractApi(
     contractAddress,
+    tokenContract,
   )
   const [loading, setLoading] = useState(true)
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
@@ -282,7 +284,7 @@ export function StakingCard({ name, contractAddress }) {
     )
 
   return (
-    <>
+    <div className={cardWrapper}>
       <Modal
         isOpen={isStakeModalOpen}
         closeHandler={() => setIsStakeModalOpen(false)}
@@ -330,7 +332,11 @@ export function StakingCard({ name, contractAddress }) {
           </div>
           <div className={cardName}>
             <span className={cardLabel}>Name</span>
-            <span className={cardNameText}>{name}</span>
+            <span className={cardNameText}>
+              {stakeDurationDays
+                ? `DAO1 — FIXED ${stakeDurationDays} DAYS`
+                : ''}
+            </span>
           </div>
         </div>
 
@@ -370,6 +376,6 @@ export function StakingCard({ name, contractAddress }) {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }

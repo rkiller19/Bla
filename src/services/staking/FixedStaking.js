@@ -10,12 +10,9 @@ import {
 } from '../../utils/ether-utilities'
 import { formatDate } from '../../utils/formatDate'
 
-const { REACT_APP_DAO1_ADDRESS: DAO1Address } = process.env
-
-const DAO1Signer = new ethers.Contract(DAO1Address, DAO1Abi, signer)
-
-export function getContractApi(contractAddress) {
+export function getContractApi(contractAddress, tokenContract) {
   const contract = new ethers.Contract(contractAddress, FixedStakingAbi, signer)
+  const DAO1Signer = new ethers.Contract(tokenContract, DAO1Abi, signer)
 
   async function getData() {
     try {

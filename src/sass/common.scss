@@ -1,22 +1,3 @@
 * {
   outline: none;
 }
-.col {
-  flex: 0 0 50%;
-  padding: 0 19px;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
-}
-
-@media screen and (max-width: $large-width) {
-  .col {
-    flex: 0 0 100%;
-    padding: 0;
-  }
-}
