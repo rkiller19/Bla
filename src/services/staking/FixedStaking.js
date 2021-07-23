@@ -1,12 +1,21 @@
 import { ethers } from 'ethers'
 
 import FixedStakingAbi from '../../abi/staking/FixedStaking.json'
+import DAO1Abi from '../../abi/staking/DAO1.json'
+
 import {
   signer,
   formatAttoToToken,
   formatTokenToAtto,
 } from '../../utils/ether-utilities'
 import { formatDate } from '../../utils/formatDate'
+
+const {
+  REACT_APP_FIXED_STAKING_30_ADDRESS: FixedStakingAddress,
+  REACT_APP_DAO1_ADDRESS: DAO1Address,
+} = process.env
+
+const DAO1Signer = new ethers.Contract(DAO1Address, DAO1Abi, signer)
 
 export function getContractApi(address) {
   const contract = new ethers.Contract(address, FixedStakingAbi, signer)
@@ -19,6 +28,7 @@ export function getContractApi(address) {
       const stakesLength = (await contract.getStakesLength(address)).toNumber()
       const stakes = []
       let totalStaked = ethers.BigNumber.from('0')
+      const tokensBalance = (await DAO1Signer.balanceOf(address)).toString()
 
       for (let i = 0; i < stakesLength; i++) {
         const stake = await contract.getStake(address, i)
@@ -101,6 +111,7 @@ export function getContractApi(address) {
         rewardRate,
         totalStaked: formatAttoToToken(totalStaked),
         stakes: formatedStakes,
+        tokensBalance: formatAttoToToken(tokensBalance),
       }
     } catch (error) {
       console.log(error)

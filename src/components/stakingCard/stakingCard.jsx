@@ -37,6 +37,7 @@ import {
   stakeModalInput,
   loader,
   loaderTxHash,
+  buttonMax,
 } from './stakingCard.module.scss'
 import { Button, Modal, Title, Input, Spinner } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
@@ -48,19 +49,29 @@ export function StakingCard({ name, contractAddress }) {
   const [rewardRate, setRewardRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
   const [totalStaked, setTotalStaked] = useState(0)
+  const [tokensBalance, setTokensBalance] = useState(0)
   const [stakeAmount, setStakeAmount] = useState('')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
   const [txHash, setTxHash] = useState('')
 
   useEffect(() => {
-    getData().then(({ stakeDurationDays, rewardRate, stakes, totalStaked }) => {
-      setLoading(false)
-      setStakeDurationDays(stakeDurationDays)
-      setRewardRate(rewardRate)
-      setStakingHistory(stakes)
-      setTotalStaked(totalStaked)
-    })
+    getData().then(
+      ({
+        stakeDurationDays,
+        rewardRate,
+        stakes,
+        totalStaked,
+        tokensBalance,
+      }) => {
+        setLoading(false)
+        setStakeDurationDays(stakeDurationDays)
+        setRewardRate(rewardRate)
+        setStakingHistory(stakes)
+        setTotalStaked(totalStaked)
+        setTokensBalance(tokensBalance)
+      },
+    )
   }, [])
 
   useEffect(() => {
@@ -231,9 +242,17 @@ export function StakingCard({ name, contractAddress }) {
             className={stakeModalInput}
           />
           <Button
+            className={buttonMax}
+            onClick={() => {
+              setStakeAmount(tokensBalance)
+            }}
+          >
+            Max
+          </Button>
+          <Button
             onClick={() => {
               setIsStakeModalOpen(false)
-              stake(stakeAmount)
+              stake(String(stakeAmount))
                 .then((tx) => {
                   setTxHash(tx.hash)
                   setLoading(true)

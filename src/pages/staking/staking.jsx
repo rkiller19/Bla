@@ -10,7 +10,7 @@ import { MainLayout, StakingCard, Title, Button } from '../../components'
 import { withWalletConnection } from '../../utils/withWalletConnection'
 
 const {
-  REACT_APP_FIXED_STAKING_ADDRESS: FixedStaking30DaysAddress,
+  REACT_APP_FIXED_STAKING_30_ADDRESS: FixedStaking30DaysAddress,
 } = process.env
 
 const StakingPure = ({ activateWallet }) => {
