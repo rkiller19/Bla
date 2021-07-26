@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classnames from 'classnames'
 import equal from 'fast-deep-equal'
+import { useEthers } from '@usedapp/core'
 
 import DAO1Logo from '../../assets/white-logo.png'
 import ArrowIcon from '../../assets/arrow-down.png'
@@ -40,18 +41,75 @@ import {
   stakeModalMaxButton,
   errorMessage,
   stakeModalBalance,
+  hoverLoader,
   loader,
-  loaderTxHash,
+  loaderCloseBtn,
 } from './stakingCard.module.scss'
-import { Button, Modal, Title, Input, Spinner } from '../'
+import { Button, Modal, Title, Input, Spinner, Link } from '../'
 import { getContractApi } from '../../services/staking/FixedStaking'
+import { shortenTxHash } from '../../utils/shortenTxHash'
+import NetworksConfig from '../../networks.json'
 
-export function StakingCard({ name, contractAddress, tokenContract }) {
+function TxLink({ txHash, chainId }) {
+  if (!txHash) {
+    return <></>
+  }
+
+  const blockExplorer = NetworksConfig[chainId].blockExplorer
+  const link = `${blockExplorer}/${txHash}`
+
+  return (
+    <Link className={link} target="_blank" rel="noreferrer" href={link}>
+      {shortenTxHash(String(txHash))}
+    </Link>
+  )
+}
+
+function TxLoader({ txHash, chainId, closeHandler, errorMessage }) {
+  const Content = () => {
+    if (errorMessage) {
+      return <span>{errorMessage}</span>
+    }
+
+    if (txHash) {
+      return (
+        <>
+          <span>Tx sent. Waiting for confirmation</span>
+          <span>
+            View on explorer: <TxLink txHash={txHash} chainId={chainId} />
+          </span>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <span>Waiting For Confirmation</span>
+        <span>Confirm this transaction in your wallet</span>
+      </>
+    )
+  }
+
+  return (
+    <div className={loader}>
+      <button onClick={closeHandler} className={loaderCloseBtn}>
+        <span />
+        <span />
+      </button>
+
+      {!errorMessage && <Spinner />}
+
+      <Content />
+    </div>
+  )
+}
+
+export function StakingCard({ contractAddress, tokenContract }) {
   const { getData, stake, unstake, harvest, approve } = getContractApi(
     contractAddress,
     tokenContract,
   )
-  const [loading, setLoading] = useState(true)
+  const { chainId } = useEthers()
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
   const [rewardRate, setRewardRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
@@ -61,9 +119,17 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
   const [stakeAmount, setStakeAmount] = useState('0.0')
   const [isStakeModalOpen, setIsStakeModalOpen] = useState(false)
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
-  const [txHash, setTxHash] = useState('')
   const [allowanceEnough, setAllowanceEnough] = useState(true)
   const [inputValidity, setInputValidity] = useState(false)
+  const [hoverLoaderVisible, setHoverLoaderVisible] = useState(true)
+
+  const [modalLoaderVisible, setModalLoaderVisible] = useState(false)
+  const [modalTxHash, setModalTxHash] = useState(null)
+  const [modalErrorMessage, setModalErrorMessage] = useState(null)
+
+  const [cardLoaderVisible, setCardLoaderVisible] = useState(false)
+  const [cardTxHash, setCardTxHash] = useState(null)
+  const [cardErrorMessage, setCardErrorMessage] = useState(null)
 
   useEffect(() => {
     getData().then(
@@ -75,7 +141,7 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
         tokensBalance,
         allowance,
       }) => {
-        setLoading(false)
+        setHoverLoaderVisible(false)
         setStakeDurationDays(stakeDurationDays)
         setRewardRate(rewardRate)
         setStakingHistory(stakes)
@@ -135,50 +201,122 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
     setStakeAmount(e.target.value)
   }
 
+  const approveHandler = () => {
+    setModalLoaderVisible(true)
+    setModalTxHash(null)
+    setModalErrorMessage(null)
+
+    approve()
+      .then((tx) => {
+        setModalTxHash(tx.hash)
+
+        tx.wait()
+          .then(() => {
+            getData().then(({ allowance }) => {
+              setModalTxHash(null)
+              setModalLoaderVisible(false)
+              setAllowance(allowance)
+            })
+          })
+          .catch((err) => {
+            setModalTxHash(null)
+            setModalErrorMessage(String(err))
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        setModalTxHash(null)
+        setModalErrorMessage(String(err.message))
+        console.log(err)
+      })
+  }
+
   const stakeHandler = () => {
     if (inputValidity) {
-      setIsStakeModalOpen(false)
+      setModalLoaderVisible(true)
+      setModalTxHash(null)
+      setModalErrorMessage(null)
+
       stake(String(stakeAmount))
         .then((tx) => {
-          setTxHash(tx.hash)
-          setLoading(true)
+          setModalTxHash(tx.hash)
 
           tx.wait()
             .then(() => {
-              setLoading(false)
+              setModalTxHash(null)
+              setIsStakeModalOpen(false)
+              setModalLoaderVisible(false)
             })
             .catch((err) => {
-              setLoading(false)
+              setModalTxHash(null)
+              setModalErrorMessage(String(err))
               console.log(err)
             })
         })
         .catch((err) => {
+          setModalTxHash(null)
+          setModalErrorMessage(String(err.message))
           console.log(err)
         })
     }
   }
 
-  const approveHandler = () => {
-    approve()
-      .then((tx) => {
-        setTxHash(tx.hash)
-        setLoading(true)
+  const unstakeHandler = (active, idx) => {
+    if (active) {
+      setCardLoaderVisible(true)
+      setCardTxHash(null)
+      setCardErrorMessage(null)
 
-        tx.wait()
-          .then(() => {
-            setLoading(false)
-            getData().then(({ allowance }) => {
-              setAllowance(allowance)
+      unstake(idx)
+        .then((tx) => {
+          setCardTxHash(tx.hash)
+
+          tx.wait()
+            .then(() => {
+              setCardTxHash(null)
+              setCardLoaderVisible(false)
             })
-          })
-          .catch((err) => {
-            setLoading(false)
-            console.log(err)
-          })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+            .catch((err) => {
+              setCardTxHash(null)
+              setCardErrorMessage(String(err))
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          setCardTxHash(null)
+          setCardErrorMessage(String(err.message))
+          console.log(err)
+        })
+    }
+  }
+
+  const harvestHandler = (allowHarvest, idx) => {
+    if (allowHarvest) {
+      setCardLoaderVisible(true)
+      setCardTxHash(null)
+      setCardErrorMessage(null)
+
+      harvest(idx)
+        .then((tx) => {
+          setCardTxHash(tx.hash)
+
+          tx.wait()
+            .then(() => {
+              setCardTxHash(null)
+              setCardLoaderVisible(false)
+            })
+            .catch((err) => {
+              setCardTxHash(null)
+              setCardErrorMessage(String(err))
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          setCardTxHash(null)
+          setCardErrorMessage(String(err.message))
+          console.log(err)
+        })
+    }
   }
 
   const StakingHistory = () =>
@@ -226,52 +364,14 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
                 <div className={cardStakingItemButtons}>
                   <Button
                     disabled={!allowHarvest}
-                    onClick={() => {
-                      allowHarvest &&
-                        harvest(idx)
-                          .then((tx) => {
-                            setTxHash(tx.hash)
-                            setLoading(true)
-
-                            tx.wait()
-                              .then(() => {
-                                setLoading(false)
-                              })
-                              .catch((err) => {
-                                setLoading(false)
-                                console.log(err)
-                              })
-                          })
-                          .catch((err) => {
-                            console.log(err)
-                          })
-                    }}
+                    onClick={() => harvestHandler(allowHarvest, idx)}
                     className={cardButton}
                   >
                     Harvest
                   </Button>
                   <Button
                     disabled={!active}
-                    onClick={() => {
-                      active &&
-                        unstake(idx)
-                          .then((tx) => {
-                            setTxHash(tx.hash)
-                            setLoading(true)
-
-                            tx.wait()
-                              .then(() => {
-                                setLoading(false)
-                              })
-                              .catch((err) => {
-                                setLoading(false)
-                                console.log(err)
-                              })
-                          })
-                          .catch((err) => {
-                            console.log(err)
-                          })
-                    }}
+                    onClick={() => unstakeHandler(active, idx)}
                     className={cardButton}
                   >
                     Unstake
@@ -299,6 +399,16 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
         },
       )
     )
+
+  const SubmitButton = () => {
+    return allowanceEnough ? (
+      <Button disabled={!inputValidity} onClick={stakeHandler}>
+        Stake
+      </Button>
+    ) : (
+      <Button onClick={approveHandler}>Approve</Button>
+    )
+  }
 
   return (
     <div className={cardWrapper}>
@@ -333,20 +443,22 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
 
           <span className={stakeModalBalance}>Balance: {tokensBalance}</span>
 
-          {allowanceEnough ? (
-            <Button disabled={!inputValidity} onClick={stakeHandler}>
-              Stake
-            </Button>
+          {modalLoaderVisible ? (
+            <TxLoader
+              txHash={modalTxHash}
+              chainId={chainId}
+              closeHandler={() => setModalLoaderVisible(false)}
+              errorMessage={modalErrorMessage}
+            />
           ) : (
-            <Button onClick={approveHandler}>Approve</Button>
+            <SubmitButton />
           )}
         </div>
       </Modal>
       <div className={card}>
-        {loading && (
-          <div className={loader}>
+        {hoverLoaderVisible && (
+          <div className={hoverLoader}>
             <Spinner />
-            <span className={loaderTxHash}>{txHash}</span>
           </div>
         )}
         <div className={cardHead}>
@@ -383,6 +495,15 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
         </div>
 
         <div className={cardStakingList}>
+          {cardLoaderVisible && (
+            <TxLoader
+              txHash={cardTxHash}
+              chainId={chainId}
+              closeHandler={() => setCardLoaderVisible(false)}
+              errorMessage={cardErrorMessage}
+            />
+          )}
+
           <StakingHistory />
         </div>
 
