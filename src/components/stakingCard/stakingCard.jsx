@@ -38,6 +38,7 @@ import {
   stakeModalInputContainer,
   stakeModalInput,
   stakeModalMaxButton,
+  errorMessage,
   stakeModalBalance,
   loader,
   loaderTxHash,
@@ -62,6 +63,7 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
   const [visibleDetailedBlock, setVisibleDetailedBlock] = useState(null)
   const [txHash, setTxHash] = useState('')
   const [allowanceEnough, setAllowanceEnough] = useState(true)
+  const [inputValidity, setInputValidity] = useState(false)
 
   useEffect(() => {
     getData().then(
@@ -103,7 +105,20 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
   }, [stakingHistory])
 
   useEffect(() => {
-    setAllowanceEnough(Number(stakeAmount) <= Number(allowance))
+    const stakeAmountNumber = Number(stakeAmount.replaceAll(',', '.'))
+
+    if (isNaN(stakeAmountNumber) || stakeAmountNumber <= 0) {
+      setInputValidity(false)
+    } else {
+      setInputValidity(true)
+    }
+
+    if (!isNaN(stakeAmountNumber)) {
+      setAllowanceEnough(stakeAmountNumber <= Number(allowance))
+      return
+    }
+
+    setAllowanceEnough(true)
   }, [stakeAmount, allowance])
 
   const accordionClickHandler = (id) => {
@@ -121,24 +136,26 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
   }
 
   const stakeHandler = () => {
-    setIsStakeModalOpen(false)
-    stake(String(stakeAmount))
-      .then((tx) => {
-        setTxHash(tx.hash)
-        setLoading(true)
+    if (inputValidity) {
+      setIsStakeModalOpen(false)
+      stake(String(stakeAmount))
+        .then((tx) => {
+          setTxHash(tx.hash)
+          setLoading(true)
 
-        tx.wait()
-          .then(() => {
-            setLoading(false)
-          })
-          .catch((err) => {
-            setLoading(false)
-            console.log(err)
-          })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+          tx.wait()
+            .then(() => {
+              setLoading(false)
+            })
+            .catch((err) => {
+              setLoading(false)
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 
   const approveHandler = () => {
@@ -302,18 +319,24 @@ export function StakingCard({ name, contractAddress, tokenContract }) {
             <Button
               className={stakeModalMaxButton}
               onClick={() => {
-                setStakeAmount(tokensBalance)
+                setStakeAmount(String(tokensBalance))
               }}
             >
               Max
             </Button>
           </div>
-          <span className={stakeModalBalance}>
-            Balance: {Number(tokensBalance)}
-          </span>
+          {!inputValidity && (
+            <span className={errorMessage}>
+              Value must be a number greater than 0
+            </span>
+          )}
+
+          <span className={stakeModalBalance}>Balance: {tokensBalance}</span>
 
           {allowanceEnough ? (
-            <Button onClick={stakeHandler}>Stake</Button>
+            <Button disabled={!inputValidity} onClick={stakeHandler}>
+              Stake
+            </Button>
           ) : (
             <Button onClick={approveHandler}>Approve</Button>
           )}
