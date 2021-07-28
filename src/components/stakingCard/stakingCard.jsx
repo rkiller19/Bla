@@ -130,6 +130,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
   const [cardLoaderVisible, setCardLoaderVisible] = useState(false)
   const [cardTxHash, setCardTxHash] = useState(null)
   const [cardErrorMessage, setCardErrorMessage] = useState(null)
+  const [cardPendingTxAmount, setCardPendingTxAmount] = useState(0)
 
   useEffect(() => {
     getData()
@@ -274,15 +275,24 @@ export function StakingCard({ contractAddress, tokenContract }) {
       unstake(idx)
         .then((tx) => {
           setCardTxHash(tx.hash)
+          setCardPendingTxAmount(cardPendingTxAmount + 1)
 
           tx.wait()
             .then(() => {
-              setCardTxHash(null)
-              setCardLoaderVisible(false)
+              setCardPendingTxAmount(cardPendingTxAmount - 1)
+
+              if (cardPendingTxAmount === 0) {
+                setCardTxHash(null)
+                setCardLoaderVisible(false)
+              }
             })
             .catch((err) => {
-              setCardTxHash(null)
-              setCardErrorMessage(String(err))
+              setCardPendingTxAmount(cardPendingTxAmount - 1)
+
+              if (cardPendingTxAmount === 0) {
+                setCardTxHash(null)
+                setCardErrorMessage(String(err))
+              }
               console.log(err)
             })
         })
@@ -299,6 +309,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
       setCardLoaderVisible(true)
       setCardTxHash(null)
       setCardErrorMessage(null)
+      setCardPendingTxAmount(cardPendingTxAmount + 1)
 
       harvest(idx)
         .then((tx) => {
@@ -306,12 +317,18 @@ export function StakingCard({ contractAddress, tokenContract }) {
 
           tx.wait()
             .then(() => {
+              setCardPendingTxAmount(cardPendingTxAmount - 1)
+
               setCardTxHash(null)
               setCardLoaderVisible(false)
             })
             .catch((err) => {
-              setCardTxHash(null)
-              setCardErrorMessage(String(err))
+              setCardPendingTxAmount(cardPendingTxAmount - 1)
+
+              if (cardPendingTxAmount === 0) {
+                setCardTxHash(null)
+                setCardErrorMessage(String(err))
+              }
               console.log(err)
             })
         })
