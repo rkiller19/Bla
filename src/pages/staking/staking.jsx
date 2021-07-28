@@ -22,6 +22,19 @@ export const Staking = () => {
   const isConnected = useSelector((state) => state.connectionReducer)
 
   const Content = () => {
+    // if no metamask detected
+    if (!window.ethereum) {
+      return (
+        <div className={connectMessage}>
+          <div className={connectMessageInnerContainer}>
+            <Title level={6}>
+              Please use Metamask app or browser extension
+            </Title>
+          </div>
+        </div>
+      )
+    }
+
     if (error) {
       return (
         <div className={connectMessage}>

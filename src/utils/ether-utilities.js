@@ -1,9 +1,5 @@
 import { ethers } from 'ethers'
 
-export const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-export const signer = provider.getSigner()
-
 export function formatAttoToToken(amount) {
   const number = ethers.utils.formatUnits(amount, 18).toString()
   const decimals = 4

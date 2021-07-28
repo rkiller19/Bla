@@ -5,7 +5,6 @@ import FixedStakingAbi from '../../abi/staking/FixedStaking.json'
 import DAO1Abi from '../../abi/staking/DAO1.json'
 
 import {
-  signer,
   formatAttoToToken,
   formatTokenToAtto,
 } from '../../utils/ether-utilities'
@@ -13,6 +12,8 @@ import { formatDate } from '../../utils/formatDate'
 
 export function withFixedStakingApi(Component) {
   return function({ contractAddress, tokenContract, ...props }) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
     const contract = new ethers.Contract(
       contractAddress,
       FixedStakingAbi,
