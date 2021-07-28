@@ -111,7 +111,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
   )
   const { chainId } = useEthers()
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
-  const [rewardRate, setRewardRate] = useState(0)
+  const [yieldRate, setYieldRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
   const [totalStaked, setTotalStaked] = useState(0)
   const [tokensBalance, setTokensBalance] = useState(0)
@@ -132,41 +132,45 @@ export function StakingCard({ contractAddress, tokenContract }) {
   const [cardErrorMessage, setCardErrorMessage] = useState(null)
 
   useEffect(() => {
-    getData().then(
-      ({
-        stakeDurationDays,
-        rewardRate,
-        stakes,
-        totalStaked,
-        tokensBalance,
-        allowance,
-      }) => {
-        setHoverLoaderVisible(false)
-        setStakeDurationDays(stakeDurationDays)
-        setRewardRate(rewardRate)
-        setStakingHistory(stakes)
-        setTotalStaked(totalStaked)
-        setTokensBalance(tokensBalance)
-        setAllowance(allowance)
-      },
-    )
+    getData()
+      .then(
+        ({
+          stakeDurationDays,
+          yieldRate,
+          stakes,
+          totalStaked,
+          tokensBalance,
+          allowance,
+        }) => {
+          setHoverLoaderVisible(false)
+          setStakeDurationDays(stakeDurationDays)
+          setYieldRate(yieldRate)
+          setStakingHistory(stakes)
+          setTotalStaked(totalStaked)
+          setTokensBalance(tokensBalance)
+          setAllowance(allowance)
+        },
+      )
+      .catch((err) => console.log(err))
   }, [])
 
   useEffect(() => {
     // Rerender component when stakes data is changed
     const interval = setInterval(() => {
-      getData().then(({ stakes, totalStaked }) => {
-        if (stakingHistory) {
-          for (let i = 0; i < stakes.length; i++) {
-            if (!equal(stakes[i], stakingHistory[i])) {
-              setStakingHistory(stakes)
-              setTotalStaked(totalStaked)
-              clearInterval(interval)
-              return
+      getData()
+        .then(({ stakes, totalStaked }) => {
+          if (stakingHistory) {
+            for (let i = 0; i < stakes.length; i++) {
+              if (!equal(stakes[i], stakingHistory[i])) {
+                setStakingHistory(stakes)
+                setTotalStaked(totalStaked)
+                clearInterval(interval)
+                return
+              }
             }
           }
-        }
-      })
+        })
+        .catch((err) => console.log(err))
     }, 2000)
   }, [stakingHistory])
 
@@ -261,8 +265,8 @@ export function StakingCard({ contractAddress, tokenContract }) {
     }
   }
 
-  const unstakeHandler = (active, idx) => {
-    if (active) {
+  const unstakeHandler = (staked, idx) => {
+    if (staked) {
       setCardLoaderVisible(true)
       setCardTxHash(null)
       setCardErrorMessage(null)
@@ -325,7 +329,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
     ) : (
       stakingHistory.map(
         (
-          { active, staked, harvestable, allowHarvest, expires, details },
+          { staked, stakedAmount, harvestable, allowHarvest, expires, details },
           idx,
         ) => {
           const isActive = visibleDetailedBlock === idx
@@ -350,7 +354,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
                 <div className={cardStakingItemInfo}>
                   <div className={cardStakingItemInfoBlock}>
                     <div className={cardLabel}>DAO1 Staked</div>
-                    <div className={cardInfoText}>{staked}</div>
+                    <div className={cardInfoText}>{stakedAmount}</div>
                   </div>
                   <div className={cardStakingItemInfoBlock}>
                     <div className={cardLabel}>Harvestable</div>
@@ -370,8 +374,8 @@ export function StakingCard({ contractAddress, tokenContract }) {
                     Harvest
                   </Button>
                   <Button
-                    disabled={!active}
-                    onClick={() => unstakeHandler(active, idx)}
+                    disabled={!staked}
+                    onClick={() => unstakeHandler(staked, idx)}
                     className={cardButton}
                   >
                     Unstake
@@ -478,7 +482,7 @@ export function StakingCard({ contractAddress, tokenContract }) {
         <div className={cardStakingConditions}>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>{stakeDurationDays}D yield</div>
-            <div className={cardInfoText}>{rewardRate}%</div>
+            <div className={cardInfoText}>{yieldRate}%</div>
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>Daily yield</div>

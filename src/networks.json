@@ -1,27 +1,35 @@
 {
   "1": {
-    "blockExplorer": "https://etherscan.io/address/",
+    "blockExplorer": "https://etherscan.io/tx/",
     "name": "Mainnet",
     "fixedStakingContracts": ["", "", ""],
     "tokenContract": ""
   },
   "4": {
-    "blockExplorer": "https://rinkeby.etherscan.io/address/",
+    "blockExplorer": "https://rinkeby.etherscan.io/tx/",
     "name": "Rinkeby",
-    "fixedStakingContracts": ["", "", ""],
-    "tokenContract": ""
+    "fixedStakingContracts": [
+      "0x324f81d545BB1A970a73c839B1F8B6f5B7CF5f7d",
+      "0x804321B5193e8dD4f66fC821c3430F19FB4B9B5b",
+      "0xe092F45c67b32A46877c614D14A3e9f0846BCd5A"
+    ],
+    "tokenContract": "0x2E56238B941dc043D271569bA4fecf3AA7717Cc9"
   },
   "137": {
-    "blockExplorer": "https://polygonscan.com/address/",
+    "blockExplorer": "https://polygonscan.com/tx/",
     "name": "Polygon",
     "fixedStakingContracts": ["", "", ""],
     "tokenContract": ""
   },
   "80001": {
-    "blockExplorer": "https://mumbai.polygonscan.com/address/",
+    "blockExplorer": "https://mumbai.polygonscan.com/tx/",
     "name": "Mumbai",
-    "fixedStakingContracts": ["", "", ""],
-    "tokenContract": ""
+    "fixedStakingContracts": [
+      "0x7a33c4ef3839e28AAf790506022443e10f8c2cC2",
+      "0x7446E16228930b9Fc2c6081b89a4a02BE1ec310C",
+      "0x82E63e9F4de147BDDD25bB00535d8245B432592C"
+    ],
+    "tokenContract": "0x3a96F852Aa269bC55f491908168d75b023DbdeFB"
   },
   "1337": {
     "blockExplorer": "",

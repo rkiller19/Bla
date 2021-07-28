@@ -17,7 +17,7 @@ export function getContractApi(contractAddress, tokenContract) {
   async function getData() {
     try {
       const stakeDurationDays = (await contract.stakeDurationDays()).toNumber()
-      const rewardRate = (await contract.rewardRate()).toNumber() / 100
+      const yieldRate = (await contract.yieldRate()).toNumber() / 100
       const signerAddress = await signer.getAddress()
       const stakesLength = (
         await contract.getStakesLength(signerAddress)
@@ -30,15 +30,13 @@ export function getContractApi(contractAddress, tokenContract) {
       const allowance = (
         await DAO1Signer.allowance(signerAddress, contractAddress)
       ).toString()
-
       for (let i = 0; i < stakesLength; i++) {
         const stake = await contract.getStake(signerAddress, i)
         stakes.push(stake)
       }
-
       const formatedStakes = stakes.map((stake, idx) => {
         const {
-          active,
+          staked,
           endTime,
           harvestableYield,
           harvestedYiels,
@@ -47,7 +45,7 @@ export function getContractApi(contractAddress, tokenContract) {
           startTime,
           totalYield,
         } = {
-          active: stake.active,
+          staked: stake.staked,
           endTime: stake.endTime.toString(),
           harvestableYield: formatAttoToToken(stake.harvestableYield),
           harvestedYiels: formatAttoToToken(stake.harvestedYield),
@@ -60,18 +58,16 @@ export function getContractApi(contractAddress, tokenContract) {
           stake.totalYield.sub(stake.harvestableYield),
         )
         totalStaked = totalStaked.add(stake.stakedAmount)
-
         const expired = endTime * 1000 < Date.now()
-
         return {
-          active,
-          staked: stakedAmount,
+          staked,
+          stakedAmount,
           harvestable: harvestableYield,
           allowHarvest: !stake.harvestableYield.isZero(),
           expires: expired ? 'Expired' : formatDate(endTime),
           details: [
             { name: 'Stake Identifier', value: idx },
-            { name: 'Stake status', value: active ? 'Active' : 'Not active' },
+            { name: 'Stake status', value: staked ? 'Active' : 'Not active' },
             {
               name: 'Start date (stake placement)',
               value: formatDate(startTime, true),
@@ -106,10 +102,9 @@ export function getContractApi(contractAddress, tokenContract) {
           ],
         }
       })
-
       return {
         stakeDurationDays,
-        rewardRate,
+        yieldRate,
         totalStaked: formatAttoToToken(totalStaked),
         stakes: formatedStakes,
         tokensBalance: formatAttoToToken(tokensBalance),

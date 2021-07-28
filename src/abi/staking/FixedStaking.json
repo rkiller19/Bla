@@ -11,11 +11,7 @@
         "name": "_stakeDurationDays",
         "type": "uint256"
       },
-      {
-        "internalType": "uint256",
-        "name": "_rewardRate",
-        "type": "uint256"
-      },
+      { "internalType": "uint256", "name": "_yieldRate", "type": "uint256" },
       {
         "internalType": "uint256",
         "name": "_earlyUnstakeFee",
@@ -24,31 +20,6 @@
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "stakeId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "EmergencyWithdraw",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -182,70 +153,30 @@
   },
   {
     "inputs": [],
+    "name": "allocatedTokens",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "earlyUnstakeFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_stakeId",
-        "type": "uint256"
-      }
-    ],
-    "name": "emergencyWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_userAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_stakeId",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "_userAddress", "type": "address" },
+      { "internalType": "uint256", "name": "_stakeId", "type": "uint256" }
     ],
     "name": "getStake",
     "outputs": [
-      {
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "stakedAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalYield",
-        "type": "uint256"
-      },
+      { "internalType": "bool", "name": "staked", "type": "bool" },
+      { "internalType": "uint256", "name": "stakedAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "endTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalYield", "type": "uint256" },
       {
         "internalType": "uint256",
         "name": "harvestedYield",
@@ -267,30 +198,16 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_userAddress",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "_userAddress", "type": "address" }
     ],
     "name": "getStakesLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_stakeId",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "_stakeId", "type": "uint256" }
     ],
     "name": "harvest",
     "outputs": [],
@@ -300,26 +217,7 @@
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "penalties",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -331,25 +229,8 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "rewardRate",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
     ],
     "name": "stake",
     "outputs": [],
@@ -359,56 +240,29 @@
   {
     "inputs": [],
     "name": "stakeDurationDays",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stakedTokens",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "stakes",
     "outputs": [
-      {
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "stakedAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalYield",
-        "type": "uint256"
-      },
+      { "internalType": "bool", "name": "staked", "type": "bool" },
+      { "internalType": "uint256", "name": "stakedAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "endTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalYield", "type": "uint256" },
       {
         "internalType": "uint256",
         "name": "harvestedYield",
@@ -426,13 +280,7 @@
   {
     "inputs": [],
     "name": "stakesOpen",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -454,35 +302,14 @@
     "inputs": [],
     "name": "token",
     "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalStaked",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "contract IERC20", "name": "", "type": "address" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "newOwner", "type": "address" }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -490,12 +317,15 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "unallocatedTokens",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_stakeId",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "_stakeId", "type": "uint256" }
     ],
     "name": "unstake",
     "outputs": [],
@@ -504,20 +334,19 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "_to", "type": "address" },
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
     ],
-    "name": "withdrawalPenalties",
+    "name": "withdrawUnallocatedTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "yieldRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   }
 ]
