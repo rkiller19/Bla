@@ -154,7 +154,11 @@ function StakingCardPure({ api }) {
     // Rerender component when stakes data is changed
     const checkUpdateInterval = setInterval(() => {
       getData()
-        .then(({ stakes, totalStaked }) => {
+        .then(({ stakes, totalStaked, tokensBalance: tokensBalanceNew }) => {
+          if (tokensBalanceNew !== tokensBalance) {
+            setTokensBalance(tokensBalanceNew)
+          }
+
           if (stakingHistory) {
             for (let i = 0; i < stakes.length; i++) {
               if (!equal(stakes[i], stakingHistory[i])) {
