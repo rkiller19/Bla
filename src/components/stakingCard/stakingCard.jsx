@@ -46,7 +46,7 @@ import {
   loaderCloseBtn,
 } from './stakingCard.module.scss'
 import { Button, Modal, Title, Input, Spinner, Link } from '../'
-import { getContractApi } from '../../services/staking/FixedStaking'
+import { withFixedStakingApi } from '../../services/staking/FixedStaking'
 import { shortenTxHash } from '../../utils/shortenTxHash'
 import NetworksConfig from '../../networks.json'
 
@@ -104,11 +104,8 @@ function TxLoader({ txHash, chainId, closeHandler, errorMessage }) {
   )
 }
 
-export function StakingCard({ contractAddress, tokenContract }) {
-  const { getData, stake, unstake, harvest, approve } = getContractApi(
-    contractAddress,
-    tokenContract,
-  )
+function StakingCardPure({ api }) {
+  const { getData, stake, unstake, harvest, approve } = api
   const { chainId } = useEthers()
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
   const [yieldRate, setYieldRate] = useState(0)
@@ -153,11 +150,9 @@ export function StakingCard({ contractAddress, tokenContract }) {
         },
       )
       .catch((err) => console.log(err))
-  }, [])
 
-  useEffect(() => {
     // Rerender component when stakes data is changed
-    const interval = setInterval(() => {
+    const checkUpdateInterval = setInterval(() => {
       getData()
         .then(({ stakes, totalStaked }) => {
           if (stakingHistory) {
@@ -165,7 +160,6 @@ export function StakingCard({ contractAddress, tokenContract }) {
               if (!equal(stakes[i], stakingHistory[i])) {
                 setStakingHistory(stakes)
                 setTotalStaked(totalStaked)
-                clearInterval(interval)
                 return
               }
             }
@@ -173,7 +167,11 @@ export function StakingCard({ contractAddress, tokenContract }) {
         })
         .catch((err) => console.log(err))
     }, 2000)
-  }, [stakingHistory])
+
+    return () => {
+      clearInterval(checkUpdateInterval)
+    }
+  }, [])
 
   useEffect(() => {
     const stakeAmountNumber = Number(stakeAmount.replaceAll(',', '.'))
@@ -544,3 +542,5 @@ export function StakingCard({ contractAddress, tokenContract }) {
     </div>
   )
 }
+
+export const StakingCard = withFixedStakingApi(StakingCardPure)

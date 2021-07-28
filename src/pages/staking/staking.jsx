@@ -10,14 +10,26 @@ import {
   connectMessageInnerContainerTitle,
   stakingCardsContainer,
 } from './staking.module.scss'
-import { MainLayout, StakingCard, Title, Button } from '../../components'
-import { withWalletConnection } from '../../utils/withWalletConnection'
+import {
+  MainLayout,
+  StakingCard,
+  Title,
+  ConnectionStatus,
+} from '../../components'
 
-const StakingPure = ({ activateWallet }) => {
-  const { chainId } = useEthers()
+export const Staking = () => {
+  const { chainId, error } = useEthers()
   const isConnected = useSelector((state) => state.connectionReducer)
 
   const Content = () => {
+    if (error) {
+      return (
+        <div className={connectMessage}>
+          <div className={connectMessageInnerContainer}>{String(error)}</div>
+        </div>
+      )
+    }
+
     if (isConnected) {
       const tokenContract = NetworksConfig[chainId].tokenContract
       const fixedStakingContracts =
@@ -42,7 +54,7 @@ const StakingPure = ({ activateWallet }) => {
           <Title className={connectMessageInnerContainerTitle} level={3}>
             Please connect wallet
           </Title>
-          <Button onClick={activateWallet}>Connect</Button>
+          <ConnectionStatus />
         </div>
       </div>
     )
@@ -54,5 +66,3 @@ const StakingPure = ({ activateWallet }) => {
     </MainLayout>
   )
 }
-
-export const Staking = withWalletConnection(StakingPure)

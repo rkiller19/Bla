@@ -21,7 +21,7 @@ function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
   const ConnectionResult = () => {
     if (error) {
       return (
-        <Button onClick={activateWallet} className={connectButton}>
+        <Button disabled className={connectButton}>
           Error
         </Button>
       )
