@@ -28,14 +28,14 @@
       background-color: transparent;
       border: none;
       margin-right: 5px;
-      color: $main-text;
+      color: $light-text;
       border-radius: 4px;
       padding: 6px;
 
       span {
         width: 25px;
         height: 2px;
-        background-color: $main-text;
+        background-color: $light-text;
         margin-bottom: 6px;
 
         &:last-child {
