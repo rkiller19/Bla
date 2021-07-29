@@ -50,10 +50,11 @@ export const Staking = () => {
 
       return (
         <div className={stakingCardsContainer}>
-          {fixedStakingContracts.map((contractAddress, idx) => (
+          {fixedStakingContracts.map(({ address, APY }) => (
             <StakingCard
-              key={idx}
-              contractAddress={contractAddress}
+              key={address}
+              APY={APY}
+              contractAddress={address}
               tokenContract={tokenContract}
             />
           ))}

@@ -104,7 +104,7 @@ function TxLoader({ txHash, chainId, closeHandler, errorMessage }) {
   )
 }
 
-function StakingCardPure({ api }) {
+function StakingCardPure({ api, APY }) {
   const { getData, stake, unstake, harvest, approve } = api
   const { chainId } = useEthers()
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
@@ -505,11 +505,13 @@ function StakingCardPure({ api }) {
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>Daily yield</div>
-            <div className={cardInfoText}>0.0516%</div>
+            <div className={cardInfoText}>
+              ~ {Number((yieldRate / stakeDurationDays).toFixed(4))}%
+            </div>
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>APY-{stakeDurationDays}D compound</div>
-            <div className={cardInfoText}>20.2%</div>
+            <div className={cardInfoText}>{APY}%</div>
           </div>
           <div className={cardStakingConditionsItem}>
             <div className={cardLabel}>Duration</div>
