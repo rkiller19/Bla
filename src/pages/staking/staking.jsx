@@ -43,7 +43,7 @@ export const Staking = () => {
       )
     }
 
-    if (isConnected) {
+    if (isConnected && chainId) {
       const tokenContract = NetworksConfig[chainId].tokenContract
       const fixedStakingContracts =
         NetworksConfig[chainId].fixedStakingContracts

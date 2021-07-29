@@ -27,7 +27,7 @@ function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
       )
     }
 
-    if (isConnected) {
+    if (isConnected && account) {
       return (
         <>
           <div className={accountAddressBlock}>
