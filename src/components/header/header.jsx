@@ -9,7 +9,7 @@ import {
 } from './header.module.scss'
 import { Title, ConnectionStatus } from '../'
 
-export function Header() {
+export function Header({ title }) {
   const dispatch = useDispatch()
 
   const openMenu = () => {
@@ -24,7 +24,7 @@ export function Header() {
           <span></span>
           <span></span>
         </button>
-        <Title level={1}>Staking</Title>
+        <Title level={1}>{title}</Title>
       </div>
       <ConnectionStatus>Disconnect Wallet</ConnectionStatus>
     </header>

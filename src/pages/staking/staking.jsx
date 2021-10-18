@@ -75,7 +75,7 @@ export const Staking = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout title="Staking">
       <Content />
     </MainLayout>
   )
