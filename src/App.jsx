@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { ConnectWallet, Staking, Farming } from './pages'
+import { ConnectWallet, Staking, Farming, Bridge } from './pages'
 
 export function App() {
   return (
@@ -11,6 +11,7 @@ export function App() {
           <Route path="/" component={ConnectWallet} exact />
           <Route path="/farming" component={Farming} />
           <Route path="/staking" component={Staking} />
+          <Route path="/bridge" component={Bridge} />
         </Switch>
       </BrowserRouter>
     </div>
