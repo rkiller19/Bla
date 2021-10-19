@@ -9,13 +9,22 @@
 
   &Title {
     margin-bottom: 20px;
+
+    &Center {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  }
+
+  &Button {
+    margin-bottom: 10px;
   }
 
   &Card {
     box-shadow: 0px 5px 20px rgba(37, 37, 37, 0.05);
     border-radius: 10px;
     background-color: $secondary-bg;
-    padding: 20px;
+    padding: 20px 20px 30px;
     width: 100%;
     margin-bottom: 20px;
     display: flex;
@@ -34,7 +43,7 @@
     }
 
     &Label {
-      margin-bottom: 4px;
+      margin-bottom: 10px;
 
       &Name {
         font-weight: bold;
@@ -75,7 +84,25 @@
 
   &Input {
     width: 100%;
+
+    &Error {
+      border-color: $red;
+    }
+
+    &Container {
+      position: relative;
+    }
   }
+}
+
+.ErrorMessage {
+  color: $red;
+  font-size: 12px;
+  position: absolute;
+  padding-top: 5px;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
 }
 
 @media screen and (max-width: $small-width) {
@@ -96,8 +123,10 @@
       }
     }
 
-    &InputContainer {
-      margin-bottom: 20px;
+    &Input {
+      &Container {
+        margin-bottom: 20px;
+      }
     }
   }
 }

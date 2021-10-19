@@ -16,7 +16,8 @@
         "APY": "52.0807"
       }
     ],
-    "tokenContract": "0xCE3f6f6672616c39D8B6858F8DAC9902eCa42C84"
+    "tokenContract": "0xCE3f6f6672616c39D8B6858F8DAC9902eCa42C84",
+    "bridgeContract": "0xFF01b75f2c155dBDA36E68eB6557DEE8d36D6A99"
   },
   "137": {
     "blockExplorer": "https://polygonscan.com/tx/",

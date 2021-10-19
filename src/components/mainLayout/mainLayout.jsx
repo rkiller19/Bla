@@ -24,7 +24,7 @@ function MainWrap({ title, children }) {
   )
 }
 
-export function MainLayout({ title, children }) {
+export function MainLayout({ title, noHandleNetwork, children }) {
   const { chainId, error } = useEthers()
   const isConnected = useSelector((state) => state.connectionReducer)
 
@@ -41,6 +41,10 @@ export function MainLayout({ title, children }) {
         </div>
       </MainWrap>
     )
+  }
+
+  if (isConnected && noHandleNetwork) {
+    return <MainWrap title={title}>{children}</MainWrap>
   }
 
   if (error) {
