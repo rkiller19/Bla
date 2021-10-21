@@ -36,5 +36,24 @@
       }
     ],
     "tokenContract": "0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD"
+  },
+  "56": {
+    "blockExplorer": "https://www.bscscan.com/tx/",
+    "name": "Binance",
+    "fixedStakingContracts": [
+      {
+        "address": "0xc97B93070144c917954c0E1bf06b6840E6527064",
+        "APY": "20.2705"
+      },
+      {
+        "address": "0xdc22d8dC05a81F8D619ECe474a8ee4fbd3aDb8B8",
+        "APY": "30.2260"
+      },
+      {
+        "address": "0x0316C84222Ec8DC1A1Ab95ba3585db37c7d6ddF8",
+        "APY": "52.0807"
+      }
+    ],
+    "tokenContract": "0xff6D784D5938CB3980Dce79BbAcEc53987D527d8"
   }
 }

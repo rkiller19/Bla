@@ -14,7 +14,7 @@ const store = createStore(
 )
 
 const config = {
-  supportedChains: [ChainId.Mainnet, ChainId.Polygon],
+  supportedChains: [ChainId.Mainnet, ChainId.Polygon, ChainId.BSC],
 }
 
 ReactDOM.render(
