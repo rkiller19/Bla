@@ -246,7 +246,6 @@ export function Bridge() {
         {loaderIsVisible && (
           <TxLoader
             txHash={txHash}
-            chainId={chainId}
             closeHandler={() => setLoaderIsVisible(false)}
             errorMessage={txErrorMessage}
           />

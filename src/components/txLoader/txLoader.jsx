@@ -1,11 +1,14 @@
 import React from 'react'
+import { useEthers } from '@usedapp/core'
 
 import { loader, loaderCloseBtn } from './txLoader.module.scss'
 import { Spinner, Link } from '../'
 import { shortenTxHash } from '../../utils/shortenTxHash'
 import NetworksConfig from '../../networks.json'
 
-function TxLink({ txHash, chainId }) {
+function TxLink({ txHash }) {
+  const { chainId } = useEthers()
+
   if (!txHash) {
     return <></>
   }
@@ -20,7 +23,7 @@ function TxLink({ txHash, chainId }) {
   )
 }
 
-export function TxLoader({ txHash, chainId, closeHandler, errorMessage }) {
+export function TxLoader({ txHash, closeHandler, errorMessage, children }) {
   const Content = () => {
     if (errorMessage) {
       return <span>{errorMessage}</span>
@@ -31,10 +34,14 @@ export function TxLoader({ txHash, chainId, closeHandler, errorMessage }) {
         <>
           <span>Tx sent. Waiting for confirmation</span>
           <span>
-            View on explorer: <TxLink txHash={txHash} chainId={chainId} />
+            View on explorer: <TxLink txHash={txHash} />
           </span>
         </>
       )
+    }
+
+    if (children) {
+      return children
     }
 
     return (

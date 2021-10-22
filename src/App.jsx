@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { ConnectWallet, Staking, Farming, Bridge } from './pages'
+import { Staking, Farming, Bridge, ConnectWallet } from './pages'
 
 export function App() {
   return (

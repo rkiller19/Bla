@@ -11,7 +11,7 @@ import {
 import { utils } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 
-import StakeLogo1 from '../assets/Logo.png'
+import DAO1Logo from '../assets/white-logo.png'
 import { FarmingCard } from '../components'
 import {
   farmingAbiInterface,
@@ -549,7 +549,7 @@ const MaticFarming = () => {
         totalstakers={totalStakers}
         tokenStaked={tokenStaked1}
         tokenEarned={tokenEarned1}
-        logo={StakeLogo1}
+        logo={DAO1Logo}
         linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
         lockInPeriod="60 Days"
         lockIn={60}
@@ -583,7 +583,7 @@ const MaticFarming = () => {
         totalstakers={totalStakers}
         tokenStaked={tokenStaked2}
         tokenEarned={tokenEarned2}
-        logo={StakeLogo1}
+        logo={DAO1Logo}
         linkUrl="https://quickswap.exchange/#/add/0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD/0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
         lockInPeriod="30 Days"
         lockIn={30}

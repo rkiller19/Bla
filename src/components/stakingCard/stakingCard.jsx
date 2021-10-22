@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import classnames from 'classnames'
 import equal from 'fast-deep-equal'
-import { useEthers } from '@usedapp/core'
 
 import DAO1Logo from '../../assets/white-logo.png'
 import ArrowIcon from '../../assets/arrow-down.png'
@@ -48,7 +47,6 @@ import { withFixedStakingApi } from '../../services/staking/FixedStaking'
 
 function StakingCardPure({ api, APY }) {
   const { getData, stake, unstake, harvest, approve } = api
-  const { chainId } = useEthers()
   const [stakeDurationDays, setStakeDurationDays] = useState(0)
   const [yieldRate, setYieldRate] = useState(0)
   const [stakingHistory, setStakingHistory] = useState([])
@@ -411,7 +409,6 @@ function StakingCardPure({ api, APY }) {
           {modalLoaderVisible ? (
             <TxLoader
               txHash={modalTxHash}
-              chainId={chainId}
               closeHandler={() => setModalLoaderVisible(false)}
               errorMessage={modalErrorMessage}
             />
@@ -465,7 +462,6 @@ function StakingCardPure({ api, APY }) {
           {cardLoaderVisible && (
             <TxLoader
               txHash={cardTxHash}
-              chainId={chainId}
               closeHandler={() => setCardLoaderVisible(false)}
               errorMessage={cardErrorMessage}
             />

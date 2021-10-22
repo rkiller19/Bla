@@ -1,13 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { StakeWithdraw, StakeAdder, ErrorBox } from '../'
-import { modalAction, unStakeModalAction } from '../../actions/modalAction'
+import {
+  card,
+  cardWrapper,
+  cardHead,
+  cardHeadLogo,
+  cardLabel,
+  cardInfoText,
+  cardName,
+  cardNameText,
+  cardStakingConditions,
+  cardStakingConditionsItem,
+  cardStakingItem,
+  cardStakingItemHead,
+  cardStakingItemInfo,
+  cardStakingItemInfoBlock,
+  cardStakingItemButtons,
+  cardFooter,
+  cardTatalStaked,
+  cardTatalStakedValue,
+  cardButton,
+  externalLink,
+  externalLinkImg,
+} from './farmingcard.module.scss'
+import { CardModal } from './cardModal/cardModal'
+import { Button, TxLoader, Modal, Title } from '../'
+import { errorModalAction } from '../../actions/modalAction'
 import { staked, unStaked } from '../../actions/stakedAction'
-import Loading from '../../assets/loading.png'
-import LinkIcon from '../../assets/link_icon.png'
+import LinkIcon from '../../assets/link_icon_white.png'
 
 export const FarmingCard = (props) => {
+  const [adderModalIsVisible, setAdderModalIsVisible] = useState(false)
+  const [withdrawModalIsVisible, setWithdrawModalIsVisible] = useState(false)
+
   const stakingTransactionState = useSelector(
     (state) => state.stakingReducer.stakingTransactionState,
   )
@@ -17,28 +43,22 @@ export const FarmingCard = (props) => {
   const harvestTransactionState = useSelector(
     (state) => state.stakingReducer.harvestTransactionState,
   )
-
   const dispatch = useDispatch()
-  const stake = () => {
-    dispatch(modalAction(true, props.uniqueKey))
-  }
-  const unStake = () => {
-    dispatch(unStakeModalAction(true, props.uniqueKey))
+
+  const HARVEST_IN_PROGRESS = harvestTransactionState === 'IN_PROGRESS'
+  const STAKING_IN_PROGRESS = stakingTransactionState === 'IN_PROGRESS'
+  const UNSTAKING_IN_PROGRESS = unStakingTransactionState === 'IN_PROGRESS'
+
+  const closeErrorModal = () => {
+    dispatch(errorModalAction(false))
   }
   const selector = useSelector((state) => state.stakedReducer.stake)
   const unStakeSelector = useSelector((state) => state.stakedReducer.unStake)
-  const modalStatus = useSelector((state) => state.modalReducer.value)
-  const modalStatusKey = useSelector((state) => state.modalReducer.title)
-  const unStakeModalStatus = useSelector(
-    (state) => state.modalReducer.unStakeModal,
-  )
-  const unStakeModalStatusKey = useSelector((state) => state.modalReducer.title)
   const errorModalStatus = useSelector((state) => state.modalReducer.errorModal)
   const errorModalMessage = useSelector((state) => state.modalReducer.title)
 
   if (selector === true) {
     setTimeout(function() {
-      // setLoading(true)
       dispatch(staked(false))
     }, 4000)
   }
@@ -70,153 +90,153 @@ export const FarmingCard = (props) => {
   }
 
   return (
-    <div className="stake-cards">
-      <div className="stack-cards-child">
-        <div className="stake-title">
-          <img src={props.logo} alt="" />
-          <p className="stake-name">
-            {props.tokenName}
-            {props.linkUrl !== '' ? (
-              <a href={props.linkUrl} target="_blank" rel="noreferrer">
-                <img src={LinkIcon} className="link-img" alt="" />
-              </a>
-            ) : (
-              ''
-            )}
-          </p>
-        </div>
-        <div className="stake-details">
-          <div className="apy value">
-            <p>Allocation</p>
-            <p className="percent" style={{ fontSize: '12px' }}>
-              {props.alloc}
-            </p>
+    <div className={cardWrapper}>
+      <div className={card}>
+        <div className={cardHead}>
+          <div className={cardHeadLogo}>
+            <img src={props.logo} alt="DAO1" />
           </div>
-          <div className="apy staked">
-            <p>TOTAL LIQUIDITY</p>
-            {props.showLiquidity ? (
-              <p className="percent">
-                $
-                {getEquivalentUSDRate(props.tokenDao1, props.usdDAO1Rate) +
-                  getEquivalentUSDRate(props.tokenUSDT1, props.usdUSDTRate)}
-              </p>
-            ) : (
-              <p className="percent">NA</p>
-            )}
-          </div>
-          <div className="apy stakes">
-            <p>LOCK</p>
-            <p className="percent">{props.lockInPeriod}</p>
-          </div>
-        </div>
-        <div className="stake-buttons">
-          <div className="stake-values">
-            <p>{props.tokenName.replace(/ *\([^)]*\)*/g, '')} STAKED</p>
-            {<p>{props.tokenStaked}</p>}
-          </div>
-          {
-            <div className="stake-button">
-              {unStakingTransactionState === 'IN_PROGRESS' ? (
-                <div className="loading">
-                  <img src={Loading} alt="" />
-                  <p>Unstaking in progress...</p>
-                </div>
+          <div className={cardName}>
+            <span className={cardLabel}>Name</span>
+            <span className={cardNameText}>
+              {props.tokenName}
+              {props.linkUrl !== '' ? (
+                <a
+                  className={externalLink}
+                  href={props.linkUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src={LinkIcon} className={externalLinkImg} alt="" />
+                </a>
               ) : (
-                <div className="btn">
-                  {stakingTransactionState === 'IN_PROGRESS' ? (
-                    <button className="button" disabled>
-                      Withdraw&nbsp;&nbsp;&nbsp;-
-                    </button>
-                  ) : props.lockIn >= getNumberOfDays() ? (
-                    <button className="button" disabled onClick={unStake}>
-                      Withdraw&nbsp;&nbsp;&nbsp;-
-                    </button>
-                  ) : (
-                    <button className="button" onClick={unStake}>
-                      Withdraw&nbsp;&nbsp;&nbsp;-
-                    </button>
-                  )}
-                </div>
+                ''
               )}
-              {stakingTransactionState === 'IN_PROGRESS' ? (
-                <div className="loading">
-                  <img src={Loading} alt="" />
-                  <p>Staking in progress...</p>
-                </div>
+            </span>
+          </div>
+        </div>
+
+        <div className={cardStakingConditions}>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>Allocation</div>
+            <div className={cardInfoText}>{props.alloc}</div>
+          </div>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>TOTAL LIQUIDITY</div>
+            <div className={cardInfoText}>
+              {props.showLiquidity ? (
+                <p className="percent">
+                  $
+                  {getEquivalentUSDRate(props.tokenDao1, props.usdDAO1Rate) +
+                    getEquivalentUSDRate(props.tokenUSDT1, props.usdUSDTRate)}
+                </p>
               ) : (
-                <div className="btn">
-                  {unStakingTransactionState === 'IN_PROGRESS' ? (
-                    <button className="button" disabled>
-                      Deposit&nbsp;&nbsp;&nbsp;+
-                    </button>
-                  ) : (
-                    <button className="button" onClick={stake}>
-                      Deposit&nbsp;&nbsp;&nbsp;+
-                    </button>
-                  )}
-                </div>
+                <p className="percent">NA</p>
               )}
             </div>
-          }
-        </div>
-        <div className="stake-earned">
-          <div className="stake-values">
-            <p>{props.title} EARNED</p>
-            <p>{props.tokenEarned}</p>
           </div>
-          <div className="stake-button">
-            {harvestTransactionState === 'IN_PROGRESS' ? (
-              <div className="loader">
-                <img src={Loading} alt="" />
-                <div className="transaction-text">
-                  <p>Harvesting in progress...</p>
-                  <a href="#">View transaction</a>
+          <div className={cardStakingConditionsItem}>
+            <div className={cardLabel}>LOCK</div>
+            <div className={cardInfoText}>{props.lockInPeriod}</div>
+          </div>
+        </div>
+
+        <div className={cardStakingItem}>
+          <div className={cardStakingItemHead}>
+            <div className={cardStakingItemInfo}>
+              <div className={cardStakingItemInfoBlock}>
+                <div className={cardLabel}>
+                  {props.tokenName.replace(/ *\([^)]*\)*/g, '')} STAKED
                 </div>
+                <div className={cardInfoText}>{props.tokenStaked}</div>
               </div>
-            ) : (
-              <button className="button" onClick={props.checkAndHarvest}>
-                Harvest
-              </button>
-            )}
+            </div>
+            <div className={cardStakingItemButtons}>
+              <Button
+                className={cardButton}
+                disabled={
+                  STAKING_IN_PROGRESS ||
+                  UNSTAKING_IN_PROGRESS ||
+                  props.lockIn >= getNumberOfDays()
+                }
+                onClick={() => {
+                  if (
+                    STAKING_IN_PROGRESS ||
+                    props.lockIn >= getNumberOfDays()
+                  ) {
+                    return
+                  }
+                  setWithdrawModalIsVisible(true)
+                }}
+              >
+                Withdraw&nbsp;-
+              </Button>
+
+              <Button
+                className={cardButton}
+                disabled={STAKING_IN_PROGRESS || UNSTAKING_IN_PROGRESS}
+                onClick={() => {
+                  if (UNSTAKING_IN_PROGRESS) {
+                    return
+                  }
+                  setAdderModalIsVisible(true)
+                }}
+              >
+                Deposit&nbsp;+
+              </Button>
+            </div>
           </div>
+          {(STAKING_IN_PROGRESS || UNSTAKING_IN_PROGRESS) && (
+            <TxLoader>Transaction pending</TxLoader>
+          )}
         </div>
+
+        <div className={cardFooter}>
+          <div className={cardTatalStaked}>
+            <div className={cardLabel}>{props.title} EARNED</div>
+            <div className={cardTatalStakedValue}>{props.tokenEarned}</div>
+          </div>
+          <Button
+            className={cardButton}
+            onClick={props.checkAndHarvest}
+            disabled={HARVEST_IN_PROGRESS}
+          >
+            Harvest
+          </Button>
+        </div>
+
+        {HARVEST_IN_PROGRESS && <TxLoader>Transaction pending</TxLoader>}
+
+        {/* Deposit modal */}
+        <CardModal
+          isOpen={adderModalIsVisible}
+          closeHandler={() => setAdderModalIsVisible(false)}
+          title={`Deposit ${props.tokenName}`}
+          callMethod={props.checkAndStakeSSGT}
+          updateWalletAmount={props.updateWalletAmount}
+          buttonText="Deposit"
+          balance={props.walletBalance}
+          walletAmount={props.walletAmount}
+        />
+
+        {/* Withdraw modal */}
+        <CardModal
+          isOpen={withdrawModalIsVisible}
+          closeHandler={() => setWithdrawModalIsVisible(false)}
+          title={`Withdraw ${props.tokenName}`}
+          callMethod={props.checkAndUnStakeSSGT}
+          updateWalletAmount={props.updateWalletAmount}
+          buttonText="Withdraw"
+          balance={props.tokenStaked}
+          walletAmount={props.walletAmount}
+        />
+
+        {/* Error modal */}
+        <Modal isOpen={errorModalStatus} closeHandler={closeErrorModal}>
+          <Title level={2}>Error</Title>
+          <p>{errorModalMessage}</p>
+        </Modal>
       </div>
-      {modalStatus === true && modalStatusKey === props.uniqueKey ? (
-        <StakeAdder
-          title={props.title}
-          logo={props.logo}
-          uniqueKey={props.uniqueKey}
-          tokenName={props.tokenName}
-          allowance={props.allowance}
-          walletBalance={props.walletBalance}
-          walletAmount={props.walletAmount}
-          updateWalletAmount={props.updateWalletAmount}
-          checkAndStakeSSGT={props.checkAndStakeSSGT}
-        />
-      ) : (
-        ''
-      )}
-      {unStakeModalStatus === true &&
-      unStakeModalStatusKey === props.uniqueKey ? (
-        <StakeWithdraw
-          title={props.title}
-          uniqueKey={props.uniqueKey}
-          tokenName={props.tokenName}
-          logo={props.logo}
-          ssgtStaked={props.ssgtStaked}
-          tokenStaked={props.tokenStaked}
-          walletAmount={props.walletAmount}
-          updateWalletAmount={props.updateWalletAmount}
-          checkAndUnStakeSSGT={props.checkAndUnStakeSSGT}
-        />
-      ) : (
-        ''
-      )}
-      {errorModalStatus === true ? (
-        <ErrorBox errorMessage={errorModalMessage} />
-      ) : (
-        ''
-      )}
     </div>
   )
 }
