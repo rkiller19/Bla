@@ -1,4 +1,5 @@
 export { Button } from './button/button'
+export { CardsContainer } from './cardsContainer/cardsContainer'
 export { CloseButton } from './closeButton/closeButton'
 export { ErrorBox } from './errorbox/errorbox'
 export { FarmingCard } from './farmingcard/farmingcard'

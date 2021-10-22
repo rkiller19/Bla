@@ -3,8 +3,7 @@ import { useEthers } from '@usedapp/core'
 
 import NetworksConfig from '../../networks.json'
 
-import { stakingCardsContainer } from './staking.module.scss'
-import { MainLayout, StakingCard } from '../../components'
+import { MainLayout, StakingCard, CardsContainer } from '../../components'
 
 export const Staking = () => {
   const { chainId } = useEthers()
@@ -16,7 +15,7 @@ export const Staking = () => {
         NetworksConfig[chainId].fixedStakingContracts
 
       return (
-        <div className={stakingCardsContainer}>
+        <CardsContainer>
           {fixedStakingContracts.map(({ address, APY }) => (
             <StakingCard
               key={address}
@@ -25,7 +24,7 @@ export const Staking = () => {
               tokenContract={tokenContract}
             />
           ))}
-        </div>
+        </CardsContainer>
       )
     }
   }
