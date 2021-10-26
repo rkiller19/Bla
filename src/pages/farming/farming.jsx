@@ -17,7 +17,7 @@ export const Farming = () => {
   }
 
   return (
-    <MainLayout title="Farming">
+    <MainLayout title="Farming" pageSupportedChains={[1, 137]}>
       <CardsContainer>
         {isEthereumEnabled() && <FarmingView />}
         {isMaticEnabled() && <MaticFarming />}

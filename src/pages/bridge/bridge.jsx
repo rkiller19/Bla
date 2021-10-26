@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import classnames from 'classnames'
-import { useEthers } from '@usedapp/core'
 import { utils } from 'ethers'
 
 import {
   Bridge as BridgeSyled,
   BridgeTitle,
-  BridgeTitleCenter,
   BridgeCard,
   BridgeCardCol,
   BridgeInputContainer,
@@ -27,7 +25,6 @@ import {
   approve,
   bridge,
 } from '../../services/bridge/BridgeService'
-import { switchNetwork } from '../../utils/switchNetwork'
 
 const networks = {
   from: { symbol: 'ETH', name: 'Ethereum mainnet' },
@@ -35,7 +32,6 @@ const networks = {
 }
 
 export function Bridge() {
-  const { chainId } = useEthers()
   const [bridgeValue, setBridgeValue] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [balance, setBalance] = useState(0)
@@ -93,21 +89,6 @@ export function Bridge() {
 
     setErrorMessage(null)
   }, [bridgeValue, balance, allowance])
-
-  if (chainId !== 1 && chainId !== 1337) {
-    return (
-      <MainLayout title="Bridge" noHandleNetwork>
-        <div className={BridgeSyled}>
-          <Title level={2} className={BridgeTitleCenter}>
-            Only Mainnet support
-          </Title>
-          <Button onClick={() => switchNetwork(1)} className={BridgeButton}>
-            Switch To Mainnet
-          </Button>
-        </div>
-      </MainLayout>
-    )
-  }
 
   const bridgeValueHandler = (e) => {
     e.preventDefault()
@@ -173,7 +154,7 @@ export function Bridge() {
   }
 
   return (
-    <MainLayout title="Bridge">
+    <MainLayout title="Bridge" pageSupportedChains={[1]}>
       <div className={BridgeSyled}>
         <Title level={2} className={BridgeTitle}>
           ETH to BSC bridge

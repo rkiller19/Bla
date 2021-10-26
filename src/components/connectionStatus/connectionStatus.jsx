@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useEthers, shortenAddress } from '@usedapp/core'
+import { UnsupportedChainIdError } from '@web3-react/core'
 import classnames from 'classnames'
 
 import WalletIcon from '../../assets/wallet-red.png'
@@ -26,12 +27,17 @@ import NETWORKS from '../../networks.json'
 import { supportedChains } from '../../constants'
 
 function NetworkSwitcher({ deactivateWallet }) {
-  const { chainId } = useEthers()
+  const { chainId, error } = useEthers()
   const [menuIsVisible, setMenuIsVidible] = useState(false)
+  const wrongNetwork = error instanceof UnsupportedChainIdError
 
   const menuClassNames = classnames(networksMenu, {
     [networksMenuHidden]: !menuIsVisible,
   })
+
+  const selectButtonText = wrongNetwork
+    ? 'Wrong Network'
+    : NETWORKS[chainId].name
 
   return (
     <div className={networksMenuWrapper}>
@@ -40,7 +46,7 @@ function NetworkSwitcher({ deactivateWallet }) {
           setMenuIsVidible(!menuIsVisible)
         }}
       >
-        {NETWORKS[chainId].name}
+        {selectButtonText}
         <img className={networksMenuArrow} src={ArrowDown} alt="Select" />
       </Button>
       <div className={menuClassNames}>
@@ -74,16 +80,20 @@ function NetworkSwitcher({ deactivateWallet }) {
 
 function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
   const { account, error } = useEthers()
-
   const isConnected = useSelector((state) => state.connectionReducer)
+  const wrongNetwork = error instanceof UnsupportedChainIdError
 
   const ConnectionResult = () => {
-    if (error) {
+    if (error && !wrongNetwork) {
       return (
         <Button disabled className={connectButton}>
           Error
         </Button>
       )
+    }
+
+    if (wrongNetwork) {
+      return <NetworkSwitcher deactivateWallet={deactivateWallet} />
     }
 
     if (isConnected && account) {
