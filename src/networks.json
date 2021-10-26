@@ -17,7 +17,10 @@
       }
     ],
     "tokenContract": "0xCE3f6f6672616c39D8B6858F8DAC9902eCa42C84",
-    "bridgeContract": "0xFF01b75f2c155dBDA36E68eB6557DEE8d36D6A99"
+    "bridgeContract": "0xFF01b75f2c155dBDA36E68eB6557DEE8d36D6A99",
+    "params": {
+      "chainId": "0x1"
+    }
   },
   "137": {
     "blockExplorer": "https://polygonscan.com/tx/",
@@ -36,7 +39,18 @@
         "APY": "52.0807"
       }
     ],
-    "tokenContract": "0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD"
+    "tokenContract": "0x3c5D1617C30BA71972adD4b0C9A6B9848f2afeeD",
+    "params": {
+      "chainId": "0x89",
+      "chainName": "Polygon",
+      "nativeCurrency": {
+        "name": "MATIC",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "rpcUrls": ["https://rpc-mainnet.maticvigil.com"],
+      "blockExplorerUrls": ["https://polygonscan.com"]
+    }
   },
   "56": {
     "blockExplorer": "https://www.bscscan.com/tx/",
@@ -55,6 +69,17 @@
         "APY": "52.0807"
       }
     ],
-    "tokenContract": "0xff6D784D5938CB3980Dce79BbAcEc53987D527d8"
+    "tokenContract": "0xff6D784D5938CB3980Dce79BbAcEc53987D527d8",
+    "params": {
+      "chainId": "0x38",
+      "chainName": "Binance Smart Chain",
+      "nativeCurrency": {
+        "name": "Binance Coin",
+        "symbol": "BNB",
+        "decimals": 18
+      },
+      "rpcUrls": ["https://bsc-dataseed.binance.org"],
+      "blockExplorerUrls": ["https://bscscan.com"]
+    }
   }
 }

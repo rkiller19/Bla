@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useEthers, shortenAddress } from '@usedapp/core'
+import classnames from 'classnames'
 
 import WalletIcon from '../../assets/wallet-red.png'
+import ArrowDown from '../../assets/arrow-down.png'
 import { Button } from '../'
 import {
   connectionStatus,
@@ -10,8 +12,65 @@ import {
   accountAddressBlock,
   accountAddress,
   connectButton,
+  disconnectButton,
+  networksMenu,
+  networksMenuHidden,
+  networksMenuList,
+  networksMenuWrapper,
+  networksMenuButton,
+  networksMenuArrow,
 } from './connectionStatus.module.scss'
 import { withWalletConnection } from '../../utils/withWalletConnection'
+import { switchNetwork } from '../../utils/switchNetwork'
+import NETWORKS from '../../networks.json'
+import { supportedChains } from '../../constants'
+
+function NetworkSwitcher({ deactivateWallet }) {
+  const { chainId } = useEthers()
+  const [menuIsVisible, setMenuIsVidible] = useState(false)
+
+  const menuClassNames = classnames(networksMenu, {
+    [networksMenuHidden]: !menuIsVisible,
+  })
+
+  return (
+    <div className={networksMenuWrapper}>
+      <Button
+        onClick={() => {
+          setMenuIsVidible(!menuIsVisible)
+        }}
+      >
+        {NETWORKS[chainId].name}
+        <img className={networksMenuArrow} src={ArrowDown} alt="Select" />
+      </Button>
+      <div className={menuClassNames}>
+        Select network
+        <div className={networksMenuList}>
+          {supportedChains.map((id) => {
+            if (chainId === id) {
+              return null
+            }
+
+            return (
+              <Button
+                key={id}
+                onClick={() => {
+                  switchNetwork(id)
+                }}
+                className={networksMenuButton}
+              >
+                {NETWORKS[id].name}
+              </Button>
+            )
+          })}
+          <Button onClick={deactivateWallet} className={disconnectButton}>
+            Disconnect
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
   const { account, error } = useEthers()
@@ -36,9 +95,7 @@ function ConnectionStatusPure({ activateWallet, deactivateWallet }) {
               {account && shortenAddress(account)}
             </span>
           </div>
-          <Button onClick={deactivateWallet} className={connectButton}>
-            Disconnect Wallet
-          </Button>
+          <NetworkSwitcher deactivateWallet={deactivateWallet} />
         </>
       )
     }

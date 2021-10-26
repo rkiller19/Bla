@@ -27,7 +27,7 @@ import {
   approve,
   bridge,
 } from '../../services/bridge/BridgeService'
-import { switchToMainnet } from '../../utils/switchNetwork'
+import { switchNetwork } from '../../utils/switchNetwork'
 
 const networks = {
   from: { symbol: 'ETH', name: 'Ethereum mainnet' },
@@ -101,7 +101,7 @@ export function Bridge() {
           <Title level={2} className={BridgeTitleCenter}>
             Only Mainnet support
           </Title>
-          <Button onClick={() => switchToMainnet()} className={BridgeButton}>
+          <Button onClick={() => switchNetwork(1)} className={BridgeButton}>
             Switch To Mainnet
           </Button>
         </div>

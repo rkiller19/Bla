@@ -26,7 +26,7 @@ export function Header({ title }) {
         </button>
         <Title level={1}>{title}</Title>
       </div>
-      <ConnectionStatus>Disconnect Wallet</ConnectionStatus>
+      <ConnectionStatus />
     </header>
   )
 }

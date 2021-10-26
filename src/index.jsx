@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ChainId, DAppProvider } from '@usedapp/core'
+import { DAppProvider } from '@usedapp/core'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 import './sass/index.scss'
 import { App } from './App'
 import { rootReducer } from './reducers'
+import { supportedChains } from './constants'
 
 const store = createStore(
   rootReducer,
@@ -14,7 +15,7 @@ const store = createStore(
 )
 
 const config = {
-  supportedChains: [ChainId.Mainnet, ChainId.Polygon, ChainId.BSC],
+  supportedChains,
 }
 
 ReactDOM.render(
