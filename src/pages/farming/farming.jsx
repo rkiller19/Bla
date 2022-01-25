@@ -9,7 +9,7 @@ export const Farming = () => {
   const { chainId } = useEthers()
 
   const isMaticEnabled = () => {
-    return chainId === ChainId.Polygon
+    return chainId === ChainId.AVAX
   }
 
   const isEthereumEnabled = () => {

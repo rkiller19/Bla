@@ -28,7 +28,7 @@ import {
 
 const networks = {
   from: { symbol: 'ETH', name: 'Ethereum mainnet' },
-  to: { symbol: 'BSC', name: 'Binance Smart Chain' },
+  to: { symbol: 'FTM', name: 'Fantom Opera' },
 }
 
 export function Bridge() {
